@@ -1,0 +1,52 @@
+
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+// @import '@ionic/angular/css/palettes/dark.system.css';
+
+ion-button{
+    
+    --background: #DEAD1C !important;
+    --color: white !important;
+    --box-shadow: none !important;
+    // --color:white;
+}
+
+.btnGoogle {
+    --background: transparent !important;
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    padding: 10px 30px 10px 30px;
+}
+
+
+.btnFacebook {
+    
+    --background: transparent !important;
+    background-color: #4368C7;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 30px 10px 30px;
+}

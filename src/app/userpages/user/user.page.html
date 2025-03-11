@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My Profile</ion-title>
+    <a href="/">LogOut</a>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!--  -->
+  <ion-avatar>
+    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+  </ion-avatar>
+  <!-- segment -->
+  <ion-segment>
+    <ion-segment-button value="Info" content-id="info">
+      <p>Info</p>
+    </ion-segment-button>
+
+    <ion-segment-button value="Security" content-id="Security">
+      <p>Security</p>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- segment view -->
+  <ion-segment-view>
+
+    <ion-segment-content id="info">
+      <ion-input label="Name"></ion-input>
+      <ion-input label="Email"></ion-input>
+    </ion-segment-content>
+    
+    <ion-segment-content id="Security">
+      <ion-input type="password" label="Password"> </ion-input>
+
+      <ion-input label="Code" labelPlacement="fixed"  name="nameUser" type="text"
+      spellcheck="false" autocapitalize="off" errorText="name is required" required>
+    </ion-input>
+    </ion-segment-content>
+  </ion-segment-view>
+</ion-content>
+<!-- tabas menus -->
+<app-tabs-pages></app-tabs-pages>

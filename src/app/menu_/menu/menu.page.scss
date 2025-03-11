@@ -1,0 +1,93 @@
+// nav
+.nav{
+    padding-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem;
+    padding: 1.25rem;
+}
+.nav .category{
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    overflow-x: auto;
+    text-transform: uppercase;
+}
+// 
+.category a{
+    color: black;
+    padding: 0.75rem;
+    font-weight: 600;
+    border: 1px solid black;
+    border-radius: 25px;
+    
+}
+// hover category 
+.category a:hover{
+    background-color: black;
+    color: white;
+}
+
+// cart products 
+.cart{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap:0;
+    padding: 1.25rem;   
+    color: black;
+    
+}
+.cart .content{
+    color: black;
+    // background-color: rgba(255, 255, 255, 0.068);
+    margin: 1rem;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+.content h3{
+    color: black;
+}
+.shadow-lg {
+    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    /* Ocultar barras de scroll en navegadres */
+    display: none;
+}
+
+.scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.imgp{
+    border-radius: 0.5rem;
+    width: auto;
+    object-fit: contain; 
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1.5rem; 
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+}
+
+
+.message{
+    padding: 10px;
+    color: black;
+    font-size: 20px;
+    text-align: center;
+}
+ion-content {
+    --padding-top: env(safe-area-inset-top);
+}
+  

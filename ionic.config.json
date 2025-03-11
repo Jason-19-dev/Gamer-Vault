@@ -1,0 +1,7 @@
+{
+  "name": "GamerVaultApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

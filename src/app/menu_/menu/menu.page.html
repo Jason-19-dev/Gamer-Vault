@@ -1,0 +1,43 @@
+<ion-header class="ion-safe-area" [translucent]="true">
+  
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- nav -->
+  <div class="nav">
+    <div class="category scrollbar-hidden">
+      <a>Almuerzo</a>
+      <a>Hambuerguesa</a>
+      <a>Alitas</a>
+      <a>Nachos</a>
+      <a>quesadillas</a>
+    </div>
+  </div>
+
+  @if (products.length>0) {
+  <div id="container">
+    <!-- product -->
+    <div *ngFor="let product of products;">
+      <div class=" cart">
+        <div class="content shadow-lg">
+          <a>
+            <img class="imgp" src={{product.image_url}} alt={{product.name}}>
+            <h3 style="font-weight: bold;">{{product.name}}</h3>
+          </a>
+          <p>Precio:$ {{product.price}}</p>
+          <p>Disponible: {{product.available ? "✅":"❌"}}</p>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  }@else {
+  <div class="message">No hay prooductos disponibles</div>
+  }
+</ion-content>
+
+<app-tabs-pages></app-tabs-pages>

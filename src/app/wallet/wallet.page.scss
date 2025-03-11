@@ -1,0 +1,33 @@
+.wallet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1.5rem;
+    // background-color: rgb(56, 1, 70);
+    background: linear-gradient(rgb(0, 0, 0),rgb(0, 37, 92));
+    // width: auto;
+    height: 200px;
+    border-radius: 20px;
+    margin: 0px 50px 0 50px;
+}
+
+.wallet .content {
+    display: flex;
+    gap: 5px;
+}
+
+p {
+    font-size: 17px;
+    line-height: 22px;
+    // color: #7e7e7e;
+    color: #ffffff;
+    margin-top: 1.5rem;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.144);
+    border-radius: 25px;
+}
+ion-button{
+    --background: rgba(0, 0, 0, 0.267);
+    color: black;
+    padding: 10px;
+}

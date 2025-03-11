@@ -1,0 +1,66 @@
+<ion-content class="ion-padding">
+
+  <h1 style="padding: 10px;text-align: center; color: white;">Sign in</h1>
+
+
+  <!-- <div style="text-align: center;">
+      <p style="color: white;">Login with</p>
+      <ion-button class="btnGoogle">
+        <img src="/assets/google.jpg" alt="google logo" width="20" height="20">
+        Google
+      </ion-button>
+      <ion-button class="btnFacebook">
+        <ion-icon name="logo-facebook" ios="logo-facebook" md="logo-facebook"></ion-icon>
+        Facebook
+      </ion-button>
+      
+    </div> -->
+  <ion-card>
+    <div style="padding: 20px;">
+      <form [formGroup]="form_signin" novalidate>
+
+        <ion-text color="danger" *ngIf="form_signin.get('nameUser')?.invalid&& form_signin.get('nameUser')?.touched">
+          Maximo 6 caracteres
+        </ion-text>
+
+        <ion-input type="text" label="Name" labelPlacement="floating" errorText="name is required" required
+          formControlName="nameUser"></ion-input>
+
+          <ion-text color="danger" *ngIf="form_signin.get('email')?.invalid && form_signin.get('email')?.touched">
+            Email inválido
+          </ion-text>
+
+        <ion-input type="email" label="Email" formControlName="email" required=""></ion-input>
+        <ion-text color="danger" *ngIf="form_signin.get('password')?.invalid && form_signin.get('password')?.touched">
+          Mínimo 6 y 8 Maximo caracteres
+        </ion-text>
+
+        <ion-input type="password" label="Password" required formControlName="password">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+
+        <!-- TODO: VALIDAR QUE SEAN IGUALES  -->
+        <!-- <ion-text color="danger" *ngIf="form_signin.get('password_confirm')!= form_signin.get('password')">
+          Las contraseñas no coinciden
+        </ion-text> -->
+
+        <ion-input type="password" label="Confirm Password" required formControlName="password_confirm">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+
+        <ion-checkbox labelPlacement="end" style="padding: 10px">He leído y acepto los términos y
+          condiciones</ion-checkbox>
+
+        <ion-button  [disabled]="form_signin.invalid" class="btnSignin" (click)="signin()"
+          type="submit">Register</ion-button>
+
+        <!-- <button class="btnSignin" (click)="signin_new_user()">Sign in</button> -->
+      </form>
+
+    </div>
+  </ion-card>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <p style="color: white">You have account? <a href=""> Login</a></p>
+  </div>
+</ion-content>

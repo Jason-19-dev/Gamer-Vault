@@ -1,0 +1,129 @@
+.wallet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1.5rem;
+    // background-color: rgb(56, 1, 70);
+    background: url('/assets/gamer.jpg') no-repeat center center/cover;
+    // width: auto;
+    height: 130px;
+    border-radius: 20px;
+    margin: 0px 50px 0 50px;
+}
+
+
+.wallet .content {
+    display: flex;
+    gap: 5px;
+}
+
+p {
+    font-size: 17px;
+    line-height: 22px;
+    // color: #7e7e7e;
+    color: #ffffff;
+    margin-top: 1.5rem;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.144);
+    border-radius: 25px;
+}
+
+
+.link a {
+    color: white;
+    background-color: red;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    padding: 1rem;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1.5rem; // 
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    
+}
+
+
+// nav
+.nav {
+    padding: 1rem;
+}
+
+.category a {
+    color: black;
+    padding: 0.5rem;
+}
+
+.nav .category {
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    overflow-x: auto;
+    text-transform: uppercase;
+}
+
+// scroll bar  nav category
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.category a:hover {
+
+    background-color: black;
+    color: white;
+    border-radius: 10px 0 10px 0;
+}
+
+
+// seach bar 
+ion-searchbar{
+    // --background: transparent !important;
+    // border-radius: 5px;
+    --box-shadow: none; 
+}
+
+ion-content {
+    // --background: transparent !important;
+    
+}
+
+// cart products 
+.cart{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:0;
+}
+.cart .content{
+    color: black;
+    // margin: 1rem;
+    border-radius: 0.75rem;
+    padding: 1.3rem;
+}
+.cart p{
+    color: black;
+}
+.content h3{
+    color: black;
+}
+.shadow-lg {
+    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.imgp{
+    border-radius: 0.5rem;
+    width: auto;
+    object-fit: contain; 
+}

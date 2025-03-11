@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Wallet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div style="margin-top: 10px;">
+    <div class="wallet">
+      <div class="content">
+        <p>Billetera </p>
+        <p>{{puntos}} Puntos</p>
+      </div>
+      <div>
+        <p>${{saldo}}</p>
+      </div>
+    </div>
+    <ion-button (click)="presentToast('top','Recarga Realizada')">Recargar</ion-button>
+
+    <ion-button (click)="presentToast('top','Enviado')">Enviar</ion-button>
+  </div>
+  <div>
+    <ion-grid>
+        <ion-item *ngFor="let trax of transactions">
+
+          <!-- <div class="content shadow-lg"> -->
+            <ion-row>
+              <ion-col>
+                <p style="color: black;">{{trax.date}}</p>     
+              </ion-col>
+      
+              <ion-col> 
+                <p style="color: black;">{{trax.type.toUpperCase()}}</p>
+              </ion-col>
+            
+              <ion-col>
+                <p style="color: black;">$ {{trax.amount}}</p>
+              </ion-col>
+              <ion-col>
+                <p style="color: black;">{{trax.origin}}</p>
+              </ion-col>
+
+              <!-- <p style="color: black;">{{trax.time}}</p> -->
+            </ion-row>
+            
+          <!-- </div> -->
+        </ion-item>
+    </ion-grid>
+    <!--  -->
+  </div>
+</ion-content>
+
+<app-tabs-pages></app-tabs-pages>

@@ -1,0 +1,72 @@
+.login-logo {
+    min-height: 200px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.login-logo img {
+    max-width: 150px;
+    margin-top: 50px;
+}
+
+.login-form {
+    padding: 16px;
+}
+
+
+
+ion-content {
+    --background: transparent !important;
+    background: linear-gradient(to bottom, #141e30, #243b55) !important; 
+    
+    
+}
+
+ion-card {
+    --background: transparent !important;
+    --box-shadow: none !important;
+
+
+}
+
+ion-input {
+    font-size: 1rem;
+    margin-bottom: 20px;
+
+}
+
+
+.page-background {
+    height: 100vh;
+}
+
+ion-button{
+    --background: transparent !important;
+    // --box-shadow: none !important;
+    margin: 5px;
+    
+}
+// button 
+.btnGoogle {
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    padding: 10px 30px 10px 30px;
+}
+
+
+.btnFacebook {
+    
+    background-color: #4368C7;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 30px 10px 30px;
+}
+
+.btnLogin{
+    font-weight: bold;
+    background-color: #DEAD1C;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 30px 10px 30px;
+}
