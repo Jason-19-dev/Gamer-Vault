@@ -35,3 +35,33 @@ ion-card {
     --padding-end: 30px;
 
 }
+
+.inputModel {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    // justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    padding: 13px;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.inputModel:focus {
+    border: none;
+    outline: none;
+}
+
+.login-logo {
+    // min-height: 200px;
+    // padding: 20px 0;
+    text-align: center;
+}
+
+.login-logo img {
+    max-width: 150px;
+    // margin-top: 50px;
+}

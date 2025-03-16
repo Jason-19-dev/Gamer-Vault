@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm, FormGroup } from '@angular/forms';
-import { IonCard, IonContent, IonButton, IonRow, IonCol, IonInput, IonIcon, AlertController, IonInputPasswordToggle, IonItem, IonList } from '@ionic/angular/standalone';
+import { FormsModule, NgForm, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { IonCard, IonContent, IonButton, IonRow, IonCol, IonInput, IonIcon, AlertController, IonInputPasswordToggle, IonItem, IonList, IonText } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { Customer } from 'src/types';
 import { addIcons } from 'ionicons';
@@ -12,7 +12,7 @@ import * as icons from 'ionicons/icons';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   // standalone: true,
-  imports: [
+  imports: [IonText, 
     IonContent,
     CommonModule,
     FormsModule,
@@ -22,14 +22,15 @@ import * as icons from 'ionicons/icons';
     IonCol,
     IonInput,
     IonInputPasswordToggle,
+    IonIcon,
+    ReactiveFormsModule
 
 
   ]
 })
 export class LoginPage implements OnInit {
 
-  loginForm!: FormGroup
-  login = { nameUser: '', password: '' };
+  loginForm: FormGroup
 
   user: Customer[] = [
     {
@@ -44,10 +45,66 @@ export class LoginPage implements OnInit {
       is_active: true,
       role: 'admin',
       create_at: ''
+    },
+    {
+      id: 2,
+      nameUser: 'adriana',
+      email: 'adriana@example.com',
+      phone: '12345679',
+      birthday_date: '19-02-2002',
+      address: '',
+      contry: 'Panama',
+      password: 'admin',
+      is_active: true,
+      role: 'admin',
+      create_at: ''
+    },
+    {
+      id: 3,
+      nameUser: 'jack',
+      email: 'jack@example.com',
+      phone: '12345679',
+      birthday_date: '19-02-2002',
+      address: '',
+      contry: 'Panama',
+      password: 'admin',
+      is_active: true,
+      role: 'admin',
+      create_at: ''
+    },
+    {
+      id: 4,
+      nameUser: 'jeremy',
+      email: 'jeremy@example.com',
+      phone: '12345679',
+      birthday_date: '19-02-2002',
+      address: '',
+      contry: 'Panama',
+      password: 'admin',
+      is_active: true,
+      role: 'admin',
+      create_at: ''
+    },
+    {
+      id: 5,
+      nameUser: 'carlos',
+      email: 'carlos@example.com',
+      phone: '12345679',
+      birthday_date: '19-02-2002',
+      address: '',
+      contry: 'Panama',
+      password: 'admin',
+      is_active: true,
+      role: 'admin',
+      create_at: ''
     }
   ]
-  constructor(private router: Router, private alertController: AlertController) {
+  constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder) {
     addIcons(icons)
+    this.loginForm = this.fb.group({
+      userName: ["",[Validators.required,Validators.maxLength(6)]],
+      password: ["",[Validators.required,Validators.maxLength(8)]],
+    })
   }
 
   ngOnInit() {
@@ -55,20 +112,19 @@ export class LoginPage implements OnInit {
   }
 
   // 
-  onLogin(form: NgForm) {
+  onLogin() {
 
-    const { nameUser: name, password: pass } = form.value
+    const { userName: name, password: pass } = this.loginForm.value
     
     const user = this.user.find(user => user.nameUser === name && user.password === pass)
-    console.log(form.value)
-    console.log(name, pass)
+    console.log(this.loginForm.value)
 
     if (user) {
       this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
-      this.router.navigateByUrl('restaurant/home');
+      this.router.navigateByUrl('home');
     }
     else {
-      this.alert('User or password incorrect', "try again", '')
+      this.alert('Usuario o contraseña incorrectos', "inténtalo de nuevo", '')
     }
   }
 

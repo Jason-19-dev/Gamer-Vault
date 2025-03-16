@@ -11,6 +11,12 @@ ion-tab-bar {
 ion-input {
   font-size: 1rem;
   margin-bottom: 20px;
-  margin: 30px;
-  // color: white;
+color: white;
+  
+}
+
+ion-content {
+  
+  --background: transparent !important;
+  background: linear-gradient(to bottom, #141e30, #243b55) !important;
 }

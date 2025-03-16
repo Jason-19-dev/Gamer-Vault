@@ -18,11 +18,8 @@ import { TabsPagesPage } from 'src/app/tabs_bar/tabs-pages/tabs-pages.page';
     IonInput,
     IonToolbar,
     TabsPagesPage,
-    IonSegment,
-    IonSegmentButton,
-    IonSegmentView,
-    IonSegmentContent,
-    IonAvatar
+    IonAvatar,
+
   ]
 })
 export class UserPage implements OnInit {

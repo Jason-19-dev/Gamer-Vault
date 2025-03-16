@@ -5,6 +5,9 @@ import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader,
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { ToastController } from '@ionic/angular';
 import { order, Product } from 'src/types';
+import { BiometricService } from 'src/services/biometric.service';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wallet',
@@ -30,7 +33,12 @@ import { order, Product } from 'src/types';
 export class WalletPage implements OnInit {
   puntos = 6
   saldo = 10.99
-  constructor(private toastController: ToastController) { }
+  constructor(
+    private toastController: ToastController,
+    private platform: Platform,
+    private biometricService: BiometricService,
+    private route: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -38,16 +46,16 @@ export class WalletPage implements OnInit {
   // transactions: Transaction[] = [
   transactions: any[] = [
     {
-      date:'03-marzo-2025',
+      date: '03-marzo-2025',
       amount: 1.40,
       origin: '****8713',
-      state:"COMPLATADO",
+      state: "COMPLATADO",
       type: "Recarga",
-      time:'11.17'
+      time: '11.17'
     }
   ]
   // toast 
-  async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
+  async toast_alert(position: 'top' | 'middle' | 'bottom', message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 1500,
@@ -55,5 +63,24 @@ export class WalletPage implements OnInit {
     });
 
     await toast.present();
+  }
+
+  // Biometric Auth
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.authenticate();
+    });
+  }
+
+  async authenticate() {
+    try {
+      const result = await this.biometricService.verifyIdentity("Recargar");
+      if (result) { 
+        this.route.navigate(['user'])
+      }
+
+    } catch (error) {
+      console.error('Authentication failed', error);
+    }
   }
 }

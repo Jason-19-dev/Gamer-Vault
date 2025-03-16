@@ -18,8 +18,6 @@ import { Router } from '@angular/router';
     FormsModule,
     IonCard,
     IonButton,
-    IonInputPasswordToggle,
-    IonInput,
     IonCheckbox,
     IonText,
     ReactiveFormsModule,
@@ -41,7 +39,6 @@ export class SigninPage implements OnInit {
       }
     );
   }
-
   ngOnInit() {
     addIcons(icons)
 
@@ -55,7 +52,7 @@ export class SigninPage implements OnInit {
     const { nameUser: name, password: pass} = this.form_signin.value
 
     this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
-    this.router.navigateByUrl('restaurant/home');
+    this.router.navigateByUrl('home');
     console.table(this.form_signin.value)
   }
 

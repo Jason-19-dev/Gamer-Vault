@@ -11,11 +11,11 @@ export const routes: Routes = [
     loadComponent: ()=> import('./auth/login/login.page').then(m=> m.LoginPage)
   },
   {
-    path: 'restaurant/home',
+    path: 'home',
     loadComponent: () => import('./home/home.page').then( m => m.HomePage)
   },
   {
-    path: 'restaurant/menu',
+    path: 'menu',
     loadComponent: () => import('./menu_/menu/menu.page').then( m => m.MenuPage)
   },
   {

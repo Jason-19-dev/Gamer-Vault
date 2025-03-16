@@ -17,9 +17,9 @@
 
 ion-content {
     --background: transparent !important;
-    background: linear-gradient(to bottom, #141e30, #243b55) !important; 
-    
-    
+    background: linear-gradient(to bottom, #141e30, #243b55) !important;
+
+
 }
 
 ion-card {
@@ -40,12 +40,13 @@ ion-input {
     height: 100vh;
 }
 
-ion-button{
+ion-button {
     --background: transparent !important;
     // --box-shadow: none !important;
     margin: 5px;
-    
+
 }
+
 // button 
 .btnGoogle {
     background-color: white;
@@ -56,17 +57,42 @@ ion-button{
 
 
 .btnFacebook {
-    
+
     background-color: #4368C7;
     border-radius: 10px;
     color: white;
     padding: 10px 30px 10px 30px;
 }
 
-.btnLogin{
+.btnLogin {
     font-weight: bold;
     background-color: #DEAD1C;
     border-radius: 10px;
     color: white;
     padding: 10px 30px 10px 30px;
+}
+
+
+.inputModel {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    // justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    padding: 13px;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.inputModel:focus {
+    border: none;
+    outline: none;
+}
+
+log {
+    height: 2px;
+    height: 24px;
 }

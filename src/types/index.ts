@@ -33,7 +33,7 @@ export type order = {
     tipo_entrega: string
     total: number
     estado: string
-    item: items[]
+    item: items[] // dymano
 }
 
 export type items = {

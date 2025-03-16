@@ -1,22 +1,19 @@
 <ion-header class="ion-safe-area" [translucent]="true">
-  
   <ion-toolbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Catálogo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <!-- nav -->
-  <div class="nav">
+  <!-- <div class="nav">
     <div class="category scrollbar-hidden">
-      <a>Almuerzo</a>
-      <a>Hambuerguesa</a>
-      <a>Alitas</a>
-      <a>Nachos</a>
-      <a>quesadillas</a>
+      <a>Example</a>
+      <a>Example</a>
+      <a>Example</a>
     </div>
-  </div>
+  </div> -->
 
   @if (products.length>0) {
   <div id="container">
@@ -26,7 +23,7 @@
         <div class="content shadow-lg">
           <a>
             <img class="imgp" src={{product.image_url}} alt={{product.name}}>
-            <h3 style="font-weight: bold;">{{product.name}}</h3>
+            <h3 style="font-weight: bold;">{{product.description}}</h3>
           </a>
           <p>Precio:$ {{product.price}}</p>
           <p>Disponible: {{product.available ? "✅":"❌"}}</p>  
