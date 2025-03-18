@@ -1,108 +1,124 @@
 -- 1. Crear la base de datos (ejecutar solo si no la creaste en AWS RDS)
-CREATE DATABASE marketplace;
-\c marketplace;  -- Conectarse a la base de datos (en PostgreSQL)
+CREATE DATABASE IF NOT EXISTS marketplace;
 
--- 2. Crear la tabla de Usuarios
-CREATE TABLE users (
-    id_user SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+-- 2. Seleccionar la base de datos para usarla
+USE marketplace;
+
+-- 3. Crear la tabla de Usuarios
+CREATE TABLE IF NOT EXISTS users (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,   -- Cambiado de SERIAL a INT AUTO_INCREMENT
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     username VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,      -- Cambié TEXT por VARCHAR(255)
     phone VARCHAR(20),
-    created_at TIMESTAMP DEFAULT NOW(),
-    auth_provider VARCHAR(50) CHECK (auth_provider IN ('email', 'google', 'facebook')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    auth_provider ENUM('email', 'google', 'facebook') NOT NULL,  -- Usé ENUM en lugar de CHECK
     is_guest BOOLEAN DEFAULT FALSE
 );
 
--- 3. Tabla de Métodos de Pago
-CREATE TABLE payment_methods (
-    id_payment SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
-    card_number VARCHAR(16) NOT NULL,
-    card_holder VARCHAR(255) NOT NULL,
-    expiration_date DATE NOT NULL,
-    cvv VARCHAR(4) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
+-- 4. Tabla de Métodos de Pago
+CREATE TABLE IF NOT EXISTS payment_methods (
+    id_payment INT AUTO_INCREMENT PRIMARY KEY, -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_user INT NOT NULL,                      -- ID del usuario (referencia a la tabla 'users')
+    card_number VARCHAR(16) NOT NULL,          -- Número de la tarjeta de crédito
+    card_holder VARCHAR(255) NOT NULL,         -- Nombre del titular de la tarjeta
+    expiration_date DATE NOT NULL,             -- Fecha de expiración de la tarjeta
+    cvv VARCHAR(4) NOT NULL,                   -- Código CVV de la tarjeta
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE  -- Relación con la tabla 'users'
 );
 
--- 4. Tabla de Productos
-CREATE TABLE products (
-    id_product SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+-- 5. Tabla de Productos
+CREATE TABLE IF NOT EXISTS products (
+    id_product INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10,2) NOT NULL,
-    stock INT NOT NULL CHECK (stock >= 0),
-    created_at TIMESTAMP DEFAULT NOW()
+    stock INT NOT NULL CHECK (stock >= 0),  -- Nota: Si tu versión de MySQL no soporta CHECK, quítalo
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. Tabla de Pedidos (Ordenes de Compra)
-CREATE TABLE orders (
-    id_order SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
-    id_payment INT REFERENCES payment_methods(id_payment),  -- Referencia a 'id_payment' de tipo INT
+-- 6. Tabla de Pedidos (Ordenes de Compra)
+CREATE TABLE IF NOT EXISTS orders (
+    id_order INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_user INT NOT NULL,
+    id_payment INT NOT NULL,
     total DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    status VARCHAR(50) CHECK (status IN ('pending', 'completed', 'cancelled')) DEFAULT 'pending'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',  -- Usé ENUM en lugar de CHECK
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_payment) REFERENCES payment_methods(id_payment) ON DELETE CASCADE
 );
 
--- 6. Tabla de Detalles de Pedido (Productos comprados en cada orden)
-CREATE TABLE order_items (
-    id_order_item SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
-    id_order INT REFERENCES orders(id_order) ON DELETE CASCADE,  -- Referencia a 'id_order' de tipo INT
-    id_product INT REFERENCES products(id_product),  -- Referencia a 'id_product' de tipo INT
-    quantity INT NOT NULL CHECK (quantity > 0),
-    price DECIMAL(10,2) NOT NULL
+-- 7. Tabla de Detalles de Pedido (Productos comprados en cada orden)
+CREATE TABLE IF NOT EXISTS order_items (
+    id_order_item INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_order INT NOT NULL,
+    id_product INT NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),  -- Nota: Si tu versión de MySQL no soporta CHECK, quítalo
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_order) REFERENCES orders(id_order) ON DELETE CASCADE,
+    FOREIGN KEY (id_product) REFERENCES products(id_product) ON DELETE CASCADE
 );
 
--- 7. Tabla de Wallet (Ahorros del usuario)
-CREATE TABLE wallet (
-    id_wallet SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
+-- 8. Tabla de Wallet (Ahorros del usuario)
+CREATE TABLE IF NOT EXISTS wallet (
+    id_wallet INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_user INT NOT NULL,
     balance DECIMAL(10,2) DEFAULT 0.00,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
 );
 
--- 8. Tabla de Ahorros por cada compra
-CREATE TABLE savings (
-    id_saving SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
-    id_order INT REFERENCES orders(id_order) ON DELETE CASCADE,  -- Referencia a 'id_order' de tipo INT
+-- 9. Tabla de Ahorros por cada compra
+CREATE TABLE IF NOT EXISTS savings (
+    id_saving INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_user INT NOT NULL,
+    id_order INT NOT NULL,
     amount_saved DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_order) REFERENCES orders(id_order) ON DELETE CASCADE
 );
 
--- 9. Tabla de Planes de Ahorro
-CREATE TABLE saving_plans (
-    id_plan SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+-- 10. Tabla de Planes de Ahorro
+CREATE TABLE IF NOT EXISTS saving_plans (
+    id_plan INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
     name VARCHAR(100) NOT NULL,
     min_amount DECIMAL(10,2) NOT NULL,
     min_transactions INT NOT NULL,
     annual_interest DECIMAL(5,2) NOT NULL
 );
 
--- 10. Tabla de Historial de Intereses
-CREATE TABLE interest_history (
-    id_interest SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
-    id_wallet INT REFERENCES wallet(id_wallet) ON DELETE CASCADE,  -- Referencia a 'id_wallet' de tipo INT
+-- 11. Tabla de Historial de Intereses
+CREATE TABLE IF NOT EXISTS interest_history (
+    id_interest INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_user INT NOT NULL,
+    id_wallet INT NOT NULL,
     interest_amount DECIMAL(10,2) NOT NULL,
-    calculated_at TIMESTAMP DEFAULT NOW()
+    calculated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_wallet) REFERENCES wallet(id_wallet) ON DELETE CASCADE
 );
 
--- 11. Tabla de Relación entre Usuarios y Planes de Ahorro
-CREATE TABLE user_saving_plans (
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
-    id_plan INT REFERENCES saving_plans(id_plan) ON DELETE CASCADE,  -- Referencia a 'id_plan' de tipo INT
-    start_date TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (id_user, id_plan)
+-- 12. Tabla de Relación entre Usuarios y Planes de Ahorro
+CREATE TABLE IF NOT EXISTS user_saving_plans (
+    id_user INT NOT NULL,
+    id_plan INT NOT NULL,
+    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_user, id_plan),
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_plan) REFERENCES saving_plans(id_plan) ON DELETE CASCADE
 );
--- 12. Tabla del Carrito de Compras
-CREATE TABLE shopping_cart (
-    id_cart SERIAL PRIMARY KEY,  -- Identificador único del carrito, autoincremental
-    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia al usuario dueño del carrito
-    products JSON NOT NULL,  -- Productos en formato JSONB (clave: producto_id, valor: cantidad)
-    created_at TIMESTAMP DEFAULT NOW(),  -- Fecha de creación del carrito
-    updated_at TIMESTAMP DEFAULT NOW()  -- Fecha de última actualización del carrito
+
+-- 13. Tabla del Carrito de Compras
+CREATE TABLE IF NOT EXISTS shopping_cart (
+    id_cart INT AUTO_INCREMENT PRIMARY KEY,  -- Cambiado de SERIAL a INT AUTO_INCREMENT
+    id_user INT NOT NULL,
+    products JSON NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
 );
