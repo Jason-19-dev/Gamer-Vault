@@ -9,11 +9,11 @@ Este proyecto es utilizado para demostración y para fines de desarrollo, aprend
 ```bash
 npm install 
 ```
-3. Instalar Ionic Framework.
+4. Instalar Ionic Framework.
 ```bash
 npm install -g @ionic/cli
 ```
-4. Levantar el proyecto.
+5. Levantar el proyecto.
 ```bash
 ionic serve
 ```
