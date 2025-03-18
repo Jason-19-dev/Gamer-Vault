@@ -102,7 +102,7 @@ CREATE TABLE user_saving_plans (
 CREATE TABLE shopping_cart (
     id_cart SERIAL PRIMARY KEY,  -- Identificador único del carrito, autoincremental
     id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia al usuario dueño del carrito
-    products JSONB NOT NULL,  -- Productos en formato JSONB (clave: producto_id, valor: cantidad)
+    products JSON NOT NULL,  -- Productos en formato JSONB (clave: producto_id, valor: cantidad)
     created_at TIMESTAMP DEFAULT NOW(),  -- Fecha de creación del carrito
     updated_at TIMESTAMP DEFAULT NOW()  -- Fecha de última actualización del carrito
 );
