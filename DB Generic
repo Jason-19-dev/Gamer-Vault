@@ -1,0 +1,98 @@
+-- 1. Crear la base de datos (ejecutar solo si no la creaste en AWS RDS)
+CREATE DATABASE marketplace;
+\c marketplace;  -- Conectarse a la base de datos (en PostgreSQL)
+
+-- 2. Crear la tabla de Usuarios
+CREATE TABLE users (
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT NOW(),
+    auth_provider VARCHAR(50) CHECK (auth_provider IN ('email', 'google', 'facebook')),
+    is_guest BOOLEAN DEFAULT FALSE
+);
+
+-- 3. Tabla de Métodos de Pago
+CREATE TABLE payment_methods (
+    payment_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    card_number VARCHAR(16) NOT NULL,
+    card_holder VARCHAR(255) NOT NULL,
+    expiration_date DATE NOT NULL,
+    cvv VARCHAR(4) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 4. Tabla de Productos
+CREATE TABLE products (
+    product_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL CHECK (stock >= 0),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 5. Tabla de Pedidos (Ordenes de Compra)
+CREATE TABLE orders (
+    order_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    payment_id UUID REFERENCES payment_methods(payment_id),
+    total DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    status VARCHAR(50) CHECK (status IN ('pending', 'completed', 'cancelled')) DEFAULT 'pending'
+);
+
+-- 6. Tabla de Detalles de Pedido (Productos comprados en cada orden)
+CREATE TABLE order_items (
+    order_item_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    order_id UUID REFERENCES orders(order_id) ON DELETE CASCADE,
+    product_id UUID REFERENCES products(product_id),
+    quantity INT NOT NULL CHECK (quantity > 0),
+    price DECIMAL(10,2) NOT NULL
+);
+
+-- 7. Tabla de Wallet (Ahorros del usuario)
+CREATE TABLE wallet (
+    wallet_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    balance DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 8. Tabla de Ahorros por cada compra
+CREATE TABLE savings (
+    saving_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    order_id UUID REFERENCES orders(order_id) ON DELETE CASCADE,
+    amount_saved DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 9. Tabla de Planes de Ahorro
+CREATE TABLE saving_plans (
+    plan_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    min_amount DECIMAL(10,2) NOT NULL,
+    min_transactions INT NOT NULL,
+    annual_interest DECIMAL(5,2) NOT NULL
+);
+
+-- 10. Tabla de Historial de Intereses
+CREATE TABLE interest_history (
+    interest_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    wallet_id UUID REFERENCES wallet(wallet_id) ON DELETE CASCADE,
+    interest_amount DECIMAL(10,2) NOT NULL,
+    calculated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 11. Tabla de Relación entre Usuarios y Planes de Ahorro
+CREATE TABLE user_saving_plans (
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    plan_id UUID REFERENCES saving_plans(plan_id) ON DELETE CASCADE,
+    start_date TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, plan_id)
+);
