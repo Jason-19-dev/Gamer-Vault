@@ -4,10 +4,10 @@ CREATE DATABASE marketplace;
 
 -- 2. Crear la tabla de Usuarios
 CREATE TABLE users (
-    id_user UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id_user SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
     first_name VARCHAR(255),
     last_name VARCHAR(255),
-    username VARCHAT(255) UNIQUE NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     phone VARCHAR(20),
@@ -18,8 +18,8 @@ CREATE TABLE users (
 
 -- 3. Tabla de Métodos de Pago
 CREATE TABLE payment_methods (
-    id_payment UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    id_user UUID REFERENCES users(id_user) ON DELETE CASCADE,
+    id_payment SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
     card_number VARCHAR(16) NOT NULL,
     card_holder VARCHAR(255) NOT NULL,
     expiration_date DATE NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE payment_methods (
 
 -- 4. Tabla de Productos
 CREATE TABLE products (
-    id_product UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id_product SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10,2) NOT NULL,
@@ -39,9 +39,9 @@ CREATE TABLE products (
 
 -- 5. Tabla de Pedidos (Ordenes de Compra)
 CREATE TABLE orders (
-    id_order UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    id_user UUID REFERENCES users(id_user) ON DELETE CASCADE,
-    id_payment UUID REFERENCES payment_methods(id_payment),
+    id_order SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
+    id_payment INT REFERENCES payment_methods(id_payment),  -- Referencia a 'id_payment' de tipo INT
     total DECIMAL(10,2) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     status VARCHAR(50) CHECK (status IN ('pending', 'completed', 'cancelled')) DEFAULT 'pending'
@@ -49,33 +49,33 @@ CREATE TABLE orders (
 
 -- 6. Tabla de Detalles de Pedido (Productos comprados en cada orden)
 CREATE TABLE order_items (
-    id_order_item UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    id_order UUID REFERENCES orders(id_order) ON DELETE CASCADE,
-    id_product UUID REFERENCES products(id_product),
+    id_order_item SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+    id_order INT REFERENCES orders(id_order) ON DELETE CASCADE,  -- Referencia a 'id_order' de tipo INT
+    id_product INT REFERENCES products(id_product),  -- Referencia a 'id_product' de tipo INT
     quantity INT NOT NULL CHECK (quantity > 0),
     price DECIMAL(10,2) NOT NULL
 );
 
 -- 7. Tabla de Wallet (Ahorros del usuario)
 CREATE TABLE wallet (
-    id_wallet UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    id_user UUID REFERENCES users(id_user) ON DELETE CASCADE,
+    id_wallet SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
     balance DECIMAL(10,2) DEFAULT 0.00,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
 -- 8. Tabla de Ahorros por cada compra
 CREATE TABLE savings (
-    id_saving UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    id_user UUID REFERENCES users(id_user) ON DELETE CASCADE,
-    id_order UUID REFERENCES orders(id_order) ON DELETE CASCADE,
+    id_saving SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
+    id_order INT REFERENCES orders(id_order) ON DELETE CASCADE,  -- Referencia a 'id_order' de tipo INT
     amount_saved DECIMAL(10,2) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
 -- 9. Tabla de Planes de Ahorro
 CREATE TABLE saving_plans (
-    id_plan UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id_plan SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
     name VARCHAR(100) NOT NULL,
     min_amount DECIMAL(10,2) NOT NULL,
     min_transactions INT NOT NULL,
@@ -84,17 +84,25 @@ CREATE TABLE saving_plans (
 
 -- 10. Tabla de Historial de Intereses
 CREATE TABLE interest_history (
-    id_interest UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    id_user UUID REFERENCES users(id_user) ON DELETE CASCADE,
-    id_wallet UUID REFERENCES wallet(id_wallet) ON DELETE CASCADE,
+    id_interest SERIAL PRIMARY KEY,  -- Cambiar a SERIAL para autoincrementar
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
+    id_wallet INT REFERENCES wallet(id_wallet) ON DELETE CASCADE,  -- Referencia a 'id_wallet' de tipo INT
     interest_amount DECIMAL(10,2) NOT NULL,
     calculated_at TIMESTAMP DEFAULT NOW()
 );
 
 -- 11. Tabla de Relación entre Usuarios y Planes de Ahorro
 CREATE TABLE user_saving_plans (
-    id_user UUID REFERENCES users(id_user) ON DELETE CASCADE,
-    id_plan UUID REFERENCES saving_plans(id_plan) ON DELETE CASCADE,
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia a 'id_user' de tipo INT
+    id_plan INT REFERENCES saving_plans(id_plan) ON DELETE CASCADE,  -- Referencia a 'id_plan' de tipo INT
     start_date TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (id_user, id_plan)
+);
+-- 12. Tabla del Carrito de Compras
+CREATE TABLE shopping_cart (
+    id_cart SERIAL PRIMARY KEY,  -- Identificador único del carrito, autoincremental
+    id_user INT REFERENCES users(id_user) ON DELETE CASCADE,  -- Referencia al usuario dueño del carrito
+    products JSONB NOT NULL,  -- Productos en formato JSONB (clave: producto_id, valor: cantidad)
+    created_at TIMESTAMP DEFAULT NOW(),  -- Fecha de creación del carrito
+    updated_at TIMESTAMP DEFAULT NOW()  -- Fecha de última actualización del carrito
 );
