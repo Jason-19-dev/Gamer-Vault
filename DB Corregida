@@ -111,3 +111,15 @@ CREATE TABLE IF NOT EXISTS shopping_cart (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- 14. Tabla de Categorías
+CREATE TABLE IF NOT EXISTS categories (
+    id_category CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT
+);
+
+-- 15. Modificación de la tabla de Productos para incluir la relación con Categorías
+ALTER TABLE products
+ADD COLUMN id_category CHAR(36),
+ADD CONSTRAINT fk_category FOREIGN KEY (id_category) REFERENCES categories(id_category);
+
