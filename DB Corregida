@@ -1,0 +1,114 @@
+-- 1. Crear la base de datos (ejecutar solo si no la creaste en AWS RDS)
+CREATE DATABASE IF NOT EXISTS marketplace;
+
+-- 2. Seleccionar la base de datos para usarla
+USE marketplace;
+
+-- 3. Crear la tabla de Usuarios con el campo de fecha de nacimiento
+CREATE TABLE IF NOT EXISTS users (
+    id_user CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    username VARCHAR(255) UNIQUE,
+    email VARCHAR(255) UNIQUE,
+    password_hash VARCHAR(255),
+    phone VARCHAR(20),
+    birth_date DATE,  -- Aquí añadimos la fecha de nacimiento
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_guest BOOLEAN DEFAULT FALSE,
+    avatar VARCHAR(255)
+);
+
+
+-- 4. Tabla de Métodos de Pago
+CREATE TABLE IF NOT EXISTS payment_methods (
+    id_payment CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    card_number VARCHAR(16) NOT NULL,
+    card_holder VARCHAR(255) NOT NULL,
+    expiration_date DATE NOT NULL,
+    cvv VARCHAR(4) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. Tabla de Productos
+CREATE TABLE IF NOT EXISTS products (
+    id_product CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL CHECK (stock >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    image_url VARCHAR(255) -- Nuevo campo para la URL de la imagen
+);
+
+-- 6. Tabla de Pedidos (Ordenes de Compra)
+CREATE TABLE IF NOT EXISTS orders (
+    id_order CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    id_payment CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'payment_methods'
+    total DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending'
+);
+
+-- 7. Tabla de Detalles de Pedido (Productos comprados en cada orden)
+CREATE TABLE IF NOT EXISTS order_items (
+    id_order_item CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_order CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'orders'
+    id_product CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'products'
+    quantity INT NOT NULL CHECK (quantity > 0),
+    price DECIMAL(10,2) NOT NULL
+);
+
+-- 8. Tabla de Wallet (Ahorros del usuario)
+CREATE TABLE IF NOT EXISTS wallet (
+    id_wallet CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    balance DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 9. Tabla de Ahorros por cada compra
+CREATE TABLE IF NOT EXISTS savings (
+    id_saving CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    id_order CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'orders'
+    amount_saved DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 10. Tabla de Planes de Ahorro
+CREATE TABLE IF NOT EXISTS saving_plans (
+    id_plan CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(100) NOT NULL,
+    min_amount DECIMAL(10,2) NOT NULL,
+    min_transactions INT NOT NULL,
+    annual_interest DECIMAL(5,2) NOT NULL
+);
+
+-- 11. Tabla de Historial de Intereses
+CREATE TABLE IF NOT EXISTS interest_history (
+    id_interest CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    id_wallet CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'wallet'
+    interest_amount DECIMAL(10,2) NOT NULL,
+    calculated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 12. Tabla de Relación entre Usuarios y Planes de Ahorro
+CREATE TABLE IF NOT EXISTS user_saving_plans (
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    id_plan CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'saving_plans'
+    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_user, id_plan)
+);
+
+-- 13. Tabla del Carrito de Compras
+CREATE TABLE IF NOT EXISTS shopping_cart (
+    id_cart CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
+    products JSON NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
