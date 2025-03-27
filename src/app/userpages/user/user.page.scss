@@ -1,22 +1,135 @@
-ion-tab-bar {
-  display: flex;
-  justify-content: space-around;
-  background-color: #f4f4f4;
-}
-
-// ion-segment-view {
-//   height: 150px;
-// }
-
-ion-input {
-  font-size: 1rem;
-  margin-bottom: 20px;
-color: white;
-  
-}
-
 ion-content {
-  
   --background: transparent !important;
-  background: linear-gradient(to bottom, #141e30, #243b55) !important;
+  background: linear-gradient(to bottom, #0a1933, #1a3a6c) !important;
 }
+
+ion-header {
+  &.has-shadow {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+ion-header ion-toolbar {
+  --background: #0a1933;
+  --color: white;
+  --border-style: none;
+  --border-width: 0;
+}
+
+ion-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  font-weight: bold;
+}
+
+/* Logout Button Styling */
+.logout-button {
+  --color: white;
+  --background: rgba(255, 255, 255, 0.1);
+  --border-radius: 20px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: none;
+  margin-right: 8px;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  --background: rgba(255, 255, 255, 0.2);
+}
+
+.logout-button ion-icon {
+  margin-right: 4px;
+  font-size: 1.1rem;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+ion-avatar {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-container h2 {
+  color: white;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.name-container ion-icon {
+  color: white;
+  font-size: 1rem;
+}
+
+.menu-items {
+  margin-bottom: auto;
+}
+
+ion-item {
+  --background: rgba(255, 255, 255, 0.1);
+  --color: white;
+  --border-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+ion-item ion-icon {
+  font-size: 1.2rem;
+}
+
+.delete-account-container {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.delete-button {
+  --color: #ffc409;
+  font-weight: 500;
+  flex-direction: column;
+}
+
+.delete-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+  border: 1px solid #ffc409;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+/* Ajuste para la barra de estado en iOS */
+.ios ion-header {
+  padding-top: var(--ion-safe-area-top);
+}
+
+/* Ajuste para la barra de estado en Android */
+.md ion-header {
+  padding-top: var(--ion-safe-area-top);
+}
+

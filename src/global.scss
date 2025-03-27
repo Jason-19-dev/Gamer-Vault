@@ -50,3 +50,39 @@ ion-button{
     color: white;
     padding: 10px 30px 10px 30px;
 }
+html {
+    /* Asegurarse de que la aplicación respete las áreas seguras */
+    padding: var(--ion-safe-area-top) var(--ion-safe-area-right) var(--ion-safe-area-bottom) var(--ion-safe-area-left);
+  }
+  
+  /* Ajuste para la barra de estado en iOS */
+  .ios ion-header {
+    padding-top: var(--ion-safe-area-top);
+  }
+  
+  /* Ajuste para la barra de navegación en iOS */
+  .ios ion-footer {
+    padding-bottom: var(--ion-safe-area-bottom);
+  }
+  
+  /* Ajuste para la barra de estado en Android */
+  .md ion-header {
+    padding-top: var(--ion-safe-area-top);
+  }
+  
+  /* Ajuste para la barra de navegación en Android */
+  .md ion-footer {
+    padding-bottom: var(--ion-safe-area-bottom);
+  }
+  
+  /* Estilos para la sombra del header */
+  ion-header.has-shadow::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
+    z-index: 1;
+  }

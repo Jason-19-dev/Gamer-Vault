@@ -1,53 +1,77 @@
-<ion-header>
+<ion-header class="has-shadow">
   <ion-toolbar>
     <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
+<ion-content class="ion-padding">
+  <ion-searchbar placeholder="Search" [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
 
-  <div id="container">
-    <!-- wallet -->
-    <div style="margin-top: 10px;">
-      <div class="wallet">
-        <div class="content">
-          <p>Billetera </p>
-          <p>{{puntos}} Puntos</p>
-        </div>
-        <div>
-          <p>${{saldo}}</p>
-        </div>
-      </div>
+  <div class="banner">
+    <div class="banner-content">
+      <p class="banner-text"></p>
     </div>
-    <!--  -->
-    <!-- nav options -->
-    <div class="nav">
-      <div class="category scrollbar-hidden">
-        <a>Pagos</a>
-        <a>Transferir</a>
-        <a>Remesas</a>
-        <a>Kioscos</a>
-        <a>Verifica</a>
-        <a>Ejemplo</a>
-      </div>
-    </div>
-
-    <div class="cart">
-      <ion-item *ngFor="let product of results">
-        <div class="content shadow-lg">
-          <a>
-            <img class="imgp" src={{product.image_url}} alt={{product.name}}>
-            <h3 style="font-weight: bold;">{{product.name}}</h3>
-          </a>
-          <p>Precio:$ {{product.price}}</p>
-          <!-- <p style="color: black;">Disponible: {{product.available ? "✅":"❌"}}</p> -->
-        </div>
-      </ion-item>
-    </div>
-
-    <ion-note style="font-size: x-large;" color="danger" *ngIf="message">{{ message }}</ion-note>
-
   </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>In-Game Coins</h2>
+      <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+    </div>
+    
+    <div class="game-icons">
+      <div class="game-icon-item">
+        <div class="game-circle fortnite">
+          <span>F</span>
+        </div>
+        <p class="game-name">Fortnite</p>
+      </div>
+      
+      <div class="game-icon-item">
+        <div class="game-circle roblox">
+          <span>□</span>
+        </div>
+        <p class="game-name">Roblox</p>
+      </div>
+      
+      <div class="game-icon-item">
+        <div class="game-circle lol">
+          <span>L</span>
+        </div>
+        <p class="game-name">LoL</p>
+      </div>
+      
+      <div class="game-icon-item">
+        <div class="game-circle fifa">
+          <span>F</span>
+        </div>
+        <p class="game-name">FIFA</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Videogames</h2>
+      <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+    </div>
+    
+    <div class="game-cards">
+      <div class="game-card" *ngFor="let product of results">
+        <div class="game-image">
+          <img [src]="product.image_url" [alt]="product.name" class="product-image">
+        </div>
+        <div class="game-info">
+          <span class="game-brand">{{getBrandFromName(product.name)}}</span>
+          <span class="game-name">{{product.name}}</span>
+          <span class="game-price">${{product.price}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-note style="font-size: x-large;" color="danger" *ngIf="message">{{ message }}</ion-note>
 </ion-content>
+
 <app-tabs-pages></app-tabs-pages>
+

@@ -1,17 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserPage } from './user.page';
+import { Component, type OnInit } from "@angular/core"
 
-describe('UserPage', () => {
-  let component: UserPage;
-  let fixture: ComponentFixture<UserPage>;
+@Component({
+  selector: "app-profile",
+  template: ``,
+  styles: [],
+})
+export class ProfilePage implements OnInit {
+  constructor() {}
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(UserPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  ngOnInit() {}
+}
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});

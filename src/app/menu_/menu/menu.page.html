@@ -1,40 +1,44 @@
 <ion-header class="ion-safe-area" [translucent]="true">
   <ion-toolbar>
-    <ion-title>Catálogo</ion-title>
+    <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Search bar -->
+  <div class="search-container">
+    <ion-searchbar placeholder="Search" class="custom-searchbar"></ion-searchbar>
+  </div>
 
-  <!-- nav -->
-  <!-- <div class="nav">
-    <div class="category scrollbar-hidden">
-      <a>Example</a>
-      <a>Example</a>
-      <a>Example</a>
-    </div>
-  </div> -->
-
-  @if (products.length>0) {
-  <div id="container">
-    <!-- product -->
-    <div *ngFor="let product of products;">
-      <div class=" cart">
-        <div class="content shadow-lg">
-          <a>
-            <img class="imgp" src={{product.image_url}} alt={{product.name}}>
-            <h3 style="font-weight: bold;">{{product.description}}</h3>
-          </a>
-          <p>Precio:$ {{product.price}}</p>
-          <p>Disponible: {{product.available ? "✅":"❌"}}</p>  
-        </div>
-      </div>
+  <!-- Categories -->
+  <div class="categories-container">
+    <div class="categories scrollbar-hidden">
+      <ion-chip 
+        *ngFor="let category of categories" 
+        [class.selected]="selectedCategory === category"
+        (click)="selectCategory(category)">
+        <ion-label>{{ category }}</ion-label>
+      </ion-chip>
     </div>
   </div>
 
-  }@else {
-  <div class="message">No hay prooductos disponibles</div>
+  <!-- Products -->
+  @if (products.length > 0) {
+    <div class="products-container">
+      <div class="product-card" *ngFor="let product of products;">
+        <div class="product-image-container">
+          <img class="product-image" [src]="product.image_url" [alt]="product.name">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">{{ product.description }}</h3>
+          <p class="product-price">${{ product.price.toFixed(2) }}</p>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="message">No hay productos disponibles</div>
   }
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>
+

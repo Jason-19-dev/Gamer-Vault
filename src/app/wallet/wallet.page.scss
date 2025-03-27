@@ -1,33 +1,189 @@
-.wallet {
+ion-content {
+    --background: #0a1933;
+    --color: white;
+  }
+  
+  ion-header ion-toolbar {
+    --background: #0a1933;
+    --color: white;
+  }
+  
+  ion-title {
+
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+  
+  .vault-card {
+    background: linear-gradient(135deg, #1a3a6c, #0f2a50);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .vault-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  
+  .vault-title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .grid-icon {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .grid-square {
+    background-color: #ffc409;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .vault-balance {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .vault-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .challenge-text {
+    color: white;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+  
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .progress-bar {
+    flex: 1;
+    height: 12px;
+    background-color: #1a3a6c;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #ffc409;
+    width: 40%;
+  }
+  
+  .level-indicator {
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 1.5rem;
-    // background-color: rgb(56, 1, 70);
-    background: linear-gradient(rgb(0, 0, 0),rgb(0, 37, 92));
-    // width: auto;
-    height: 200px;
-    border-radius: 20px;
-    margin: 0px 50px 0 50px;
-}
-
-.wallet .content {
+    width: 24px;
+    height: 24px;
+    background-color: #ffc409;
+    color: #0a1933;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .learn-button {
+    --color: #fff;
+    --background: rgba(255, 255, 255, 0.1);
+    --border-radius: 8px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    font-size: 12px;
+    margin: 0;
+    text-transform: none;
+  }
+  
+  .section-title {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
+  
+  .savings-list {
     display: flex;
-    gap: 5px;
-}
-
-p {
-    font-size: 17px;
-    line-height: 22px;
-    // color: #7e7e7e;
-    color: #ffffff;
-    margin-top: 1.5rem;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.144);
-    border-radius: 25px;
-}
-ion-button{
-    --background: rgba(0, 0, 0, 0.267);
-    color: black;
-    padding: 10px;
-}
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .savings-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-end: 0;
+  }
+  
+  .game-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+  
+  .fortnite {
+    background-color: #1da1f2;
+  }
+  
+  .it-takes-two {
+    background-color: #ff4500;
+  }
+  
+  .elden-ring {
+    background-color: #000;
+  }
+  
+  .game-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .game-name {
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .game-description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+  }
+  
+  .game-amount {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  

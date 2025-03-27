@@ -1,52 +1,74 @@
 <ion-header>
-<ion-toolbar>
-  <ion-title>Carrito</ion-title>
-  <a (click)="clearCart()">Limpiar Todo</a>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Carrito</ion-title>
+    <ion-button fill="clear" slot="end" class="clear-button" (click)="clearCart()">
+      <ion-icon name="trash-outline" slot="start"></ion-icon>
+      Limpiar Todo
+    </ion-button>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of cartItems">
-      <ion-label>{{ item.name }}</ion-label>
-      <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src={{item.image_url}} />
-      </ion-thumbnail>
-      <ion-label>${{ item.price }} x {{ item.quantity }}</ion-label>
-      <ion-button (click)="removeFromCart(item)" color="danger">X</ion-button>
-    </ion-item>
-  </ion-list>
+<ion-content class="ion-padding">
+  <div class="cart-container">
+    <div class="cart-items">
+      <ion-list lines="none">
+        <ion-item *ngFor="let item of cartItems" class="cart-item">
+          <ion-thumbnail slot="start" class="item-thumbnail">
+            <img alt="Product image" [src]="item.image_url || '/placeholder.svg'" />
+          </ion-thumbnail>
+          <div class="item-details">
+            <h3 class="item-name">{{ item.name }}</h3>
+            <div class="item-price-quantity">
+              <span class="item-price">${{ item.price }}</span>
+              <span class="item-quantity">x {{ item.quantity }}</span>
+            </div>
+          </div>
+          <ion-button fill="clear" class="remove-button" (click)="removeFromCart(item)">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      
+      <div class="empty-cart-message" *ngIf="cartItems.length === 0">
+        <ion-icon name="cart-outline" class="empty-cart-icon"></ion-icon>
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
 
-  <ion-grid style="margin-top: 80px;">
-    <ion-row>
-      <ion-col>Productos</ion-col>
-      <ion-col>{{cartItems.length}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>Cantidad</ion-col>
-      <ion-col>${{total}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>Descuento</ion-col>
-      <ion-col>-${{25}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>ITBMS 7%</ion-col>
-      <ion-col>${{total*0.07}}</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Total</ion-col>
-      <ion-col>$ {{((total*0.07)+total)}}</ion-col>
-    </ion-row>
-  </ion-grid>
-
-
-  <ion-button expand="full" color="danger">
-    Pagar
-    <ion-icon name="cart-outline"></ion-icon>
-
-  </ion-button>
+    <div class="cart-summary" *ngIf="cartItems.length > 0">
+      <h2 class="summary-title">Resumen de compra</h2>
+      
+      <div class="summary-row">
+        <span class="summary-label">Productos</span>
+        <span class="summary-value">{{cartItems.length}}</span>
+      </div>
+      
+      <div class="summary-row">
+        <span class="summary-label">Subtotal</span>
+        <span class="summary-value">${{total.toFixed(2)}}</span>
+      </div>
+      
+      <div class="summary-row">
+        <span class="summary-label">Descuento</span>
+        <span class="summary-value discount">-$25.00</span>
+      </div>
+      
+      <div class="summary-row">
+        <span class="summary-label">ITBMS 7%</span>
+        <span class="summary-value">${{(total*0.07).toFixed(2)}}</span>
+      </div>
+      
+      <div class="summary-row total">
+        <span class="summary-label">Total</span>
+        <span class="summary-value">${{((total*0.07)+total).toFixed(2)}}</span>
+      </div>
+      
+      <ion-button expand="block" class="pay-button">
+        Pagar
+        <ion-icon name="cart-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>

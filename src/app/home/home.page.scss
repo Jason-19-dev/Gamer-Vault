@@ -1,128 +1,205 @@
-.wallet {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 1.5rem;
-    // background-color: rgb(56, 1, 70);
-    background: url('/assets/gamer.jpg') no-repeat center center/cover;
-    // width: auto;
-    height: 130px;
-    border-radius: 20px;
-    margin: 0px 50px 0 50px;
+ion-content {
+  --background: #0a1933;
+  --color: white;
 }
 
+ion-header {
+  &.has-shadow {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+}
 
-.wallet .content {
-    display: flex;
-    gap: 5px;
+ion-header ion-toolbar {
+  --background: #0a1933;
+  --color: white;
+  --border-style: none;
+  --border-width: 0;
+}
+
+ion-title {
+  font-family: monospace;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+ion-searchbar {
+  --background: #ffffff;
+  --color: #000000;
+  --border-radius: 8px;
+  --box-shadow: none;
+  margin-bottom: 16px;
+}
+
+.banner {
+  background: linear-gradient(135deg, #0066cc, #003366);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="10" height="10" fill="rgba(255,255,255,0.1)"/></svg>');
+  background-size: 20px 20px;
+  border-radius: 12px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.7), rgba(0, 51, 102, 0.7));
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.banner-text {
+  color: white;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-header h2 {
+  color: white;
+  font-size: 16px;
+  margin: 0;
+}
+
+.section-header ion-icon {
+  color: white;
+  font-size: 20px;
+}
+
+.game-icons {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.game-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+}
+
+.fortnite {
+  background-color: #1da1f2;
+}
+
+.roblox {
+  background-color: #000000;
+}
+
+.lol {
+  background-color: #1e3f20;
+  border: 2px solid #c89b3c;
+}
+
+.fifa {
+  background-color: #e90052;
+}
+
+.game-name {
+  color: white;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.game-card {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #0d2144;
+}
+
+.game-image {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-info {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.game-brand {
+  color: #8a8a8a;
+  font-size: 10px;
+}
+
+.game-price {
+  color: white;
+  font-size: 12px;
 }
 
 p {
-    font-size: 17px;
-    line-height: 22px;
-    // color: #7e7e7e;
-    color: #ffffff;
-    margin-top: 1.5rem;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.144);
-    border-radius: 25px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
 }
 
-
-.link a {
-    color: white;
-    background-color: red;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    padding: 1rem;
+.wallet {
+  display: none;
 }
 
-.link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 1.5rem; // 
-    margin-top: 2.5rem;
-    margin-bottom: 1.25rem;
-    
-}
-
-
-// nav
 .nav {
-    padding: 1rem;
+  display: none;
 }
 
-.category a {
-    color: black;
-    padding: 0.5rem;
+.cart {
+  display: none;
 }
 
-.nav .category {
-    display: flex;
-    gap: 5px;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow: hidden;
-    overflow-x: auto;
-    text-transform: uppercase;
-}
-
-// scroll bar  nav category
-.scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-}
-
-.scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.category a:hover {
-    background-color: black;
-    color: white;
-    border-radius: 10px 0 10px 0;
-}
-
-
-// seach bar 
-ion-searchbar{
-    // --background: transparent !important;
-    // border-radius: 5px;
-    --box-shadow: none; 
-}
-
-ion-content {
-    // --background: transparent !important;
-    
-}
-
-// cart products 
-.cart{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap:0;
-}
-.cart .content{
-    color: black;
-    // margin: 1rem;
-    border-radius: 0.75rem;
-    padding: 1.3rem;
-}
-.cart p{
-    color: black;
-}
-.content h3{
-    color: black;
-}
-.shadow-lg {
-    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.imgp{
-    border-radius: 0.5rem;
-    width: auto;
-    object-fit: contain; 
-}
