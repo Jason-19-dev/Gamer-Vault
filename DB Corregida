@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS marketplace;
 -- 2. Seleccionar la base de datos para usarla
 USE marketplace;
 
--- 3. Crear la tabla de Usuarios con el campo de fecha de nacimiento
+-- 3. Crear la tabla de Usuarios con el campo de número de celular y fecha de nacimiento
 CREATE TABLE IF NOT EXISTS users (
     id_user CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     first_name VARCHAR(255),
@@ -12,13 +12,12 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(255) UNIQUE,
     email VARCHAR(255) UNIQUE,
     password_hash VARCHAR(255),
-    phone VARCHAR(20),
-    birth_date DATE,  -- Aquí añadimos la fecha de nacimiento
+    phone VARCHAR(20),  -- Número de celular (se asume que este campo es para celular)
+    birth_date DATE,  -- Fecha de nacimiento
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_guest BOOLEAN DEFAULT FALSE,
     avatar VARCHAR(255)
 );
-
 
 -- 4. Tabla de Métodos de Pago
 CREATE TABLE IF NOT EXISTS payment_methods (
@@ -29,6 +28,13 @@ CREATE TABLE IF NOT EXISTS payment_methods (
     expiration_date DATE NOT NULL,
     cvv VARCHAR(4) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 14. Tabla de Categorías
+CREATE TABLE IF NOT EXISTS categories (
+    id_category CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description JSON
 );
 
 -- 5. Tabla de Productos con la descripción como JSON
@@ -43,24 +49,20 @@ CREATE TABLE IF NOT EXISTS products (
     CONSTRAINT fk_category FOREIGN KEY (id_category) REFERENCES categories(id_category)
 );
 
--- 6. Tabla de Pedidos (Ordenes de Compra)
+-- 6. Tabla de Pedidos (Ordenes de Compra) con campos de descripción, total y ahorro
 CREATE TABLE IF NOT EXISTS orders (
     id_order CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
     id_payment CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'payment_methods'
-    total DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,  -- Total de la orden
+    savings DECIMAL(10,2) NOT NULL,  -- Ahorro generado en la orden
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending'
+    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+    description JSON  -- Descripción de la orden como JSON
 );
 
--- 7. Tabla de Detalles de Pedido (Productos comprados en cada orden)
-CREATE TABLE IF NOT EXISTS order_items (
-    id_order_item CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    id_order CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'orders'
-    id_product CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'products'
-    quantity INT NOT NULL CHECK (quantity > 0),
-    price DECIMAL(10,2) NOT NULL
-);
+-- 7. Eliminar la tabla de Detalles de Pedido (order_items)
+DROP TABLE IF EXISTS order_items;
 
 -- 8. Tabla de Wallet (Ahorros del usuario)
 CREATE TABLE IF NOT EXISTS wallet (
@@ -70,14 +72,8 @@ CREATE TABLE IF NOT EXISTS wallet (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 9. Tabla de Ahorros por cada compra
-CREATE TABLE IF NOT EXISTS savings (
-    id_saving CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    id_user CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'users'
-    id_order CHAR(36) NOT NULL,  -- Cambié a CHAR(36) para coincidir con el UUID de 'orders'
-    amount_saved DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- 9. Eliminar la tabla de Ahorros por cada compra (ya no es necesaria)
+DROP TABLE IF EXISTS savings;
 
 -- 10. Tabla de Planes de Ahorro
 CREATE TABLE IF NOT EXISTS saving_plans (
@@ -112,10 +108,4 @@ CREATE TABLE IF NOT EXISTS shopping_cart (
     products JSON NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
--- 14. Tabla de Categorías
-CREATE TABLE IF NOT EXISTS categories (
-    id_category CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    name VARCHAR(255) NOT NULL UNIQUE,
-    description TEXT
 );
