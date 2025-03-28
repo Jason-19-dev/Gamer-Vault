@@ -18,10 +18,6 @@ import * as icons from 'ionicons/icons';
     FormsModule,
     IonCard,
     IonButton,
-    IonRow,
-    IonCol,
-    IonInput,
-    IonInputPasswordToggle,
     IonIcon,
     ReactiveFormsModule
 

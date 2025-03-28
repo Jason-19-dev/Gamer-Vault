@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
+import { Router } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -10,6 +11,7 @@ import {
   IonItem,
   IonNote,
   IonIcon,
+  IonButton, // Agregado aquí
   AlertController,
   Platform,
 } from "@ionic/angular/standalone"
@@ -35,6 +37,7 @@ import { chevronForwardCircleOutline } from "ionicons/icons"
     IonHeader,
     TabsPagesPage,
     IonIcon,
+    IonButton, // Agregado aquí
   ],
 })
 export class HomePage implements OnInit {
@@ -43,17 +46,17 @@ export class HomePage implements OnInit {
   message = ""
   isAndroid = false
 
+  
   constructor(
     private alertController: AlertController,
     private platform: Platform,
+    private router: Router // Inyecta el Router
   ) {
-    addIcons({
-      "chevron-forward-circle-outline": chevronForwardCircleOutline,
-    })
-
-    this.isAndroid = this.platform.is("android")
+    addIcons({ chevronForwardCircleOutline });
   }
-
+  navigateToMenu() {
+    this.router.navigate(['/menu']);
+  }
   ngOnInit() {}
 
   products: Product[] = [

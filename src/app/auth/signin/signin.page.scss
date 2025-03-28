@@ -7,7 +7,7 @@
     overflow: hidden;
   }
   
-  .signin-container {
+  .login-container {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
@@ -18,9 +18,9 @@
     height: 100%;
   }
   
-  .signin-logo {
+  .login-logo {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 40px;
     
     img {
       max-width: 100px;
@@ -30,7 +30,7 @@
     h1 {
       color: white;
       font-family: monospace;
-      font-size: 24px;
+      font-size: 28px;
       margin: 0;
       letter-spacing: 1px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
