@@ -34,7 +34,7 @@
 
 .page-background {
   --background: transparent !important;
-  background: linear-gradient(135deg, #0a1933, #1a3a6c) !important;
+  background: linear-gradient(0deg, #1a3a6c, #0a1933) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +42,7 @@
 }
 
 .app-card {
-  --background: rgba(41, 82, 128, 0.42) !important;
+  --background: rgba(41, 82, 128, 0.45) !important;
   --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
   border-radius: 8px !important;
 }
