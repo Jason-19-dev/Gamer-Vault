@@ -32,20 +32,28 @@
   font-style: normal;
 }
 
-ion-button{
-    
-    --background: #DEAD1C !important;
-    --color: white !important;
-    --box-shadow: none !important;
-    // --color:white;
+.page-background {
+  --background: transparent !important;
+  background: linear-gradient(135deg, #0a1933, #1a3a6c) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .app-card {
   --background: rgba(41, 82, 128, 0.42) !important;
   --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
   border-radius: 8px !important;
-  backdrop-filter: blur(10px);
-  margin: 20px 0;
+}
+
+
+ion-button{
+    
+    --background: #DEAD1C !important;
+    --color: white !important;
+    --box-shadow: none !important;
+    // --color:white;
 }
 
 
