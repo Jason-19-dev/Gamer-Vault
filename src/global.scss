@@ -25,6 +25,13 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import '@ionic/angular/css/palettes/dark.system.css';
 
+@font-face {
+  font-family: 'PressStart2P';
+  src: url("assets/fonts/PressStart2P.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 ion-button{
     
     --background: #DEAD1C !important;
@@ -32,6 +39,15 @@ ion-button{
     --box-shadow: none !important;
     // --color:white;
 }
+
+.app-card {
+  --background: rgba(41, 82, 128, 0.42) !important;
+  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(10px);
+  margin: 20px 0;
+}
+
 
 .btnGoogle {
     --background: transparent !important;
@@ -86,3 +102,4 @@ html {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
     z-index: 1;
   }
+
