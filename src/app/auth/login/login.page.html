@@ -20,7 +20,7 @@
                 <input class="custom-input" placeholder="Username" formControlName="userName" type="text" required>
               </div>
               <ion-text class="error-message" color="danger" *ngIf="loginForm.get('userName')?.hasError('required') && loginForm.get('userName')?.touched">
-                Required user
+                The username is required.
               </ion-text>
               <ion-text class="error-message" color="danger" *ngIf="loginForm.get('userName')?.hasError('maxlength') && loginForm.get('userName')?.touched">
                 Must be no more than 8 characters.
@@ -39,7 +39,7 @@
               <input class="custom-input" placeholder="Password" formControlName="password" type="text" required>
             </div>
             <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
-              Required password
+              The password is required.
             </ion-text>
             <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
               Must be no more than 8 characters.

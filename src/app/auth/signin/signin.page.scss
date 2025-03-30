@@ -1,20 +1,40 @@
-.page-background {
-    --background: transparent !important;
-    background: linear-gradient(135deg, #0a1933, #1a3a6c) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  .login-container {
+
+  /*.login-container {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding:  20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    height: 100%;
+  }*/
+
+  ion-datetime {
+    --background: rgb(245, 235, 247);
+    --background-rgb: 245, 235, 247;
+    --wheel-highlight-background: rgb(218, 216, 255);
+    --wheel-highlight-border-radius: 48px;
+    --wheel-fade-background-rgb: 245, 235, 247;
+  }
+  
+  ion-datetime::part(wheel-item) {
+    color: rgb(255, 66, 97);
+  }
+  
+  ion-datetime::part(wheel-item active) {
+    color: rgb(128, 30, 171);
+  }
+
+  .signin-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    //align-items: center;
     height: 100%;
   }
   
@@ -29,22 +49,14 @@
     
     h1 {
       color: white;
-      font-family: monospace;
-      font-size: 28px;
+      font-family: PressStart2P;
+      font-size: 20px;
       margin: 0;
       letter-spacing: 1px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
   }
-  
-  .signin-card {
-    --background: rgba(255, 255, 255, 0.1) !important;
-    --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
-    border-radius: 16px !important;
-    backdrop-filter: blur(10px);
-    margin: 10px 0 20px;
-    padding: 0;
-  }
+
   
   .card-header {
     padding: 16px 20px 0;
@@ -100,16 +112,22 @@
     &::placeholder {
       color: #999;
     }
+
+    /*&.error-placeholder::placeholder {
+        color: red;
+      }*/
   }
   
   .error-message {
-    font-size: 12px;
+    font-size: 16px;
+    //font-weight: bold;
+    color: #DEAD1C;
     margin-top: 4px;
     margin-left: 8px;
   }
   
-  .terms-container {
-    margin: 16px 0;
+  /*.terms-container {
+    margin-left: 20px;
     
     ion-checkbox {
       --background: rgba(255, 255, 255, 0.1);
@@ -125,7 +143,36 @@
         margin-left: 8px;
       }
     }
+  }*/
+
+  .terms-container {
+    margin-left: 20px;
+    
+    ion-checkbox {
+      --background: transparent; 
+      --background-checked: transparent;
+      --border-color: #DEAD1C; 
+      --border-color-checked: #DEAD1C; 
+      --checkmark-color: #DEAD1C;
+      --size: 18px;
+  
+      &::part(container) {
+        background: transparent !important;
+        border: 2px solid #DEAD1C !important;
+      }
+  
+      &::part(mark) {
+        background: transparent !important;
+      }
+  
+      &::part(label) {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        margin-left: 8px;
+      }
+    }
   }
+  
   
   .register-button {
     --background: #DEAD1C !important;
@@ -133,8 +180,9 @@
     --border-radius: 12px;
     --box-shadow: 0 4px 8px rgba(222, 173, 28, 0.3);
     font-weight: bold;
-    margin: 0;
+    margin: 0 auto;
     height: 48px;
+    width: 200px;
     font-size: 16px;
     text-transform: none;
   }
