@@ -5,40 +5,42 @@
       <h1>Gamer Vault</h1>
     </div>
     
-    <ion-card class="login-card">
+    <ion-card class="app-card">
       <div class="login-form">
         <form [formGroup]="loginForm" novalidate>
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/User.png" alt="" class="input-icon">
-              <input class="custom-input" placeholder="Username" formControlName="userName" type="text" required>
+              <input class="custom-input" 
+                [ngClass]="{'error-placeholder': loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched}" 
+                [attr.placeholder]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched ? 'Username is required' : 'Username'"
+                formControlName="userName" 
+                type="text" 
+                required>
             </div>
-            <ion-text class="error-message" color="danger" *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
-              Usuario requerido
-            </ion-text>
           </div>
           
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/key.png" alt="" class="input-icon">
-              <input class="custom-input" placeholder="Password" formControlName="password" type="password" required>
+              <input class="custom-input" 
+              [ngClass]="{'error-placeholder': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}" 
+              [attr.placeholder]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'Password is required' : 'Password'"
+              formControlName="password" 
+              type="password" 
+              required>
             </div>
-            <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-              Contraseña requerida
-            </ion-text>
           </div>
 
-          <div class="forgot-password">
+          <!--<div class="forgot-password">
             <a href="signin">¿Olvidaste tu contraseña?</a>
-          </div>
+          </div>-->
           
-          <ion-button [disabled]="loginForm.invalid" (click)="onLogin()" type="submit" expand="block" class="login-button">
-            Iniciar sesión
-          </ion-button>
+          
         </form>
       </div>
       
-      <div class="social-login">
+      <!--<div class="social-login">
         <p>O inicia sesión con</p>
         <div class="social-buttons">
           <ion-button class="google-button">
@@ -50,12 +52,16 @@
             Facebook
           </ion-button>
         </div>
-      </div>
+      </div>-->
     </ion-card>
-    
+
+    <ion-button [disabled]="loginForm.invalid" (click)="onLogin()" type="submit" expand="block" class="login-button">
+            Login
+    </ion-button>
+
     <div class="bottom-links">
-      <p class="signup-link" (click)="onSignup()">¿No tienes una cuenta? <a>Regístrate</a></p>
-      <a href="home" class="guest-link">Entrar como invitado</a>
+      <p class="signup-link" (click)="onSignup()">Don't have an account yet? <a>Register</a></p>
+      <!--<a href="home" class="guest-link">Entrar como invitado</a>-->
     </div>
   </div>
 </ion-content>
