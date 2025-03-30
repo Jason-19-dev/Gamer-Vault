@@ -73,15 +73,10 @@
       color: #999;
     }
 
-    &.error-placeholder::placeholder {
+    /*&.error-placeholder::placeholder {
         color: red;
-      }
+      }*/
   }
-  
-  /*.custom-input.error-placeholder::placeholder {
-    color: red;
-  }*/
-  
   
   .error-message {
     font-size: 16px;
