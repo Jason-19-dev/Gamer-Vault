@@ -11,18 +11,12 @@
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/User.png" alt="" class="input-icon">
-              <!--<input class="custom-input" 
-                [ngClass]="{'error-placeholder': loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched}" 
-                [attr.placeholder]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched ? 'Username is required' : 'Username'"
-                formControlName="userName" 
-                type="text" 
-                required>-->
-                <input class="custom-input" placeholder="Username" formControlName="userName" type="text" required>
+                <ion-input class="custom-input" label="Username" labelPlacement="floating" placeholder="Enter your username" formControlName="userName" type="text" required></ion-input>
               </div>
               <ion-text class="error-message" color="danger" *ngIf="loginForm.get('userName')?.hasError('required') && loginForm.get('userName')?.touched">
                 The username is required.
               </ion-text>
-              <ion-text class="error-message" color="danger" *ngIf="loginForm.get('userName')?.hasError('maxlength') && loginForm.get('userName')?.touched">
+              <ion-text class="error-message" *ngIf="loginForm.get('userName')?.hasError('maxlength') && loginForm.get('userName')?.touched">
                 Must be no more than 8 characters.
               </ion-text>
           </div>
@@ -30,13 +24,7 @@
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/key.png" alt="" class="input-icon">
-              <!--<input class="custom-input" 
-              [ngClass]="{'error-placeholder': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}" 
-              [attr.placeholder]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'Password is required' : 'Password'"
-              formControlName="password" 
-              type="password" 
-              required>-->
-              <input class="custom-input" placeholder="Password" formControlName="password" type="text" required>
+              <ion-input class="custom-input" label="Password" labelPlacement="floating" placeholder="Enter your password" formControlName="password" type="password" required></ion-input>
             </div>
             <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
               The password is required.

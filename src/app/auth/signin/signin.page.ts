@@ -22,7 +22,8 @@ import { IonDatetime } from '@ionic/angular/standalone';
     IonCheckbox,
     IonText,
     ReactiveFormsModule,
-    IonDatetime
+    IonDatetime,
+    IonInput
 
   ]
 })
@@ -36,12 +37,14 @@ export class SigninPage implements OnInit {
         nameUser: ['', [Validators.required, Validators.maxLength(25)]],
         email: ['', [Validators.required, Validators.email]],
         phoneNumber: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
-        password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(8)]],
+        password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         password_confirm: ['', [Validators.required]],
+        dateOfBirth:[]
 
       }
     );
   }
+
   ngOnInit() {
     addIcons(icons)
 
@@ -58,8 +61,6 @@ export class SigninPage implements OnInit {
     this.router.navigateByUrl('home');
     console.table(this.form_signin.value)
   }
-
-
 
   // Message 
   async alert(header: string, subHeader: string, message: string) {

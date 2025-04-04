@@ -19,7 +19,8 @@ import * as icons from 'ionicons/icons';
     IonCard,
     IonButton,
     IonIcon,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonInput
 
 
   ]
@@ -98,8 +99,8 @@ export class LoginPage implements OnInit {
   constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder) {
     addIcons(icons)
     this.loginForm = this.fb.group({
-      userName: ["",[Validators.required,Validators.maxLength(8)]],
-      password: ["",[Validators.required,Validators.maxLength(8)]],
+      userName: ["",[Validators.required,Validators.maxLength(50)]],
+      password: ["",[Validators.required,Validators.maxLength(50)]],
     })
   }
 
