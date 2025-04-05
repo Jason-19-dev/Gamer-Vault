@@ -7,24 +7,23 @@
     margin: 0 auto;
     padding: 80px 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;*/
+    flex-direction: column;*/
+    justify-content: space-evenly;
 
     width: 100%;
     min-height: 100%;
     max-width: 400px;
     margin: 0 auto;
-    padding: 30px 20px; // deja padding inferior
+    padding: 30px 20px; 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
   }
   
   .login-logo {
     text-align: center;
     
     img {
-      max-width: 100px;
+      width: 100px;
       margin-bottom: 10px;
     }
     
@@ -201,12 +200,12 @@
   }
   
   // Responsive adjustments
-  @media (max-height: 600px) {
+  @media (max-height: auto) {
     .login-logo {
       padding-top: 20px;
       
       img {
-        max-width: 80px;
+        width: 100px;
       }
       
       h1 {
