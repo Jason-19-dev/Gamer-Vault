@@ -30,74 +30,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup
 
-  user: Customer[] = [
-    {
-      id: 1,
-      nameUser: 'jason',
-      email: 'jason@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 2,
-      nameUser: 'adriana',
-      email: 'adriana@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 3,
-      nameUser: 'jack',
-      email: 'jack@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 4,
-      nameUser: 'jeremy',
-      email: 'jeremy@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 5,
-      nameUser: 'carlos',
-      email: 'carlos@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    }
-  ]
-  constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder) {
+  constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder, private authService: AuthService) {
     addIcons(icons)
     this.loginForm = this.fb.group({
       userName: ["",[Validators.required,Validators.maxLength(50)]],
@@ -114,16 +47,21 @@ export class LoginPage implements OnInit {
 
     const { userName: name, password: pass } = this.loginForm.value
     
-    const user = this.user.find(user => user.nameUser === name && user.password === pass)
-    console.log(this.loginForm.value)
-
-    if (user) {
-      this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
-      this.router.navigateByUrl('home');
-    }
-    else {
-      this.alert('Usuario o contraseña incorrectos', "inténtalo de nuevo", '')
-    }
+    this.authService.login(name, pass).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.success) {
+          this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
+          this.router.navigateByUrl('home');
+        } else {
+          this.alert('Incorrect username or password', 'Try again', '');
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.alert('Server error', 'Please try again later', '');
+      }
+    });
   }
 
   onSignup() {
