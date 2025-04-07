@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveF
 import { IonButton, IonCard, IonCheckbox, IonContent, IonInput, IonInputPasswordToggle, IonText, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as icons from 'ionicons/icons';
+import { AuthService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
 
@@ -31,7 +32,7 @@ export class SigninPage implements OnInit {
 
   form_signin: FormGroup;;
 
-  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController) {
+  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private authService: AuthService) {
     this.form_signin = this.fb.group(
       {
         nameUser: ['', [Validators.required, Validators.maxLength(25)]],
@@ -52,17 +53,25 @@ export class SigninPage implements OnInit {
 
   signin() {
     if (this.form_signin.invalid) {
+      this.alert('Invalid information', '', 'Please check your information');
       return
     }
     // values form
-    const { nameUser: name, password: pass} = this.form_signin.value
+    const formData = this.form_signin.value;
 
-    this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
-    this.router.navigateByUrl('home');
-    console.table(this.form_signin.value)
+    this.authService.register(formData).subscribe({
+      next: (res) => {
+        this.alert('Successful registration', '', `Welcome ${formData.nameUser.toUpperCase()}!`);
+        this.router.navigateByUrl('home');
+      },
+      error: (err) => {
+        const msg = err?.error?.message || 'User could not be registered';
+        this.alert('Error in registration', '', msg);
+      }
+    });
+    
   }
 
-  // Message 
   async alert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
