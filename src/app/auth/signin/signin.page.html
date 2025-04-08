@@ -77,7 +77,7 @@
               <img src="assets/key.png" alt="" class="input-icon">
               <ion-input class="custom-input" label="Confirm password" labelPlacement="floating" placeholder="e.g. mypassword123" formControlName="password_confirm" type="password" required minlength="8"></ion-input>
             </div>
-            <ion-text class="error-message" color="danger" *ngIf="form_signin.get('password_confirm')?.value !== form_signin.get('password')?.value && form_signin.get('password_confirm')?.touched">
+            <ion-text class="error-message" color="danger" *ngIf="form_signin.get('password_confirm')?.value !== form_signin.get('password_hash')?.value && form_signin.get('password_confirm')?.touched">
               The password validation doesn't match
             </ion-text>
           </div>
