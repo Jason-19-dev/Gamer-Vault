@@ -52,7 +52,7 @@
   </div>
 
   <!-- Videogames Section -->
-  <div class="section" style="cursor: pointer;" (click)="navigateToMenu()">
+  <div class="section">
     <div class="section-header">
       <h2>Videogames</h2>
       <ion-icon name="chevron-forward-circle-outline"></ion-icon>
@@ -61,7 +61,11 @@
     <div class="game-cards">
       <div class="game-card" *ngFor="let product of results">
         <div class="game-image">
-          <img [src]="product.image_url" [alt]="product.name" class="product-image">
+          <!-- Usa una imagen predeterminada si la URL está vacía o no es válida -->
+          <img 
+            [src]="product.image_url || 'assets/images/default-image.png'" 
+            [alt]="product.name || 'Product Image'" 
+            class="product-image">
         </div>
         <div class="game-info">
           <span class="game-brand">{{getBrandFromName(product.name)}}</span>

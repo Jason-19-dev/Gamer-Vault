@@ -7,42 +7,42 @@ import { Product } from 'src/types';
   providedIn: 'root'
 })
 export class ProductsService {
-  url = 'http://localhost:8000/products'
+  url = 'http://localhost:8000/products';
+  externalApiUrl = 'https://3lf4j03yx8.execute-api.us-east-1.amazonaws.com/vi/products'; // API externa
   httpsOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
 
-  constructor(private http:HttpClient) { }
-  // error handler 
+  constructor(private http: HttpClient) {}
 
+  // Error handler
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Something bad happened; please try again later.';
 
     if (error.status === 0) {
       errorMessage = 'Network error: Por favor, verifica tu conexión a internet';
     } else if (error.status >= 400 && error.status < 500) {
-      // 404 Not Found)
       errorMessage = `Client error: ${error.error.message || error.statusText}`;
     } else if (error.status >= 500) {
-      // Error del servidor
       errorMessage = `Server error: ${error.error.message || error.statusText}`;
     }
-    console.error("API SERVICE:",errorMessage);
+    console.error("API SERVICE:", errorMessage);
     return throwError(() => new Error(errorMessage));
   }
-  
 
-
-  // GET
-  public getProducts(): Observable<Product[]>{
-
+  // GET products from local API
+  public getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.url, this.httpsOptions).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
-
-
+  // GET products from external API
+  public getProductsFromExternalApi(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.externalApiUrl, this.httpsOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
 }
