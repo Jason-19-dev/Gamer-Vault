@@ -41,7 +41,7 @@ export class SigninPage implements OnInit {
         phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
         password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         password_confirm: ['', [Validators.required]],
-        dateOfBirth:['', [Validators.required, minAgeValidator(18)]]
+        birth_date:['', [Validators.required, minAgeValidator(18)]]
 
       }
     );
