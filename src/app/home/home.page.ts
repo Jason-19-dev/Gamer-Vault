@@ -70,7 +70,7 @@ export class HomePage implements OnInit {
 
   // Updated method to categorize products
   private fetchProducts() {
-    this.productsService.getProductsFromExternalApi().subscribe({
+    this.productsService.getProducts().subscribe({
       next: (data) => {
         this.products = data
         this.results = [...this.products]

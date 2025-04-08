@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ProductsService {
-  private apiUrl = `${environment.apiURL}/products/`;
+  private apiUrl = `${environment.apiURL}/products`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +17,7 @@ export class ProductsService {
   }
 
   // GET products from external API
-  public getProductsFromExternalApi(): Observable<Product[]> {
+  public getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/videogames`, { headers : this.jsonHeaders }).pipe(
       catchError(this.handleError)
     );
