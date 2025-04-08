@@ -28,8 +28,11 @@
               <img src="assets/calendar.png" alt="" class="input-icon">
               <ion-input class="custom-input" label="Birthdate" labelPlacement="floating" formControlName="dateOfBirth" type="date" required></ion-input>
             </div>
-            <ion-text class="error-message" color="danger" *ngIf="form_signin.get('fdgd')?.invalid && form_signin.get('sdsfsfg')?.touched">
-              The phone number is required.
+            <ion-text class="error-message" color="danger" *ngIf="form_signin.get('dateOfBirth')?.hasError('required') && form_signin.get('dateOfBirth')?.touched">
+              The birthdate is required.
+            </ion-text>
+            <ion-text class="error-message" color="danger" *ngIf="form_signin.get('dateOfBirth')?.hasError('underage') && form_signin.get('dateOfBirth')?.touched">
+              Must be over 18 years old.
             </ion-text>
           </div>
           
