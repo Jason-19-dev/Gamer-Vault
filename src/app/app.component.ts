@@ -2,6 +2,7 @@ import { Component } from "@angular/core"
 import { IonApp, IonRouterOutlet, Platform } from "@ionic/angular/standalone"
 import { StatusBar, Style } from "@capacitor/status-bar"
 import { SplashScreen } from "@capacitor/splash-screen"
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 @Component({
   selector: "app-root",
@@ -22,6 +23,7 @@ export class AppComponent {
       await StatusBar.setStyle({ style: Style.Dark })
       await StatusBar.setBackgroundColor({ color: "#0a1933" })
       await StatusBar.setOverlaysWebView({ overlay: false })
+      await ScreenOrientation.lock({ orientation: 'portrait' });
 
       // Ocultar la pantalla de splash
       await SplashScreen.hide()
