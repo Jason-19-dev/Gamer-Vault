@@ -13,7 +13,7 @@ import {
   IonLabel,
 } from "@ionic/angular/standalone"
 import { Product } from "src/types"
-import { ProductsService } from "src/services/products.service"
+import { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 

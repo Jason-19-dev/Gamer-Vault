@@ -20,7 +20,7 @@ import type { Product } from "src/types"
 import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { chevronForwardCircle, chevronForwardCircleOutline } from "ionicons/icons"
-import { ProductsService } from "src/services/products.service"
+import { ProductsService } from "src/services/products/products.service"
 
 @Component({
   selector: "app-home",

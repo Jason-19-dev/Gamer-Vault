@@ -16,7 +16,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/angular/standalone"
-import { CartService } from "src/services/cart.service" // Cambiado a importación regular
+import { CartService } from "src/services/cart/cart.service" // Cambiado a importación regular
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { cartOutline, trashOutline, closeCircleOutline } from "ionicons/icons"
