@@ -86,18 +86,18 @@
             <ion-text class="error-message" *ngIf="form_signin.get('password_confirm')?.value !== form_signin.get('password_hash')?.value && form_signin.get('password_confirm')?.touched">
               The password validation doesn't match
             </ion-text>
+          </div>    
+
+          <div class="terms-container">
+            <ion-checkbox formControlName="termsAccepted" labelPlacement="end">
+             I read and accept the terms and conditions.
+            </ion-checkbox>
           </div>
 
-            <div class="terms-container">
-              <ion-checkbox labelPlacement="end">
-                I read and accept the terms and conditions.
-              </ion-checkbox>
-            </div>
-          
         </form>
       </div>
-    </ion-card>
 
+    </ion-card>
 
           
     <ion-button [disabled]="form_signin.invalid" (click)="signin()" type="submit" expand="block" class="register-button">

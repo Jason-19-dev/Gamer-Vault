@@ -41,7 +41,8 @@ export class SigninPage implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
         password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-        password_confirm: ['', [Validators.required]]
+        password_confirm: ['', [Validators.required]],
+        termsAccepted: [false, [Validators.requiredTrue]]
       }
     );
   }
@@ -59,6 +60,7 @@ export class SigninPage implements OnInit {
     // values form
     const formData = this.form_signin.value;
     delete formData.password_confirm;
+    delete formData.termsAccepted;
 
     this.authService.register(formData).subscribe({
       next: (res) => {

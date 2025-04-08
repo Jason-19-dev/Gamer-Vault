@@ -69,12 +69,7 @@
     border-radius: 8px;
     padding: 0px 12px;
     transition: all 0.3s ease;
-    
-    &:focus-within {
-      box-shadow: 0 0 0 2px #DEAD1C;
-    }
   }
-  
   .input-icon {
     width: 20px;
     height: 20px;
@@ -89,7 +84,7 @@
     font-size: 16px;
     padding: 0;
     &:focus {
-      outline: none;
+      outline: none !important;
     }
     
     &::placeholder {
@@ -111,7 +106,7 @@
   }
 
   .terms-container {
-    margin-left: 20px;
+    margin-left: 0px;
     padding: 5px 0px;
     
     ion-checkbox {
