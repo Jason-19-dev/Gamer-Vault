@@ -37,12 +37,11 @@ export class SigninPage implements OnInit {
     this.form_signin = this.fb.group(
       {
         username: ['', [Validators.required, Validators.maxLength(25)]],
+        birth_date:['', [Validators.required, minAgeValidator(18)]],
         email: ['', [Validators.required, Validators.email]],
         phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
         password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-        password_confirm: ['', [Validators.required]],
-        birth_date:['', [Validators.required, minAgeValidator(18)]]
-
+        password_confirm: ['', [Validators.required]]
       }
     );
   }

@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
   constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder, private authService: AuthService) {
     addIcons(icons)
     this.loginForm = this.fb.group({
-      userName: ["",[Validators.required,Validators.maxLength(50)]],
+      userName: ["",[Validators.required,Validators.maxLength(25)]],
       password: ["",[Validators.required,Validators.maxLength(50)]],
     })
   }

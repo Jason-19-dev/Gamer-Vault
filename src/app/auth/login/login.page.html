@@ -17,7 +17,7 @@
                 The username is required.
               </ion-text>
               <ion-text class="error-message" *ngIf="loginForm.get('userName')?.hasError('maxlength') && loginForm.get('userName')?.touched">
-                Must be no more than 8 characters.
+                Must be no more than 25 characters.
               </ion-text>
           </div>
           
@@ -30,7 +30,7 @@
               The password is required.
             </ion-text>
             <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
-              Must be no more than 8 characters.
+              Must be no more than 50 characters.
             </ion-text>
           </div>
 
