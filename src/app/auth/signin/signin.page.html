@@ -13,7 +13,7 @@
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/User.png" alt="" class="input-icon">
-              <ion-input class="custom-input" label="Username" labelPlacement="floating" placeholder="e.g. ggEasy" formControlName="nameUser" type="text" required></ion-input>
+              <ion-input class="custom-input" label="Username" labelPlacement="floating" placeholder="e.g. ggEasy" formControlName="username" type="text" required></ion-input>
             </div>
             <ion-text class="error-message" *ngIf="form_signin.get('nameUser')?.hasError('required') && form_signin.get('nameUser')?.touched"> 
               The username is required.
@@ -26,7 +26,7 @@
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/calendar.png" alt="" class="input-icon">
-              <ion-input class="custom-input" label="Birthdate" labelPlacement="floating" formControlName="dateOfBirth" type="date" required></ion-input>
+              <ion-input class="custom-input" label="Birthdate" labelPlacement="floating" formControlName="birth_date" type="date" required></ion-input>
             </div>
             <ion-text class="error-message" color="danger" *ngIf="form_signin.get('dateOfBirth')?.hasError('required') && form_signin.get('dateOfBirth')?.touched">
               The birthdate is required.
@@ -52,7 +52,7 @@
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/phone.png" alt="" class="input-icon">
-              <ion-input class="custom-input" label="Phone number" labelPlacement="floating" placeholder="e.g. 69946616" formControlName="phoneNumber" type="number" required></ion-input>
+              <ion-input class="custom-input" label="Phone number" labelPlacement="floating" placeholder="e.g. 69946616" formControlName="phone" type="number" required></ion-input>
             </div>
             <ion-text class="error-message" color="danger" *ngIf="form_signin.get('phoneNumber')?.hasError('required') && form_signin.get('phoneNumber')?.touched">
               The phone number is required.
@@ -65,7 +65,7 @@
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/key.png" alt="" class="input-icon">
-              <ion-input class="custom-input" label="Password" labelPlacement="floating" placeholder="e.g. mypassword123" formControlName="password" type="password" required minlength="8"></ion-input>
+              <ion-input class="custom-input" label="Password" labelPlacement="floating" placeholder="e.g. mypassword123" formControlName="password_hash" type="password" required minlength="8"></ion-input>
             </div>
             <ion-text class="error-message" color="danger" *ngIf="form_signin.get('password')?.hasError('minlength') && form_signin.get('password')?.touched">
               Must be no less than 8 characters.

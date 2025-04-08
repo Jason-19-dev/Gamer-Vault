@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
     this.authService.login(name, pass).subscribe({
       next: (response) => {
         console.log(response);
-        if (response.success) {
+        if (response.token) {
           this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
           this.router.navigateByUrl('home');
         } else {

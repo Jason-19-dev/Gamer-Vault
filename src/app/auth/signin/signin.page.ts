@@ -36,10 +36,10 @@ export class SigninPage implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private authService: AuthService) {
     this.form_signin = this.fb.group(
       {
-        nameUser: ['', [Validators.required, Validators.maxLength(25)]],
+        username: ['', [Validators.required, Validators.maxLength(25)]],
         email: ['', [Validators.required, Validators.email]],
-        phoneNumber: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
-        password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+        phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
+        password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         password_confirm: ['', [Validators.required]],
         dateOfBirth:['', [Validators.required, minAgeValidator(18)]]
 
@@ -59,14 +59,16 @@ export class SigninPage implements OnInit {
     }
     // values form
     const formData = this.form_signin.value;
+    delete formData.password_confirm;
 
     this.authService.register(formData).subscribe({
       next: (res) => {
-        this.alert('Successful registration', '', `Welcome ${formData.nameUser.toUpperCase()}!`);
+        console.log("hola");
+        this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
         this.router.navigateByUrl('home');
       },
       error: (err) => {
-        const msg = err?.error?.message || 'User could not be registered';
+        const msg = 'User could not be registered';
         this.alert('Error in registration', '', msg);
       }
     });
