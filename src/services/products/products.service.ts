@@ -2,20 +2,26 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Product } from 'src/types';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  url = 'http://localhost:8000/products';
-  externalApiUrl = 'https://3lf4j03yx8.execute-api.us-east-1.amazonaws.com/vi/products'; // API externa
-  httpsOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+  private apiUrl = `${environment.apiURL}/products/`;
 
   constructor(private http: HttpClient) {}
+
+  private get jsonHeaders(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+
+  // GET products from external API
+  public getProductsFromExternalApi(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/videogames`, { headers : this.jsonHeaders }).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   // Error handler
   private handleError(error: HttpErrorResponse) {
@@ -32,17 +38,4 @@ export class ProductsService {
     return throwError(() => new Error(errorMessage));
   }
 
-  // GET products from local API
-  public getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url, this.httpsOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  // GET products from external API
-  public getProductsFromExternalApi(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.externalApiUrl, this.httpsOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
 }

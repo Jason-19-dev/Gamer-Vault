@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveF
 import { IonButton, IonCard, IonCheckbox, IonContent, IonInput, IonInputPasswordToggle, IonText, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as icons from 'ionicons/icons';
-import { AuthService } from 'src/services/auth.service';
+import { AuthService } from 'src/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
 import { AbstractControl, ValidationErrors } from '@angular/forms';

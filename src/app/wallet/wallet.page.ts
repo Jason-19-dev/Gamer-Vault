@@ -5,7 +5,7 @@ import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader,
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { ToastController } from '@ionic/angular';
 import { order, Product } from 'src/types';
-import { BiometricService } from 'src/services/biometric.service';
+import { BiometricService } from 'src/services/biometric/biometric.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 

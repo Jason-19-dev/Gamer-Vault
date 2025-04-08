@@ -17,37 +17,51 @@
   <div class="section" style="cursor: pointer;" (click)="navigateToMenu()">
     <div class="section-header">
       <h2>In-Game Coins</h2>
-      <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+      <ion-icon name="chevron-forward-circle"></ion-icon>
     </div>
     
+    <!-- Display coin products as circular images -->
     <div class="game-icons">
-      <div class="game-icon-item">
-        <div class="game-circle fortnite">
-          <span>F</span>
+      <div class="game-icon-item" *ngFor="let product of coinProducts">
+        <div class="game-circle">
+          <img 
+            [src]="product.image_url || 'assets/images/default-image.png'" 
+            [alt]="product.name || 'Product Image'" 
+            class="circle-image">
         </div>
-        <p class="game-name">Fortnite</p>
+        <p class="game-name">{{product.name}}</p>
       </div>
       
-      <div class="game-icon-item">
-        <div class="game-circle roblox">
-          <span>□</span>
+      <!-- Show default icons if no coin products are found -->
+      <ng-container *ngIf="coinProducts.length === 0">
+        <div class="game-icon-item">
+          <div class="game-circle fortnite">
+            <span>F</span>
+          </div>
+          <p class="game-name">Fortnite</p>
         </div>
-        <p class="game-name">Roblox</p>
-      </div>
-      
-      <div class="game-icon-item">
-        <div class="game-circle lol">
-          <span>L</span>
+        
+        <div class="game-icon-item">
+          <div class="game-circle roblox">
+            <span>□</span>
+          </div>
+          <p class="game-name">Roblox</p>
         </div>
-        <p class="game-name">LoL</p>
-      </div>
-      
-      <div class="game-icon-item">
-        <div class="game-circle fifa">
-          <span>F</span>
+        
+        <div class="game-icon-item">
+          <div class="game-circle lol">
+            <span>L</span>
+          </div>
+          <p class="game-name">LoL</p>
         </div>
-        <p class="game-name">FIFA</p>
-      </div>
+        
+        <div class="game-icon-item">
+          <div class="game-circle fifa">
+            <span>F</span>
+          </div>
+          <p class="game-name">FIFA</p>
+        </div>
+      </ng-container>
     </div>
   </div>
 
@@ -55,13 +69,12 @@
   <div class="section">
     <div class="section-header">
       <h2>Videogames</h2>
-      <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+      <ion-icon name="chevron-forward-circle"></ion-icon>
     </div>
     
     <div class="game-cards">
-      <div class="game-card" *ngFor="let product of results">
+      <div class="game-card" *ngFor="let product of gameProducts">
         <div class="game-image">
-          <!-- Usa una imagen predeterminada si la URL está vacía o no es válida -->
           <img 
             [src]="product.image_url || 'assets/images/default-image.png'" 
             [alt]="product.name || 'Product Image'" 

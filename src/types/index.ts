@@ -9,7 +9,9 @@ export type Product = {
     available: boolean
     image_url: string
     create_at: string
-}
+    category_name?: string
+  }
+  
 
 export type Customer = {
     id: number

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BiometricServiceService } from './biometric-service';
+import { BiometricService } from './biometric.service';
 
 describe('BiometricServiceService', () => {
-  let service: BiometricServiceService;
+  let service: BiometricService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BiometricServiceService);
+    service = TestBed.inject(BiometricService);
   });
 
   it('should be created', () => {
