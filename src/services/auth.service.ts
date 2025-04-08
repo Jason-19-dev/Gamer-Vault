@@ -17,8 +17,8 @@ export class AuthService{
         return this.http.post(`${this.apiURL}/register`, data, { headers });
     }
 
-    login(userName: string, password: string): Observable<any>{
-        const body = {userName, password};
+    login(username: string, password: string): Observable<any>{
+        const body = {username, password};
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.http.post(`${this.apiURL}/login`, body, { headers });
     }
