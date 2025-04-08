@@ -99,7 +99,7 @@ function minAgeValidator (minAge: number) {
     const isUnderage = monthDiff < 0 || (monthDiff === 0 && dayDiff < 0);
     const finalAge = isUnderage ? age - 1 : age;
 
-    if (isNaN(finalAge) || finalAge < minAge) {
+    if (finalAge < minAge) {
       return { underage: true };
     }
 
