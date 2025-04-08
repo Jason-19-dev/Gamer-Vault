@@ -12,14 +12,16 @@ export class AuthService{
 
     constructor(private http: HttpClient) {}
 
+    private get jsonHeaders(): HttpHeaders {
+        return new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+
     register(data: any): Observable<any>{
-        const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.post(`${this.apiURL}/register`, data, { headers });
+        return this.http.post(`${this.apiURL}/register`, data, { headers: this.jsonHeaders });
     }
 
     login(username: string, password: string): Observable<any>{
         const body = {username, password};
-        const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.post(`${this.apiURL}/login`, body, { headers });
+        return this.http.post(`${this.apiURL}/login`, body, { headers: this.jsonHeaders });
     }
 }

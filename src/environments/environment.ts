@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  apiURL: 'https://pdm7xkaly6.execute-api.us-east-1.amazonaws.com/prod'
+  apiURL: 'http://3.80.195.54:5000'
 };
 
 /*

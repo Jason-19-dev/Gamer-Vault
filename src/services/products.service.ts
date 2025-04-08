@@ -2,13 +2,15 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Product } from 'src/types';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   url = 'http://localhost:8000/products';
-  externalApiUrl = 'https://3lf4j03yx8.execute-api.us-east-1.amazonaws.com/vi/products'; // API externa
+  //externalApiUrl = 'https://3lf4j03yx8.execute-api.us-east-1.amazonaws.com/vi/products'; // API externa
+  externalApiUrl = `${environment.apiURL}/products/videogames`;
   httpsOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
