@@ -7,9 +7,20 @@
 <ion-content class="ion-padding">
   <ion-searchbar placeholder="Search" [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
 
+  <!--
   <div class="banner">
     <div class="banner-content">
       <p class="banner-text"></p>
+    </div>
+  </div>
+  -->
+  <div class="banner" [ngStyle]="{
+      'background-image': currentBannerImage
+        ? 'url(' + currentBannerImage + ')'
+        : 'none'
+    }">
+    <div class="banner-content">
+      <p class="banner-text">{{ currentBannerText }}</p>
     </div>
   </div>
 
@@ -19,19 +30,19 @@
       <h2>In-Game Coins</h2>
       <ion-icon name="chevron-forward-circle"></ion-icon>
     </div>
-    
+
     <!-- Display coin products as circular images -->
     <div class="game-icons">
       <div class="game-icon-item" *ngFor="let product of coinProducts">
         <div class="game-circle">
-          <img 
-            [src]="product.image_url || 'assets/images/default-image.png'" 
-            [alt]="product.name || 'Product Image'" 
+          <img
+            [src]="product.image_url || 'assets/images/default-image.png'"
+
             class="circle-image">
         </div>
-        <p class="game-name">{{product.name}}</p>
+
       </div>
-      
+
       <!-- Show default icons if no coin products are found -->
       <ng-container *ngIf="coinProducts.length === 0">
         <div class="game-icon-item">
@@ -40,21 +51,21 @@
           </div>
           <p class="game-name">Fortnite</p>
         </div>
-        
+
         <div class="game-icon-item">
           <div class="game-circle roblox">
             <span>□</span>
           </div>
           <p class="game-name">Roblox</p>
         </div>
-        
+
         <div class="game-icon-item">
           <div class="game-circle lol">
             <span>L</span>
           </div>
           <p class="game-name">LoL</p>
         </div>
-        
+
         <div class="game-icon-item">
           <div class="game-circle fifa">
             <span>F</span>
@@ -71,13 +82,13 @@
       <h2>Videogames</h2>
       <ion-icon name="chevron-forward-circle"></ion-icon>
     </div>
-    
+
     <div class="game-cards">
       <div class="game-card" *ngFor="let product of gameProducts">
         <div class="game-image">
-          <img 
-            [src]="product.image_url || 'assets/images/default-image.png'" 
-            [alt]="product.name || 'Product Image'" 
+          <img
+            [src]="product.image_url || 'assets/images/default-image.png'"
+            [alt]="product.name || 'Product Image'"
             class="product-image">
         </div>
         <div class="game-info">

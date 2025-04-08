@@ -2,6 +2,7 @@ import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
+import { HttpClient } from '@angular/common/http';
 
 import {
   IonContent,
@@ -21,6 +22,18 @@ import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { chevronForwardCircle, chevronForwardCircleOutline } from "ionicons/icons"
 import { ProductsService } from "src/services/products/products.service"
+
+interface CoinItem {
+  game: string;
+  image_url: string;
+}
+
+interface GameItem {
+  name: string;
+  image_url: string;
+  price: string;
+}
+
 
 @Component({
   selector: "app-home",
@@ -52,23 +65,77 @@ export class HomePage implements OnInit {
   public results: Product[] = []
 
   // Add these properties for categorized products
-  coinProducts: Product[] = []
-  gameProducts: Product[] = []
+  coinProducts: CoinItem[] = []
+  gameProducts: GameItem[] = []
+
+  //variables del banner
+  currentBannerImage: string = '';
+  currentBannerText: string = '';
+  private bannerIndex: number = 0;
+  private bannerInterval: any;
+
 
   constructor(
     private alertController: AlertController, // Correctamente inyectado
     private platform: Platform,
     private router: Router,
     private productsService: ProductsService,
+    private http: HttpClient,
+
   ) {
     addIcons({chevronForwardCircle,chevronForwardCircleOutline});
   }
 
   ngOnInit() {
-    this.fetchProducts()
+    this.fetchGameProducts()
+    this.fetchCoinProducts()
   }
 
-  // Updated method to categorize products
+  ngOnDestroy() {
+  if (this.bannerInterval) {
+    clearInterval(this.bannerInterval);
+  }
+}
+
+
+   private fetchCoinProducts() {
+    this.http.get<CoinItem[]>('http://3.231.107.27:5000/products/coins/games-list').subscribe({
+      next: (data) => {
+        console.log("Monedas recibidas:", data);
+        this.coinProducts = data;
+      },
+      error: (err) => {
+        console.error("Error al obtener monedas:", err.message);
+      },
+    });
+  }
+
+     private fetchGameProducts() {
+    this.http.get<GameItem[]>('http://3.231.107.27:5000/products/videogames').subscribe({
+      next: (data) => {
+        console.log("Juegos recibidos:", data);
+        this.gameProducts = data;
+
+        this.startBannerRotation();
+      },
+      error: (err) => {
+        console.error("Error al obtener monedas:", err.message);
+      },
+    });
+    }
+    private startBannerRotation() {
+  if (this.gameProducts.length === 0) return;
+
+  this.currentBannerImage = this.gameProducts[0].image_url;
+  this.currentBannerText = this.gameProducts[0].name;
+
+  this.bannerInterval = setInterval(() => {
+    this.bannerIndex = (this.bannerIndex + 1) % this.gameProducts.length;
+    const current = this.gameProducts[this.bannerIndex];
+    this.currentBannerImage = current.image_url;
+    this.currentBannerText = current.name;
+  }, 5000);
+}
   private fetchProducts() {
     this.productsService.getProducts().subscribe({
       next: (data) => {
@@ -76,9 +143,9 @@ export class HomePage implements OnInit {
         this.results = [...this.products]
 
         // Filter products by category_name
-        this.coinProducts = this.products.filter((product) => product.category_name === "coin")
+        //this.coinProducts = this.products.filter((product) => product.category_name === "coin")
 
-        this.gameProducts = this.products.filter((product) => product.category_name === "videogame")
+        //this.gameProducts = this.products.filter((product) => product.category_name === "videogame")
 
         console.log("Productos obtenidos:", this.products)
         console.log("Monedas:", this.coinProducts)
@@ -98,9 +165,9 @@ export class HomePage implements OnInit {
     if (query) {
       const filteredProducts = this.products.filter((product) => product.name.toLowerCase().includes(query))
 
-      this.coinProducts = filteredProducts.filter((product) => product.category_name === "coin")
+      //this.coinProducts = filteredProducts.filter((product) => product.category_name === "coin")
 
-      this.gameProducts = filteredProducts.filter((product) => product.category_name === "videogame")
+      //this.gameProducts = filteredProducts.filter((product) => product.category_name === "videogame")
 
       if (filteredProducts.length === 0) {
         this.message = "No Results"
@@ -109,9 +176,9 @@ export class HomePage implements OnInit {
       }
     } else {
       // Reset to original filtered lists
-      this.coinProducts = this.products.filter((product) => product.category_name === "coin")
+      //this.coinProducts = this.products.filter((product) => product.category_name === "coin")
 
-      this.gameProducts = this.products.filter((product) => product.category_name === "videogame")
+      //this.gameProducts = this.products.filter((product) => product.category_name === "videogame")
       this.message = ""
     }
   }
