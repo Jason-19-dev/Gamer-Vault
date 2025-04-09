@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  apiURL: 'http://3.231.107.27:5000'
+  apiURL: 'http://nlb-test-api-jason-54771c5df4f8cef1.elb.us-east-1.amazonaws.com'
 };
 
 /*

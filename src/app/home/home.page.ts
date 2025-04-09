@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
 import { HttpClient } from '@angular/common/http';
+import { environment } from "src/environments/environment";
 
 import {
   IonContent,
@@ -99,7 +100,7 @@ export class HomePage implements OnInit {
 
 
    private fetchCoinProducts() {
-    this.http.get<CoinItem[]>('http://3.231.107.27:5000/products/coins/games-list').subscribe({
+    this.http.get<CoinItem[]>(`${environment.apiURL}/products/coins/games-list`).subscribe({
       next: (data) => {
         console.log("Monedas recibidas:", data);
         this.coinProducts = data;
@@ -111,7 +112,7 @@ export class HomePage implements OnInit {
   }
 
      private fetchGameProducts() {
-    this.http.get<GameItem[]>('http://3.231.107.27:5000/products/videogames').subscribe({
+    this.http.get<GameItem[]>(`${environment.apiURL}/products/videogames`).subscribe({
       next: (data) => {
         console.log("Juegos recibidos:", data);
         this.gameProducts = data;
