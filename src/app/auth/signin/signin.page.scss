@@ -16,7 +16,7 @@
     min-height: 100%;
     max-width: 400px;
     margin: 0 auto;
-    padding: 30px 20px; // deja padding inferior
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -58,6 +58,7 @@
     padding: 16px 20px;
   }
   
+ 
   .input-container:not(:last-child) {
     margin-bottom: 20px;
   }
@@ -67,12 +68,17 @@
     align-items: center;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
-    padding: 0px 12px;
+    padding: 0px 16px;
     transition: all 0.3s ease;
+    
+    /*&:focus-within {
+      box-shadow: 0 0 0 2px #DEAD1C;
+    }*/
   }
+  
   .input-icon {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     margin-right: 12px;
   }
   
@@ -83,19 +89,20 @@
     color: #333;
     font-size: 16px;
     padding: 0;
+    
     &:focus {
-      outline: none !important;
+      outline: none;
     }
     
     &::placeholder {
-      color: #999 !important;
-    }
-    
-    /*&.error-placeholder::placeholder {
-      color: red;
-      }*/
+      color: #999;
     }
 
+    /*&.error-placeholder::placeholder {
+        color: red;
+      }*/
+  }
+  
   
   .error-message {
     font-size: 16px;

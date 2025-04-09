@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { IonButton, IonCard, IonCheckbox, IonContent, IonInput, IonInputPasswordToggle, IonText, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as icons from 'ionicons/icons';
 import { AuthService } from 'src/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -43,7 +42,7 @@ export class SigninPage implements OnInit {
         password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         password_confirm: ['', [Validators.required]],
         termsAccepted: [false, [Validators.requiredTrue]]
-      }
+      }, { validators: passwordValidator('password_hash', 'password_confirm') }
     );
   }
 
@@ -104,6 +103,22 @@ function minAgeValidator (minAge: number) {
       return { underage: true };
     }
 
+    return null;
+  };
+}
+
+
+function passwordValidator(passwordKey: string, confirmPasswordKey: string): ValidatorFn {
+  return (formGroup: AbstractControl): ValidationErrors | null => {
+    const group = formGroup as FormGroup;
+    const password = group.get(passwordKey)?.value;
+    const confirmPassword = group.get(confirmPasswordKey)?.value;
+
+    if (password !== confirmPassword) {
+      group.get(confirmPasswordKey)?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } 
+    
     return null;
   };
 }
