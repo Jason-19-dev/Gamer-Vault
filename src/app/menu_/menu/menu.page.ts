@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
+import  { ActivatedRoute } from "@angular/router"
 import {
-  AlertController,
+   AlertController,
   IonContent,
   IonHeader,
   IonIcon,
@@ -11,11 +12,37 @@ import {
   IonSearchbar,
   IonChip,
   IonLabel,
+  IonSpinner,
 } from "@ionic/angular/standalone"
-import { Product } from "src/types"
-import { ProductsService } from "src/services/products/products.service"
+import  { Product } from "src/types"
+import  { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
+import  { HttpClient } from "@angular/common/http"
+
+// Interfaces para los datos de la API según la estructura real
+interface ApiCoinItem {
+  category_name: string
+  game_name: string
+  image_url: string
+  product_id: string
+}
+
+interface ApiGameItem {
+  category_name: string
+  created_at: string
+  description: {
+    developer: string
+    genre: string
+    platforms: string[]
+    release_year: number
+  }
+  id_category: string
+  image_url: string
+  name: string
+  price: string
+  product_id: string
+}
 
 @Component({
   selector: "app-menu",
@@ -34,14 +61,20 @@ import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
     IonChip,
     IonLabel,
     IonIcon,
+    IonSpinner,
   ],
 })
 export class MenuPage implements OnInit {
   title = "Videogames"
   categories = ["Adventure", "Shooters", "Horror", "Action RPG"]
   selectedCategory: string | null = null
+  isLoading = true
 
-  products: Product[] = [
+  // Productos que se mostrarán
+  products: any[] = []
+
+  // Productos de respaldo en caso de error
+  fallbackGames: Product[] = [
     {
       id: 1,
       name: "Spiderman 2",
@@ -64,47 +97,148 @@ export class MenuPage implements OnInit {
         "https://www.sony.com.pa/image/6145c1d32e6ac8e63a46c912dc33c5bb?fmt=pjpeg&wid=165&bgcolor=FFFFFF&bgc=FFFFFF",
       create_at: "2024-02-26T15:30:00Z",
     },
+  ]
+
+  fallbackCoins: Product[] = [
     {
-      id: 3,
-      name: "Little Nightmares II",
-      description: "Little Nightmares II",
-      price: 80.0,
-      stock: 20,
+      id: 6,
+      name: "Fortnite V-Bucks",
+      description: "1000 V-Bucks para Fortnite",
+      price: 9.99,
+      stock: 999,
       available: true,
       image_url:
-        "https://back.panafoto.com/media/catalog/product/cache/22adb41f3f66ba957b3b3b7b0df44fe6/1/5/154973-001.jpg",
-      create_at: "2024-02-25T12:45:00Z",
+        "https://cdn2.unrealengine.com/Fortnite/fortnite-game/v-bucks/V-Bucks_1000x1000-1000x1000-2f68d41a76e15d2fd2eafb62a186c410c167285d.png",
+      create_at: "2024-02-27T10:00:00Z",
     },
     {
-      id: 4,
-      name: "Assassin's Creed Valhalla",
-      description: "Assassin's Creed Valhalla",
-      price: 60.0,
-      stock: 8,
+      id: 7,
+      name: "Roblox Robux",
+      description: "800 Robux para Roblox",
+      price: 9.99,
+      stock: 999,
       available: true,
-      image_url: "https://images.samsung.com/latin/galaxy-watch6/feature/galaxy-watch6-kv-pc.jpg",
-      create_at: "2024-02-24T18:20:00Z",
-    },
-    {
-      id: 5,
-      name: "Laptop ASUS VivoBook",
-      description: "Laptop ultraligera con procesador Intel Core i5 y 8GB de RAM.",
-      price: 750.99,
-      stock: 10,
-      available: true,
-      image_url: "https://www.multimax.net/cdn/shop/files/Asus_VivoBook_Go_15_OLED_AMD_Ryzen_5_7520U_8GB_RAM_512GB_SSD_15.6_Windows_11_Multimax_Panama_Computadoras_Dell_Lenovo_Apple_ASUS_MSI_Huawei_PSN0109624_1_1200x.jpg?v=1732564858",
-      create_at: "2024-02-27T10:00:00Z"
+      image_url: "https://images.rbxcdn.com/e452125426ae1abb1d19a4c06af31f29.svg",
+      create_at: "2024-02-27T10:00:00Z",
     },
   ]
 
   constructor(
     private api_product: ProductsService,
     private alertController: AlertController,
-  ) {
-    // this.get_products()
+    private route: ActivatedRoute,
+    private http: HttpClient,
+  ) {}
+
+  ngOnInit() {
+    // Suscribirse a los cambios en los parámetros de la URL
+    this.route.queryParams.subscribe((params) => {
+      const section = params["section"]
+
+      if (section === "coins") {
+        // Mostrar monedas para juegos
+        this.title = "In-Game Coins"
+        this.categories = ["Fortnite", "Roblox", "League of Legends", "FIFA"]
+        this.loadCoinsFromAPI()
+      } else {
+        // Mostrar videojuegos (por defecto)
+        this.title = "Videogames"
+        this.categories = ["Adventure", "Shooters", "Horror", "Action RPG"]
+        this.loadGamesFromAPI()
+      }
+    })
   }
 
-  ngOnInit() {}
+  private loadCoinsFromAPI() {
+    this.isLoading = true
+    // Usar HttpClient para obtener monedas desde la API
+    this.http
+      .get<ApiCoinItem[]>("http://nlb-test-api-jason-54771c5df4f8cef1.elb.us-east-1.amazonaws.com/products/coins")
+      .subscribe({
+        next: (data) => {
+          console.log("Monedas recibidas:", data)
+
+          // Transformar los datos de la API al formato que espera el componente
+          this.products = data.map((item) => ({
+            id: item.product_id,
+            name: item.game_name || "Moneda de juego",
+            description: `Monedas para ${item.game_name}`,
+            price: 9.99, // Precio por defecto si no viene en la API
+            stock: 999,
+            available: true,
+            image_url: item.image_url || "assets/images/default-image.png",
+            create_at: new Date().toISOString(),
+            // Datos adicionales específicos de monedas
+            category_name: item.category_name,
+            game_name: item.game_name,
+          }))
+
+          this.isLoading = false
+        },
+        error: (err) => {
+          console.error("Error al obtener monedas:", err.message)
+          this.alert()
+          this.messageNotification()
+          // Usar datos locales como respaldo en caso de error
+          this.products = this.fallbackCoins
+          this.isLoading = false
+        },
+      })
+  }
+
+  private loadGamesFromAPI() {
+    this.isLoading = true
+    // Usar HttpClient para obtener juegos desde la API
+    this.http
+      .get<ApiGameItem[]>("http://nlb-test-api-jason-54771c5df4f8cef1.elb.us-east-1.amazonaws.com/products/videogames")
+      .subscribe({
+        next: (data) => {
+          console.log("Juegos recibidos:", data)
+
+          // Transformar los datos de la API al formato que espera el componente
+          this.products = data.map((item) => ({
+            id: item.product_id,
+            name: item.name || "Videojuego",
+            description: this.formatGameDescription(item),
+            price: Number.parseFloat(item.price) || 59.99, // Convertir el precio a número
+            stock: 10,
+            available: true,
+            image_url: item.image_url || "assets/images/default-image.png",
+            create_at: item.created_at || new Date().toISOString(),
+            // Datos adicionales específicos de videojuegos
+            category_name: item.category_name,
+            developer: item.description?.developer,
+            genre: item.description?.genre,
+            platforms: item.description?.platforms,
+            release_year: item.description?.release_year,
+          }))
+
+          this.isLoading = false
+        },
+        error: (err) => {
+          console.error("Error al obtener juegos:", err.message)
+          this.alert()
+          this.messageNotification()
+          // Usar datos locales como respaldo en caso de error
+          this.products = this.fallbackGames
+          this.isLoading = false
+        },
+      })
+  }
+
+  // Método para formatear la descripción del juego
+  private formatGameDescription(game: ApiGameItem): string {
+    if (!game.description) return game.name
+
+    const { developer, genre, release_year } = game.description
+    let description = game.name
+
+    if (developer) description += ` - ${developer}`
+    if (genre) description += ` | ${genre}`
+    if (release_year) description += ` (${release_year})`
+
+    return description
+  }
 
   selectCategory(category: string) {
     if (this.selectedCategory === category) {
@@ -112,20 +246,29 @@ export class MenuPage implements OnInit {
     } else {
       this.selectedCategory = category
     }
-    // Here you would filter products by category
+
+    // Filtrar productos por categoría
+    if (this.title === "Videogames" && this.selectedCategory) {
+      // Para videojuegos, filtrar por género
+      this.filterGamesByGenre(this.selectedCategory)
+    } else if (this.title === "In-Game Coins" && this.selectedCategory) {
+      // Para monedas, filtrar por nombre del juego
+      this.filterCoinsByGame(this.selectedCategory)
+    }
   }
 
-  get_products(): void {
-    this.api_product.getProducts().subscribe({
-      next: (data) => {
-        this.products = data
-      },
-      error: (err) => {
-        this.alert()
-        this.messageNotification()
-        console.error("error al obtener los productos", err)
-      },
-    })
+  // Filtrar videojuegos por género
+  private filterGamesByGenre(genre: string) {
+    // Implementar lógica de filtrado por género
+    // Por ahora, solo mostramos un mensaje en consola
+    console.log(`Filtrando juegos por género: ${genre}`)
+  }
+
+  // Filtrar monedas por juego
+  private filterCoinsByGame(game: string) {
+    // Implementar lógica de filtrado por juego
+    // Por ahora, solo mostramos un mensaje en consola
+    console.log(`Filtrando monedas por juego: ${game}`)
   }
 
   async alert() {
@@ -146,10 +289,12 @@ export class MenuPage implements OnInit {
           id: 1,
           title: this.title,
           body: `Has ahorrado $0.50, sigue así.`,
-          schedule: { at: new Date(Date.now() + 1000) }, // para ue mande en un seunfo
+          schedule: { at: new Date(Date.now() + 1000) }, // para que mande en un segundo
           sound: "default",
         },
       ],
     })
   }
 }
+
+export default MenuPage

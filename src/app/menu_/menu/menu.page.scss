@@ -1,121 +1,164 @@
 // Global styles
 ion-content {
-    --background: #0a1a2f;
-    --color: white;
-    --padding-top: env(safe-area-inset-top);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --background: #0a1a2f;
+  --color: white;
+  --padding-top: env(safe-area-inset-top);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+ion-header ion-toolbar {
+  --background: #0a1a2f;
+  --color: white;
+}
+
+// Loading container
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+  
+  ion-spinner {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
   }
   
-  ion-header ion-toolbar {
-    --background: #0a1a2f;
-    --color: white;
-  }
-  
-  ion-title {
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  // Search bar
-  .search-container {
-    padding: 10px 16px;
-  }
-  
-  .custom-searchbar {
-    --background: #152a44;
-    --color: white;
-    --placeholder-color: #8a9ab0;
-    --icon-color: #8a9ab0;
-    --border-radius: 10px;
-    --box-shadow: none;
-    font-size: 0.9rem;
-  }
-  
-  // Categories
-  .categories-container {
-    padding: 0 16px 10px;
-  }
-  
-  .categories {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 5px;
-  }
-  
-  ion-chip {
-    --background: #152a44;
-    --color: white;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    height: 32px;
-  }
-  
-  ion-chip.selected {
-    --background: #3880ff;
-  }
-  
-  // Products
-  .products-container {
-    padding: 10px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .product-card {
-    background: #152a44;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .product-image-container {
-    width: 100%;
-    height: 140px;
-    overflow: hidden;
-  }
-  
-  .product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .product-info {
-    padding: 12px;
-  }
-  
-  .product-title {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
-    color: white;
-  }
-  
-  .product-price {
-    margin: 4px 0 0;
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-  }
-  
-  // Utility classes
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .message {
-    padding: 20px;
+  p {
     color: white;
     font-size: 16px;
-    text-align: center;
   }
-  
-  
+}
+
+// Categories
+.categories-container {
+  margin: 10px 0;
+  overflow-x: auto;
+}
+
+.categories {
+  display: flex;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+ion-chip {
+  --background: rgba(255, 255, 255, 0.1);
+  --color: white;
+  margin: 5px;
+}
+
+ion-chip.selected {
+  --background: var(--ion-color-primary);
+  --color: white;
+}
+
+// Products grid
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+// Product card
+.product-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s;
+}
+
+.product-card:active {
+  transform: scale(0.98);
+}
+
+.product-image-container {
+  height: 150px;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 12px;
+}
+
+.product-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-details {
+  margin: 4px 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+// Platforms
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.platform-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+// Message
+.message {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+// Search
+.search-container {
+  padding: 10px 16px;
+}
+
+.custom-searchbar {
+  --background: #ffffff;
+  --color: #000000;
+  --border-radius: 8px;
+  --box-shadow: none;
+  margin-bottom: 16px;
+}

@@ -11,7 +11,7 @@
   </div>
 
   <!-- Categories -->
-  <div class="categories-container">
+ <!-- <div class="categories-container">
     <div class="categories scrollbar-hidden">
       <ion-chip 
         *ngFor="let category of categories" 
@@ -20,25 +20,51 @@
         <ion-label>{{ category }}</ion-label>
       </ion-chip>
     </div>
+  </div>-->
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="circular"></ion-spinner>
+    <p>Cargando productos...</p>
   </div>
 
   <!-- Products -->
-  @if (products.length > 0) {
-    <div class="products-container">
-      <div class="product-card" *ngFor="let product of products;">
-        <div class="product-image-container">
-          <img class="product-image" [src]="product.image_url" [alt]="product.name">
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">{{ product.description }}</h3>
-          <p class="product-price">${{ product.price.toFixed(2) }}</p>
+  <ng-container *ngIf="!isLoading">
+    @if (products.length > 0) {
+      <div class="products-container">
+        <div class="product-card" *ngFor="let product of products;">
+          <div class="product-image-container">
+            <img class="product-image" [src]="product.image_url" [alt]="product.name">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">{{ product.name }}</h3>
+            
+            <!-- Información específica para videojuegos -->
+            <p *ngIf="title === 'Videogames'" class="product-details">
+              <span *ngIf="product.genre">{{ product.genre }}</span>
+              <span *ngIf="product.developer"> | {{ product.developer }}</span>
+              <span *ngIf="product.release_year"> ({{ product.release_year }})</span>
+            </p>
+            
+            <!-- Información específica para monedas -->
+            <p *ngIf="title === 'In-Game Coins'" class="product-details">
+              {{ product.description }}
+            </p>
+            
+            <!-- Mostrar precio solo para videojuegos -->
+            <p *ngIf="title === 'Videogames'" class="product-price">${{ product.price.toFixed(2) }}</p>
+            
+            <!-- Plataformas para videojuegos -->
+            <div *ngIf="product.platforms && product.platforms.length > 0" class="platforms">
+              <span *ngFor="let platform of product.platforms" class="platform-tag">{{ platform }}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  } @else {
-    <div class="message">No hay productos disponibles</div>
-  }
+    } @else {
+      <div class="message">No hay productos disponibles</div>
+    }
+  </ng-container>
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>
-

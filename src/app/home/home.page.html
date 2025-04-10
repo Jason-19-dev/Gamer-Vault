@@ -7,13 +7,6 @@
 <ion-content class="ion-padding">
   <ion-searchbar placeholder="Search" [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
 
-  <!--
-  <div class="banner">
-    <div class="banner-content">
-      <p class="banner-text"></p>
-    </div>
-  </div>
-  -->
   <div class="banner" [ngStyle]="{
       'background-image': currentBannerImage
         ? 'url(' + currentBannerImage + ')'
@@ -25,7 +18,7 @@
   </div>
 
   <!-- In-Game Coins Section -->
-  <div class="section" style="cursor: pointer;" (click)="navigateToMenu()">
+  <div class="section" style="cursor: pointer;" (click)="navigateToMenu('coins')">
     <div class="section-header">
       <h2>In-Game Coins</h2>
       <ion-icon name="chevron-forward-circle"></ion-icon>
@@ -37,10 +30,8 @@
         <div class="game-circle">
           <img
             [src]="product.image_url || 'assets/images/default-image.png'"
-
             class="circle-image">
         </div>
-
       </div>
 
       <!-- Show default icons if no coin products are found -->
@@ -77,7 +68,7 @@
   </div>
 
   <!-- Videogames Section -->
-  <div class="section">
+  <div class="section" (click)="navigateToMenu('videogames')">
     <div class="section-header">
       <h2>Videogames</h2>
       <ion-icon name="chevron-forward-circle"></ion-icon>
@@ -92,8 +83,7 @@
             class="product-image">
         </div>
         <div class="game-info">
-          <span class="game-brand">{{getBrandFromName(product.name)}}</span>
-          <span class="game-name">{{product.name}}</span>
+          <span class="game-title">{{product.name}}</span>
           <span class="game-price">${{product.price}}</span>
         </div>
       </div>
