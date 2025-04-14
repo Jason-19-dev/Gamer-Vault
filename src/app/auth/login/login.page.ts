@@ -1,103 +1,131 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { IonCard, IonContent, IonButton, IonRow, IonCol, IonInput, IonIcon, AlertController, IonInputPasswordToggle, IonItem, IonList, IonText, IonHeader, IonToolbar } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/services/auth/auth.service';
-import { Customer } from 'src/types';
-import { addIcons } from 'ionicons';
-import * as icons from 'ionicons/icons';
+import { Component, type OnInit } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule, ReactiveFormsModule, FormBuilder, type FormGroup, Validators } from "@angular/forms"
+import {
+  IonCard,
+  IonContent,
+  IonButton,
+  IonInput,
+  IonIcon,
+  AlertController,
+  IonText,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+} from "@ionic/angular/standalone"
+import { Router } from "@angular/router"
+import { AuthService } from "src/services/auth/auth.service"
+import { UserService } from "src/services/user/user.service"
+import { addIcons } from "ionicons"
+import { personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle } from "ionicons/icons"
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  // standalone: true,
-  imports: [IonToolbar, IonHeader, IonText, 
+  selector: "app-login",
+  templateUrl: "./login.page.html",
+  styleUrls: ["./login.page.scss"],
+  standalone: true,
+  imports: [
     IonContent,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonCard,
     IonButton,
     IonIcon,
-    ReactiveFormsModule,
-    IonInput
-
-
-  ]
+    IonInput,
+    IonText,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+  ],
 })
 export class LoginPage implements OnInit {
-
   loginForm: FormGroup
+  showPassword = false
 
-  constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder, private authService: AuthService) {
-    addIcons(icons)
+  constructor(
+    private router: Router,
+    private alertController: AlertController,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService,
+  ) {
+    addIcons({ personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle });
+
     this.loginForm = this.fb.group({
-      userName: ["",[Validators.required,Validators.maxLength(25)]],
-      password: ["",[Validators.required,Validators.maxLength(50)]],
+      userName: ["", [Validators.required, Validators.maxLength(25)]],
+      password: ["", [Validators.required, Validators.maxLength(50)]],
     })
   }
 
-  ngOnInit() {
-    
+  ngOnInit() {}
+
+  togglePassword() {
+    this.showPassword = !this.showPassword
   }
 
-  // 
   onLogin() {
+    if (this.loginForm.invalid) {
+      return
+    }
 
     const { userName: name, password: pass } = this.loginForm.value
-    
+
     this.authService.login(name, pass).subscribe({
       next: (response) => {
-        console.log(response);
+        console.log(response)
         if (response.token) {
+          // Store user information
+          this.userService.setCurrentUser({
+            userName: name,
+            fullName: name.toUpperCase(), // Using username as fullName for demo
+            email: `${name}@example.com`, // Demo email
+            profileImage: "https://ionicframework.com/docs/img/demos/avatar.svg", // Default profile image
+          })
+
           this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
-          this.router.navigateByUrl('home');
+          this.router.navigateByUrl("home")
         } else {
-          this.alert('Incorrect username or password', 'Try again', '');
+          this.alert("Incorrect username or password", "Try again", "")
         }
       },
       error: (err) => {
-        console.error(err);
-        this.alert('Server error', 'Please try again later', '');
-      }
-    });
+        console.error(err)
+        this.alert("Server error", "Please try again later", "")
+      },
+    })
   }
 
   onSignup() {
-
-    this.router.navigateByUrl('signin');
+    this.router.navigateByUrl("signin")
   }
 
-  // alert 
   async alert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
       message: message,
-      buttons: ['OK'],
-    });
+      buttons: ["OK"],
+    })
 
-    await alert.present();
-
-    // LocalNotifications.schedule({
-    //   notifications: [
-    //     {
-    //       id: 1,
-    //       title: this.title,
-    //       body: `Has ahorrado $0.50, sigue así.`,
-    //       schedule: { at: new Date(Date.now() + 1000) }, // para ue mande en un seunfo
-    //       sound:"default",
-
-    //     }
-    //   ]
-    // })
+    await alert.present()
   }
 
-  //  login google
   signinGoogle() {
+    // Google sign in logic
+    console.log("Google sign in clicked")
 
-    
+    // For demo purposes, let's simulate a Google login
+    const mockUser = {
+      userName: "google_user",
+      fullName: "Google User",
+      email: "google_user@gmail.com",
+      profileImage: "https://ionicframework.com/docs/img/demos/avatar.svg",
+    }
 
+    this.userService.setCurrentUser(mockUser)
+    this.router.navigateByUrl("home")
   }
 }
+
+export default LoginPage

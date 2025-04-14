@@ -47,12 +47,10 @@ interface GameItem {
     CommonModule,
     FormsModule,
     IonSearchbar,
-    IonItem,
     IonNote,
     IonHeader,
     TabsPagesPage,
     IonIcon,
-    IonButton,
   ],
 })
 export class HomePage implements OnInit {

@@ -1,4 +1,5 @@
 export const environment = {
-  production: true,
-  apiURL: 'https://pdm7xkaly6.execute-api.us-east-1.amazonaws.com/prod', // Cambia esto por la URL de tu API en producción
+  production: false,
+
+  apiURL: 'http://http://nlb-test-cors-b6e704113b6f1ed6.elb.us-east-1.amazonaws.com'
 };

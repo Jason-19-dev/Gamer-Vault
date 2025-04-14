@@ -32,7 +32,7 @@
   <ng-container *ngIf="!isLoading">
     @if (products.length > 0) {
       <div class="products-container">
-        <div class="product-card" *ngFor="let product of products;">
+        <div class="product-card" *ngFor="let product of products;" (click)="goToProductDetail(product)">
           <div class="product-image-container">
             <img class="product-image" [src]="product.image_url" [alt]="product.name">
           </div>

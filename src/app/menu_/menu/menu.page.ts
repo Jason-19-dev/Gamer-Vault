@@ -1,9 +1,9 @@
 import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
-import  { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
 import {
-   AlertController,
+  AlertController,
   IonContent,
   IonHeader,
   IonIcon,
@@ -14,11 +14,12 @@ import {
   IonLabel,
   IonSpinner,
 } from "@ionic/angular/standalone"
-import  { Product } from "src/types"
-import  { ProductsService } from "src/services/products/products.service"
+import type { Product } from "src/types"
+import { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
-import  { HttpClient } from "@angular/common/http"
+import { HttpClient } from "@angular/common/http"
+import { environment } from "src/environments/environment";
 
 // Interfaces para los datos de la API según la estructura real
 interface ApiCoinItem {
@@ -58,9 +59,6 @@ interface ApiGameItem {
     TabsPagesPage,
     IonTitle,
     IonSearchbar,
-    IonChip,
-    IonLabel,
-    IonIcon,
     IonSpinner,
   ],
 })
@@ -128,6 +126,7 @@ export class MenuPage implements OnInit {
     private alertController: AlertController,
     private route: ActivatedRoute,
     private http: HttpClient,
+    private router: Router, // Añadir Router al constructor
   ) {}
 
   ngOnInit() {
@@ -150,80 +149,72 @@ export class MenuPage implements OnInit {
   }
 
   private loadCoinsFromAPI() {
-    this.isLoading = true
-    // Usar HttpClient para obtener monedas desde la API
+    this.isLoading = true;
     this.http
-      .get<ApiCoinItem[]>("http://nlb-test-api-jason-54771c5df4f8cef1.elb.us-east-1.amazonaws.com/products/coins")
+      .get<ApiCoinItem[]>(`${environment.apiURL}/products/coins`)
       .subscribe({
         next: (data) => {
-          console.log("Monedas recibidas:", data)
+          console.log("Monedas recibidas:", data);
 
-          // Transformar los datos de la API al formato que espera el componente
           this.products = data.map((item) => ({
             id: item.product_id,
             name: item.game_name || "Moneda de juego",
             description: `Monedas para ${item.game_name}`,
-            price: 9.99, // Precio por defecto si no viene en la API
+            price: 9.99,
             stock: 999,
             available: true,
             image_url: item.image_url || "assets/images/default-image.png",
             create_at: new Date().toISOString(),
-            // Datos adicionales específicos de monedas
             category_name: item.category_name,
             game_name: item.game_name,
-          }))
+          }));
 
-          this.isLoading = false
+          this.isLoading = false;
         },
         error: (err) => {
-          console.error("Error al obtener monedas:", err.message)
-          this.alert()
-          this.messageNotification()
-          // Usar datos locales como respaldo en caso de error
-          this.products = this.fallbackCoins
-          this.isLoading = false
+          console.error("Error al obtener monedas:", err.message);
+          this.alert();
+          this.messageNotification();
+          this.products = this.fallbackCoins;
+          this.isLoading = false;
         },
-      })
+      });
   }
 
   private loadGamesFromAPI() {
-    this.isLoading = true
-    // Usar HttpClient para obtener juegos desde la API
+    this.isLoading = true;
     this.http
-      .get<ApiGameItem[]>("http://nlb-test-api-jason-54771c5df4f8cef1.elb.us-east-1.amazonaws.com/products/videogames")
+      .get<ApiGameItem[]>(`${environment.apiURL}/products/videogames`)
       .subscribe({
         next: (data) => {
-          console.log("Juegos recibidos:", data)
+          console.log("Juegos recibidos:", data);
 
-          // Transformar los datos de la API al formato que espera el componente
           this.products = data.map((item) => ({
             id: item.product_id,
             name: item.name || "Videojuego",
             description: this.formatGameDescription(item),
-            price: Number.parseFloat(item.price) || 59.99, // Convertir el precio a número
+            price: Number.parseFloat(item.price) || 59.99,
             stock: 10,
             available: true,
             image_url: item.image_url || "assets/images/default-image.png",
             create_at: item.created_at || new Date().toISOString(),
-            // Datos adicionales específicos de videojuegos
             category_name: item.category_name,
             developer: item.description?.developer,
             genre: item.description?.genre,
             platforms: item.description?.platforms,
             release_year: item.description?.release_year,
-          }))
+          }));
 
-          this.isLoading = false
+          this.isLoading = false;
         },
         error: (err) => {
-          console.error("Error al obtener juegos:", err.message)
-          this.alert()
-          this.messageNotification()
-          // Usar datos locales como respaldo en caso de error
-          this.products = this.fallbackGames
-          this.isLoading = false
+          console.error("Error al obtener juegos:", err.message);
+          this.alert();
+          this.messageNotification();
+          this.products = this.fallbackGames;
+          this.isLoading = false;
         },
-      })
+      });
   }
 
   // Método para formatear la descripción del juego
@@ -293,6 +284,17 @@ export class MenuPage implements OnInit {
           sound: "default",
         },
       ],
+    })
+  }
+
+  // Método para navegar a la página de detalles del producto
+  goToProductDetail(product: any) {
+    // Determinar el tipo de producto (videojuego o moneda)
+    const productType = this.title === "Videogames" ? "videogame" : "coin"
+
+    // Navegar a la página de detalles con el ID del producto y el tipo
+    this.router.navigate(["/product-detail", product.id], {
+      queryParams: { type: productType },
     })
   }
 }

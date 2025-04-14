@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
 
   apiURL: 'http://nlb-test-api-jason-54771c5df4f8cef1.elb.us-east-1.amazonaws.com'
 };

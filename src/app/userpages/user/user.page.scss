@@ -1,12 +1,6 @@
 ion-content {
-  --background: transparent !important;
-  background: linear-gradient(to bottom, #0a1933, #1a3a6c) !important;
-}
-
-ion-header {
-  &.has-shadow {
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  }
+  --background: #0a1933;
+  --color: white;
 }
 
 ion-header ion-toolbar {
@@ -20,57 +14,38 @@ ion-title {
   font-size: 1.2rem;
   font-weight: 600;
   color: white;
-  font-weight: bold;
-}
-
-/* Logout Button Styling */
-.logout-button {
-  --color: white;
-  --background: rgba(255, 255, 255, 0.1);
-  --border-radius: 20px;
-  --padding-start: 12px;
-  --padding-end: 12px;
-  --padding-top: 6px;
-  --padding-bottom: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-transform: none;
-  margin-right: 8px;
-  transition: background-color 0.3s;
-}
-
-.logout-button:hover {
-  --background: rgba(255, 255, 255, 0.2);
-}
-
-.logout-button ion-icon {
-  margin-right: 4px;
-  font-size: 1.1rem;
 }
 
 .profile-container {
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 20px 0;
 }
 
-.avatar-container {
+.avatar-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  justify-content: center;
+  margin-bottom: 40px;
+  width: 100%;
+  text-align: center;
 }
 
 ion-avatar {
   width: 80px;
   height: 80px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  border: 2px solid white;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .name-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
@@ -84,52 +59,124 @@ ion-avatar {
 .name-container ion-icon {
   color: white;
   font-size: 1rem;
+  cursor: pointer;
 }
 
-.menu-items {
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-bottom: auto;
+  padding: 0 16px;
 }
 
-ion-item {
-  --background: rgba(255, 255, 255, 0.1);
-  --color: white;
-  --border-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
-  border-radius: 10px;
+.action-button {
+  --background: white;
+  --color: #0a1933;
+  --border-radius: 8px;
+  --box-shadow: none;
+  font-weight: 500;
+  height: 48px;
+  margin: 0;
+  text-transform: none;
 }
 
-ion-item ion-icon {
+.action-button ion-icon {
+  margin-right: 8px;
   font-size: 1.2rem;
+}
+
+.logout-button {
+  --background: white;
+  --color: #0a1933;
 }
 
 .delete-account-container {
   display: flex;
   justify-content: center;
-  margin-top: auto;
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 
-.delete-button {
-  --color: #ffc409;
-  font-weight: 500;
+.delete-button { 
+  --color: #ff3b30; 
+  --background: transparent !important; 
+  --background-hover: transparent !important;
+  --background-activated: transparent !important;
+  --background-focused: transparent !important;
+  font-size: 0.9rem; 
+  text-transform: none; 
+}
+
+.delete-button ion-icon { 
+  margin-right: 8px; 
+  font-size: 1.1rem; 
+  color: #ff3b30;
+}
+
+.no-user-container {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 20px;
+  text-align: center;
+  
+  p {
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  ion-button {
+    --background: #e90052;
+    --color: white;
+  }
 }
 
-.delete-icon {
-  font-size: 24px;
-  margin-bottom: 5px;
-  border: 1px solid #ffc409;
-  border-radius: 50%;
-  padding: 8px;
+.menu-items {
+  margin-bottom: auto;
+  padding: 0 16px;
 }
 
-/* Ajuste para la barra de estado en iOS */
+.menu-items ion-item {
+  --background: white;
+  --color: #0a1933;
+  --border-radius: 8px;
+  margin-bottom: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 16px;
+  --min-height: 48px;
+}
+
+.menu-items ion-item ion-icon {
+  color: #0a1933;
+  margin-right: 12px;
+}
+
+.menu-items ion-item ion-label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Styling for the tab bar */
+ion-tab-bar {
+  --background: #0a1933;
+  --color: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+ion-tab-button {
+  --color-selected: #ffcc00;
+}
+
+/* Adjust for iOS status bar */
 .ios ion-header {
   padding-top: var(--ion-safe-area-top);
 }
 
-/* Ajuste para la barra de estado en Android */
+/* Adjust for Android status bar */
 .md ion-header {
   padding-top: var(--ion-safe-area-top);
 }
-
