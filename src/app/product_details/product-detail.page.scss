@@ -30,7 +30,7 @@ ion-header ion-toolbar {
 
 .hero-banner {
   position: relative;
-  height: 445px;
+  height: 440px;
   overflow: hidden;
 }
 
@@ -159,9 +159,24 @@ ion-header ion-toolbar {
 }
 
 .view-cart-button {
-  --background: #ffcc00;
-  --color: #000000;
+  --background: #4caf50 !important; /* Verde para el botón de ver carrito */
+  --color: white !important;
+  flex: 1; /* Ambos botones tendrán el mismo ancho */
   margin: 0;
+}
+
+.remove-from-cart-button {
+  --background: #f44336 !important; /* Rojo para el botón de eliminar */
+  --color: white !important;
+  flex: 1; /* Ambos botones tendrán el mismo ancho */
+  margin: 0;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 8px; /* Espaciado entre los botones */
+  justify-content: center; /* Centra los botones horizontalmente */
+  margin-top: 16px; /* Espaciado superior */
 }
 
 .screenshots-section {
@@ -188,4 +203,39 @@ ion-header ion-toolbar {
   padding: 40px 20px;
   color: rgba(255, 255, 255, 0.7);
   font-size: 16px;
+}
+
+.toast-message {
+  position: fixed;
+  margin-top: 5px;
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  background-color: #28a745; /* Success green */
+  color: white;
+  padding: 12px 16px 15px 15px; /* Espaciado interno */
+  font-size: 14px;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center; /* Centra el texto */
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+ion-icon {
+  font-size: 20px; /* Tamaño del ícono */
 }

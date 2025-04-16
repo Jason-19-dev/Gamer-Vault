@@ -63,13 +63,17 @@ interface ApiGameItem {
   ],
 })
 export class MenuPage implements OnInit {
-  title = "Videogames"
-  categories = ["Adventure", "Shooters", "Horror", "Action RPG"]
-  selectedCategory: string | null = null
-  isLoading = true
+  title = "Videogames";
+  categories = ["Adventure", "Shooters", "Horror", "Action RPG"];
+  selectedCategory: string | null = null;
+  isLoading = true;
 
   // Productos que se mostrarán
-  products: any[] = []
+  products: any[] = [];
+  allProducts: any[] = []; // Almacena todos los productos para el filtrado
+
+  // Consulta de búsqueda
+  searchQuery: string = "";
 
   // Productos de respaldo en caso de error
   fallbackGames: Product[] = [
@@ -169,6 +173,7 @@ export class MenuPage implements OnInit {
             game_name: item.game_name,
           }));
 
+          this.allProducts = [...this.products]; // Guarda todos los productos para el filtrado
           this.isLoading = false;
         },
         error: (err) => {
@@ -176,6 +181,7 @@ export class MenuPage implements OnInit {
           this.alert();
           this.messageNotification();
           this.products = this.fallbackCoins;
+          this.allProducts = [...this.products]; // Guarda los productos de respaldo
           this.isLoading = false;
         },
       });
@@ -193,7 +199,7 @@ export class MenuPage implements OnInit {
             id: item.product_id,
             name: item.name || "Videojuego",
             description: this.formatGameDescription(item),
-            price: Number.parseFloat(item.price) || 59.99,
+            price: Number.parseFloat(item.price) || 0.0,
             stock: 10,
             available: true,
             image_url: item.image_url || "assets/images/default-image.png",
@@ -205,6 +211,7 @@ export class MenuPage implements OnInit {
             release_year: item.description?.release_year,
           }));
 
+          this.allProducts = [...this.products]; // Guarda todos los productos para el filtrado
           this.isLoading = false;
         },
         error: (err) => {
@@ -212,6 +219,7 @@ export class MenuPage implements OnInit {
           this.alert();
           this.messageNotification();
           this.products = this.fallbackGames;
+          this.allProducts = [...this.products]; // Guarda los productos de respaldo
           this.isLoading = false;
         },
       });
@@ -260,6 +268,19 @@ export class MenuPage implements OnInit {
     // Implementar lógica de filtrado por juego
     // Por ahora, solo mostramos un mensaje en consola
     console.log(`Filtrando monedas por juego: ${game}`)
+  }
+
+  // Método para filtrar productos
+  filterProducts() {
+    const query = this.searchQuery.toLowerCase().trim();
+
+    if (query) {
+      this.products = this.allProducts.filter((product) =>
+        product.name.toLowerCase().includes(query)
+      );
+    } else {
+      this.products = [...this.allProducts]; // Restablece los productos si no hay búsqueda
+    }
   }
 
   async alert() {

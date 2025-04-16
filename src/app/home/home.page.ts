@@ -25,8 +25,9 @@ import { chevronForwardCircle, chevronForwardCircleOutline } from "ionicons/icon
 import  { ProductsService } from "src/services/products/products.service"
 
 interface CoinItem {
-  game: string
-  image_url: string
+  id: string;
+  game_name: string; // Nombre del juego o moneda
+  image_url: string;
 }
 
 interface GameItem {
@@ -54,139 +55,135 @@ interface GameItem {
   ],
 })
 export class HomePage implements OnInit {
-  puntos = 6
-  saldo = 10.99
-  message = ""
-  isAndroid = false
+  puntos = 6;
+  saldo = 10.99;
+  message = "";
+  isAndroid = false;
 
-  products: Product[] = [] // Inicializa como un arreglo vacío
-  public results: Product[] = []
+  products: Product[] = []; // Inicializa como un arreglo vacío
+  public results: Product[] = [];
 
   // Add these properties for categorized products
-  coinProducts: CoinItem[] = []
-  gameProducts: GameItem[] = []
+  coinProducts: CoinItem[] = []; // Solo se llenará con datos de la API
+  gameProducts: GameItem[] = []; // Solo se llenará con datos de la API
 
   // Store original data for search filtering
-  private allCoinProducts: CoinItem[] = []
-  private allGameProducts: GameItem[] = []
+  private allCoinProducts: CoinItem[] = [];
+  private allGameProducts: GameItem[] = [];
 
   // Current search query
-  searchQuery = ""
+  searchQuery = "";
 
-  //variables del banner
-  currentBannerImage = ""
-  currentBannerText = ""
-  private bannerIndex = 0
-  private bannerInterval: any
+  // Variables del banner
+  currentBannerImage = "";
+  currentBannerText = "";
+  private bannerIndex = 0;
+  private bannerInterval: any;
 
   constructor(
-    private alertController: AlertController, // Correctamente inyectado
+    private alertController: AlertController,
     private platform: Platform,
     private router: Router,
     private productsService: ProductsService,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
-    addIcons({ chevronForwardCircle, chevronForwardCircleOutline })
+    addIcons({ chevronForwardCircle, chevronForwardCircleOutline });
   }
 
   ngOnInit() {
-    this.fetchGameProducts()
-    this.fetchCoinProducts()
+    this.fetchGameProducts();
+    this.fetchCoinProducts();
   }
 
   ngOnDestroy() {
     if (this.bannerInterval) {
-      clearInterval(this.bannerInterval)
+      clearInterval(this.bannerInterval);
     }
   }
 
   private fetchCoinProducts() {
     this.http.get<CoinItem[]>(`${environment.apiURL}/products/coins`).subscribe({
       next: (data) => {
-        console.log("Monedas recibidas:", data)
-        this.coinProducts = data
-        this.allCoinProducts = [...data] // Store original data for filtering
+        console.log("Monedas recibidas:", data);
+        this.coinProducts = data; // Solo datos de la API
+        this.allCoinProducts = [...data]; // Guarda los datos originales para la búsqueda
       },
       error: (err) => {
-        console.error("Error al obtener monedas:", err.message)
+        console.error("Error al obtener monedas:", err.message);
       },
-    })
+    });
   }
 
   private fetchGameProducts() {
     this.http.get<GameItem[]>(`${environment.apiURL}/products/videogames`).subscribe({
       next: (data) => {
-        console.log("Juegos recibidos:", data)
-        this.gameProducts = data
-        this.allGameProducts = [...data] // Store original data for filtering
-        this.startBannerRotation()
+        console.log("Juegos recibidos:", data);
+        this.gameProducts = data; // Solo datos de la API
+        this.allGameProducts = [...data]; // Guarda los datos originales para la búsqueda
+        this.startBannerRotation();
       },
       error: (err) => {
-        console.error("Error al obtener juegos:", err.message)
+        console.error("Error al obtener juegos:", err.message);
       },
-    })
+    });
   }
 
   private startBannerRotation() {
-    if (this.gameProducts.length === 0) return
+    if (this.gameProducts.length === 0) return;
 
-    this.currentBannerImage = this.gameProducts[0].image_url
-    this.currentBannerText = this.gameProducts[0].name
+    this.currentBannerImage = this.gameProducts[0].image_url;
+    this.currentBannerText = this.gameProducts[0].name;
 
     this.bannerInterval = setInterval(() => {
-      this.bannerIndex = (this.bannerIndex + 1) % this.gameProducts.length
-      const current = this.gameProducts[this.bannerIndex]
-      this.currentBannerImage = current.image_url
-      this.currentBannerText = current.name
-    }, 5000)
+      this.bannerIndex = (this.bannerIndex + 1) % this.gameProducts.length;
+      const current = this.gameProducts[this.bannerIndex];
+      this.currentBannerImage = current.image_url;
+      this.currentBannerText = current.name;
+    }, 5000);
   }
 
-  // Updated handleInput method to filter both categories
   handleInput(event: Event) {
-    const target = event.target as HTMLIonSearchbarElement
-    const query = target.value?.toLowerCase().trim() || ""
-    this.searchQuery = query
+    const target = event.target as HTMLIonSearchbarElement;
+    const query = target.value?.toLowerCase().trim() || "";
+    this.searchQuery = query;
 
     // Apply filtering
-    this.filterProducts()
+    this.filterProducts();
   }
 
-  // Separate method for filtering to make the code cleaner
   filterProducts() {
     if (this.searchQuery) {
-      // Filter game products by name
+      // Filtrar productos de videojuegos por nombre
       this.gameProducts = this.allGameProducts.filter((product) =>
-        product.name.toLowerCase().includes(this.searchQuery),
-      )
+        product.name.toLowerCase().includes(this.searchQuery)
+      );
 
-      // Filter coin products by game name
+      // Filtrar monedas por el campo 'game_name'
       this.coinProducts = this.allCoinProducts.filter((product) =>
-        product.game.toLowerCase().includes(this.searchQuery),
-      )
+        product.game_name.toLowerCase().includes(this.searchQuery)
+      );
 
-      // Show message if no results found in either category
+      // Mostrar mensaje si no se encuentran resultados en ninguna categoría
       if (this.gameProducts.length === 0 && this.coinProducts.length === 0) {
-        this.message = "No Results"
+        this.message = "No Results";
       } else {
-        this.message = ""
+        this.message = "";
       }
-
-      console.log(`Search results - Games: ${this.gameProducts.length}, Coins: ${this.coinProducts.length}`)
     } else {
-      // Reset to original data when search is cleared
-      this.gameProducts = [...this.allGameProducts]
-      this.coinProducts = [...this.allCoinProducts]
-      this.message = ""
+      // Restablecer los datos originales cuando se borre la búsqueda
+      this.gameProducts = [...this.allGameProducts];
+      this.coinProducts = [...this.allCoinProducts];
+      this.message = "";
     }
 
-    // Update banner rotation if game products have changed
+    // Actualizar la rotación del banner si los productos de videojuegos han cambiado
     if (this.gameProducts.length > 0) {
-      this.bannerIndex = 0
-      this.currentBannerImage = this.gameProducts[0].image_url
-      this.currentBannerText = this.gameProducts[0].name
+      this.bannerIndex = 0;
+      this.currentBannerImage = this.gameProducts[0].image_url;
+      this.currentBannerText = this.gameProducts[0].name;
     } else {
-      this.currentBannerImage = ""
-      this.currentBannerText = "No games found"
+      this.currentBannerImage = "";
+      this.currentBannerText = "No games found";
     }
   }
 

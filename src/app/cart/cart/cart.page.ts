@@ -50,6 +50,7 @@ export class CartPage implements OnInit, OnDestroy {
   roundedTotal = 0
   savings = 0
   finalTotal = 0
+  toastMessage: string | null = null; // Propiedad para el mensaje del toast
   private cartSubscription: Subscription | null = null
 
   constructor(
@@ -107,23 +108,23 @@ export class CartPage implements OnInit, OnDestroy {
 
   removeFromCart(product: CartItem) {
     this.cartService.removeCart(product)
-    this.showToast(`${product.name} eliminado del carrito`)
+    this.showToast(`${product.name} removed from cart`)
   }
 
   async clearCart() {
     const alert = await this.alertController.create({
-      header: "Confirmar",
-      message: "¿Estás seguro de que quieres vaciar el carrito?",
+      header: "Confirm",
+      message: "Are you sure you want to clear the cart?",
       buttons: [
         {
-          text: "Cancelar",
+          text: "Cancel",
           role: "cancel",
         },
         {
-          text: "Vaciar",
+          text: "Clear",
           handler: () => {
             this.cartService.clearCart()
-            this.showToast("Carrito vaciado")
+            this.showToast("Cart cleared")
           },
         },
       ],
@@ -134,18 +135,16 @@ export class CartPage implements OnInit, OnDestroy {
 
   checkout() {
     // Here you would implement the checkout process
-    this.showToast("Procesando pago...")
+    this.showToast("Processing payment...")
     // Navigate to a thank you page or payment processing page
     // this.router.navigate(['/checkout']);
   }
 
-  async showToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
-      position: "bottom",
-    })
-    toast.present()
+  showToast(message: string) {
+    this.toastMessage = message; // Actualiza el mensaje del toast
+    setTimeout(() => {
+      this.toastMessage = null; // Limpia el mensaje después de 3 segundos
+    }, 3000);
   }
 
   continueShopping() {

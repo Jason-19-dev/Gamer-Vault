@@ -32,37 +32,13 @@
             [src]="product.image_url || 'assets/images/default-image.png'"
             class="circle-image">
         </div>
+        <!-- Mostrar el nombre de las monedas -->
+        <p class="game-name">{{ product.game_name }}</p>
       </div>
 
       <!-- Show default icons if no coin products are found -->
       <ng-container *ngIf="coinProducts.length === 0">
-        <div class="game-icon-item">
-          <div class="game-circle fortnite">
-            <span>F</span>
-          </div>
-          <p class="game-name">Fortnite</p>
-        </div>
-
-        <div class="game-icon-item">
-          <div class="game-circle roblox">
-            <span>□</span>
-          </div>
-          <p class="game-name">Roblox</p>
-        </div>
-
-        <div class="game-icon-item">
-          <div class="game-circle lol">
-            <span>L</span>
-          </div>
-          <p class="game-name">LoL</p>
-        </div>
-
-        <div class="game-icon-item">
-          <div class="game-circle fifa">
-            <span>F</span>
-          </div>
-          <p class="game-name">FIFA</p>
-        </div>
+        
       </ng-container>
     </div>
   </div>

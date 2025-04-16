@@ -14,8 +14,7 @@ import {
   IonChip,
   IonLabel,
   IonButton,
-  ToastController,
-} from "@ionic/angular/standalone"
+  ToastController, IonIcon } from "@ionic/angular/standalone"
 import { ProductsService } from "src/services/products/products.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { HttpClient } from "@angular/common/http"
@@ -28,7 +27,7 @@ import type { Subscription } from "rxjs"
   templateUrl: "./product-detail.page.html",
   styleUrls: ["./product-detail.page.scss"],
   standalone: true,
-  imports: [
+  imports: [IonIcon, 
     CommonModule,
     FormsModule,
     IonContent,
@@ -53,6 +52,7 @@ export class ProductDetailPage implements OnInit, OnDestroy {
   screenshots: string[] = []
   similarProducts: any[] = []
   isInCart = false
+  toastMessage: string | null = null // Propiedad para el mensaje del toast
   private cartSubscription: Subscription | null = null
 
   constructor(
@@ -253,13 +253,8 @@ export class ProductDetailPage implements OnInit, OnDestroy {
 
     // Check if product is already in cart
     if (this.isInCart) {
-      const toast = await this.toastController.create({
-        message: `${this.product.name} ya está en el carrito`,
-        duration: 2000,
-        position: "bottom",
-        color: "warning",
-      })
-      toast.present()
+      this.toastMessage = `${this.product.name} is already in the cart`
+      setTimeout(() => (this.toastMessage = null), 3000) // Clear message after 3 seconds
       return
     }
 
@@ -267,18 +262,24 @@ export class ProductDetailPage implements OnInit, OnDestroy {
     const added = this.cartService.addToCart(this.product)
 
     if (added) {
-      // Show success toast
-      const toast = await this.toastController.create({
-        message: `${this.product.name} añadido al carrito`,
-        duration: 2000,
-        position: "bottom",
-        color: "success",
-      })
-      toast.present()
+      // Show success message
+      this.toastMessage = `${this.product.name} added to the cart`
+      setTimeout(() => (this.toastMessage = null), 3000) // Clear message after 3 seconds
 
       // Update button state
       this.isInCart = true
     }
+  }
+
+  removeFromCart() {
+    if (!this.product || !this.product.id) return;
+
+    this.cartService.removeCart(this.product);
+    this.toastMessage = `${this.product.name} removed from the cart`;
+    setTimeout(() => (this.toastMessage = null), 3000); // Clear message after 3 seconds
+
+    // Actualiza el estado del botón
+    this.isInCart = false;
   }
 
   goToProductDetail(productId: string) {

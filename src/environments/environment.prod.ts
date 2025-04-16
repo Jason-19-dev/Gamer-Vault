@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
 
-  apiURL: 'http://http://nlb-test-cors-b6e704113b6f1ed6.elb.us-east-1.amazonaws.com'
+  apiURL: 'https://mg3hk6z5q4.execute-api.us-east-1.amazonaws.com/dev'
 };

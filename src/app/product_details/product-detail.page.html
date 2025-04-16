@@ -8,10 +8,15 @@
 </ion-header>
 
 <ion-content>
+  <!-- Toast message container -->
+  <div *ngIf="toastMessage" class="toast-message">
+    {{ toastMessage }}
+  </div>
+
   <!-- Loading indicator -->
   <div *ngIf="isLoading" class="loading-container">
     <ion-spinner name="circular"></ion-spinner>
-    <p>Cargando detalles...</p>
+    <p>Loading details...</p>
   </div>
 
   <!-- Product details -->
@@ -26,7 +31,7 @@
 
     <!-- Tags section - horizontal scrollable -->
     <div class="tags-section">
-      <h2 class="section-title">TAGS</h2>
+      <h2 class="section-title">Tags</h2>
       <div class="tags-scroll-container">
         <div class="tags-container">
           <ion-chip *ngFor="let tag of productTags" class="tag-chip">
@@ -40,14 +45,14 @@
     <div class="description-section">
       <h2 class="section-title">Description</h2>
       
-      <!-- Para videojuegos, mostrar una descripción genérica si no hay una específica -->
+      <!-- For videogames, show a generic description if none is provided -->
       <p *ngIf="isVideoGame" class="description-text">
-        {{ product.description?.description || 'Un juego de ' + product.description?.genre }}
+        {{ product.description?.description || 'A game of ' + product.description?.genre }}
       </p>
       
-      <!-- Para monedas, mostrar la descripción directamente -->
+      <!-- For coins, show the description directly -->
       <p *ngIf="!isVideoGame" class="description-text">
-        {{ product.description || 'Moneda virtual para ' + product.game_name }}
+        {{ product.description || 'Virtual currency for ' + product.game_name }}
       </p>
       
       <!-- Additional details for videogames -->
@@ -82,9 +87,14 @@
       </ng-container>
       
       <ng-template #alreadyInCart>
-        <ion-button expand="block" class="view-cart-button" (click)="goToCart()">
-          View in Cart
-        </ion-button>
+        <div class="cart-actions">
+          <ion-button fill="clear" class="view-cart-button" (click)="goToCart()">
+            <ion-icon name="cart-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" class="remove-from-cart-button" (click)="removeFromCart()">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ng-template>
     </div>
 
@@ -99,7 +109,7 @@
 
   <!-- No product found message -->
   <div *ngIf="!isLoading && !product" class="message">
-    Producto no encontrado
+    Product not found
   </div>
 </ion-content>
 

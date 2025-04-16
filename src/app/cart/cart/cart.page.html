@@ -1,14 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Carrito</ion-title>
+    <ion-title>Cart</ion-title>
     <ion-button fill="clear" slot="end" class="clear-button" (click)="clearCart()">
-      <ion-icon name="trash-outline" slot="start"></ion-icon>
-      Limpiar Todo
+      <ion-icon name="trash-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Toast message container -->
+  <div *ngIf="toastMessage" class="toast-message">
+    {{ toastMessage }}
+  </div>
+
   <div class="cart-container">
     <div class="cart-items">
       <ion-list lines="none">
@@ -20,7 +24,6 @@
             <h3 class="item-name">{{ item.name }}</h3>
             <div class="item-price-quantity">
               <span class="item-price">${{ item.price.toFixed(2) }}</span>
-              <span class="item-quantity">x {{ item.quantity }}</span>
             </div>
           </div>
           <ion-button fill="clear" class="remove-button" (click)="removeFromCart(item)">
@@ -31,18 +34,18 @@
       
       <div class="empty-cart-message" *ngIf="cartItems.length === 0">
         <ion-icon name="cart-outline" class="empty-cart-icon"></ion-icon>
-        <p>Tu carrito está vacío</p>
+        <p>Your cart is empty</p>
         <ion-button expand="block" (click)="continueShopping()">
-          Continuar comprando
+          Continue Shopping
         </ion-button>
       </div>
     </div>
 
     <div class="cart-summary" *ngIf="cartItems.length > 0">
-      <h2 class="summary-title">Resumen de compra</h2>
+      <h2 class="summary-title">Order Summary</h2>
       
       <div class="summary-row">
-        <span class="summary-label">Productos</span>
+        <span class="summary-label">Products</span>
         <span class="summary-value">{{cartItems.length}}</span>
       </div>
       
@@ -52,12 +55,12 @@
       </div>
       
       <div class="summary-row">
-        <span class="summary-label">Total redondeado</span>
+        <span class="summary-label">Rounded Total</span>
         <span class="summary-value">${{roundedTotal.toFixed(2)}}</span>
       </div>
       
       <div class="summary-row" *ngIf="savings > 0">
-        <span class="summary-label">Ahorro</span>
+        <span class="summary-label">Savings</span>
         <span class="summary-value discount">${{savings.toFixed(2)}}</span>
       </div>
       
@@ -67,7 +70,7 @@
       </div>
       
       <ion-button expand="block" class="pay-button" (click)="checkout()">
-        Pagar
+        Checkout
         <ion-icon name="cart-outline" slot="end"></ion-icon>
       </ion-button>
     </div>
