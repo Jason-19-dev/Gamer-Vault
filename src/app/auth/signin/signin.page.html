@@ -4,9 +4,9 @@
       <img src="assets/icon/favicon.png" alt="logo" width="100" height="100" priority />
       <h1>GAMER VAULT</h1>
     </div>
-    
+
     <ion-card class="app-card">
-      
+
       <div class="signin-form">
         <form [formGroup]="form_signin" novalidate>
 
@@ -15,10 +15,10 @@
               <img src="assets/User.png" alt="" class="input-icon">
               <ion-input class="custom-input" label="Username" labelPlacement="floating" placeholder="e.g. ggEasy" formControlName="username" type="text" required></ion-input>
             </div>
-            <ion-text class="error-message" *ngIf="form_signin.get('username')?.hasError('required') && form_signin.get('username')?.touched"> 
+            <ion-text class="error-message" *ngIf="form_signin.get('username')?.hasError('required') && form_signin.get('username')?.touched">
               The username is required.
             </ion-text>
-            <ion-text class="error-message" *ngIf="form_signin.get('username')?.hasError('maxlength')"> 
+            <ion-text class="error-message" *ngIf="form_signin.get('username')?.hasError('maxlength')">
               Must be no more than 25 characters.
             </ion-text>
           </div>
@@ -35,7 +35,7 @@
               Must be over 18 years old.
             </ion-text>
           </div>
-          
+
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/email.png" alt="" class="input-icon">
@@ -61,7 +61,7 @@
               Invalid phone number.
             </ion-text>
           </div>
-          
+
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/key.png" alt="" class="input-icon">
@@ -77,7 +77,7 @@
               The password is required.
             </ion-text>
           </div>
-          
+
           <div class="input-container">
             <div class="input-wrapper">
               <img src="assets/key.png" alt="" class="input-icon">
@@ -86,12 +86,16 @@
             <ion-text class="error-message" *ngIf="form_signin.get('password_confirm')?.hasError('passwordMismatch') && form_signin.get('password_confirm')?.touched">
               The password validation doesn't match
             </ion-text>
-          </div>    
+          </div>
 
           <div class="terms-container">
-            <ion-checkbox formControlName="termsAccepted" labelPlacement="end">
-             I read and accept the terms and conditions.
+            <ion-checkbox [checked]="form_signin.value.termsAccepted" (click)="openTermsModal($event)">
             </ion-checkbox>
+
+            <ion-label class="terms-label">
+              I read and accept the
+              <span class="terms-link" (click)="openTermsModal($event)">terms and conditions</span>
+            </ion-label>
           </div>
 
         </form>
@@ -99,7 +103,7 @@
 
     </ion-card>
 
-          
+
     <ion-button [disabled]="form_signin.invalid" (click)="signin()" type="submit" expand="block" class="register-button">
        Register
     </ion-button>

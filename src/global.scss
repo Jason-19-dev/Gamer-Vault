@@ -50,7 +50,7 @@
 
 
 ion-button{
-    
+
     --background: #DEAD1C !important;
     --color: white !important;
     --box-shadow: none !important;
@@ -68,7 +68,7 @@ ion-button{
 
 
 .btnFacebook {
-    
+
     --background: transparent !important;
     background-color: #4368C7;
     border-radius: 10px;
@@ -79,27 +79,27 @@ html {
     /* Asegurarse de que la aplicación respete las áreas seguras */
     padding: var(--ion-safe-area-top) var(--ion-safe-area-right) var(--ion-safe-area-bottom) var(--ion-safe-area-left);
   }
-  
+
   /* Ajuste para la barra de estado en iOS */
   .ios ion-header {
     padding-top: var(--ion-safe-area-top);
   }
-  
+
   /* Ajuste para la barra de navegación en iOS */
   .ios ion-footer {
     padding-bottom: var(--ion-safe-area-bottom);
   }
-  
+
   /* Ajuste para la barra de estado en Android */
   .md ion-header {
     padding-top: var(--ion-safe-area-top);
   }
-  
+
   /* Ajuste para la barra de navegación en Android */
   .md ion-footer {
     padding-bottom: var(--ion-safe-area-bottom);
   }
-  
+
   /* Estilos para la sombra del header */
   ion-header.has-shadow::after {
     content: "";
@@ -112,3 +112,8 @@ html {
     z-index: 1;
   }
 
+ion-modal {
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
