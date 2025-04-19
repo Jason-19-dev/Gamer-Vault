@@ -137,7 +137,7 @@ export class CartPage implements OnInit, OnDestroy {
     // Here you would implement the checkout process
     this.showToast("Processing payment...")
     // Navigate to a thank you page or payment processing page
-    // this.router.navigate(['/checkout']);
+    this.router.navigate(['/checkout']);
   }
 
   showToast(message: string) {
