@@ -118,14 +118,25 @@ export class HomePage implements OnInit {
     this.http.get<GameItem[]>(`${environment.apiURL}/products/videogames`).subscribe({
       next: (data) => {
         console.log("Juegos recibidos:", data);
-        this.gameProducts = data; // Solo datos de la API
-        this.allGameProducts = [...data]; // Guarda los datos originales para la búsqueda
+
+        // Seleccionar 10 videojuegos aleatorios
+        this.gameProducts = this.getRandomItems(data, 10);
+        this.allGameProducts = [...this.gameProducts]; // Guarda los datos originales para la búsqueda
+
+        console.log("Juegos seleccionados aleatoriamente:", this.gameProducts);
+
         this.startBannerRotation();
       },
       error: (err) => {
         console.error("Error al obtener juegos:", err.message);
       },
     });
+  }
+
+  // Método para obtener elementos aleatorios de un arreglo
+  private getRandomItems<T>(array: T[], count: number): T[] {
+    const shuffled = [...array].sort(() => 0.5 - Math.random()); // Mezclar el arreglo
+    return shuffled.slice(0, count); // Retornar los primeros 'count' elementos
   }
 
   private startBannerRotation() {
