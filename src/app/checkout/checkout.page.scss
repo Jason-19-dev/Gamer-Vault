@@ -1,0 +1,242 @@
+ion-content {
+  --background: #0a1933;
+  --color: white;
+}
+
+ion-header ion-toolbar {
+  --background: #0a1933;
+  --color: white;
+  --border-style: none;
+  --border-width: 0;
+  --box-shadow: none;
+}
+
+ion-title {
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.summary-title {
+  color: white;
+  font-size: 18px;
+  margin: 0 0 16px 0;
+  font-weight: 600;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.summary-row.total {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+  padding-top: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.discount {
+  color: #52c41a;
+}
+
+.pay-button {
+  --background: #ffc409;
+  --color: #0a1933;
+  --border-radius: 12px;
+  --box-shadow: none;
+  margin-top: 20px;
+  font-weight: 600;
+  height: 48px;
+}
+
+.digital-wallet-card {
+  background: linear-gradient(135deg, #1c1c3c, #2a3f88);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-chip {
+  width: 36px;
+  height: 28px;
+  background: #ffc107;
+  border-radius: 6px;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.wallet-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wallet-logo {
+  height: 24px;
+}
+
+.wallet-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-family: 'monospace';
+}
+
+.wallet-balance {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 20px;
+  letter-spacing: 1px;
+}
+
+.wallet-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wallet-user {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.wallet-brand {
+  height: 28px;
+}
+
+.method-cards {
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+  margin: 20px;
+
+  .method-card {
+    background: linear-gradient(135deg, #1c1c3c, #2a3f88);
+    color: white;
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    transition: all 0.3s ease;
+
+    ion-icon,
+    img {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 8px;
+    }
+
+    span {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    &.selected {
+      border: 2px solid #ffc409;
+      box-shadow: 0 0 10px rgba(255, 196, 9, 0.5);
+    }
+
+    &.selected::after {
+      content: '✓';
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ffc409;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+
+.saved-card-checkout {
+  padding: 0 20px;
+
+  .checkout-card {
+    background: linear-gradient(135deg, #1c1c3c, #2a3f88);
+    border-radius: 14px;
+    padding: 20px;
+    color: white;
+    height: 120px;
+    position: relative;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    .checkout-card-logo {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      img {
+        height: 22px;
+      }
+    }
+
+    .checkout-card-number {
+      font-size: 17px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .checkout-card-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      text-transform: uppercase;
+
+      .holder {
+        font-weight: 600;
+      }
+
+      .expiry {
+        font-weight: 500;
+      }
+    }
+  }
+}

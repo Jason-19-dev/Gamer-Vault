@@ -1,0 +1,118 @@
+ion-content {
+  --background: #0a1933;
+  color: white;
+  padding: 16px;
+}
+
+.card-modal-header {
+  ion-toolbar {
+    --background: #0a1933;
+    --color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  ion-title {
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  ion-button {
+    color: #ffc409;
+  }
+}
+
+/* Vista previa de la tarjeta */
+.card-preview {
+  background: linear-gradient(135deg, #1c1c3c, #2a3f88);
+  border-radius: 16px;
+  padding: 20px;
+  color: white;
+  margin-bottom: 20px;
+  position: relative;
+  height: 160px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  font-family: 'Courier New', monospace;
+}
+
+.card-logo-container {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.card-logo {
+  height: 28px;
+}
+
+.card-number {
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* Inputs con estilo */
+.styled-input {
+  --background: #172c48;
+  --border-radius: 10px;
+  --padding-start: 12px;
+  --highlight-color-focused: #ffc409;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  margin-bottom: 16px;
+  height: 56px;
+
+  &::part(native) {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  &::part(label) {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+  }
+}
+
+ion-item.styled-input:focus-within {
+  border-color: #ffc409;
+  box-shadow: 0 0 5px #ffc409;
+}
+
+ion-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+ion-input {
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Fila de MM/AA y CVC */
+.card-grid {
+  display: flex;
+  gap: 12px;
+
+  .half-input {
+    flex: 1;
+    margin-bottom: 0;
+  }
+}
+
+/* Botón */
+.pay-button {
+  --background: #ffc409;
+  --color: #0a1933;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-top: 24px;
+}
