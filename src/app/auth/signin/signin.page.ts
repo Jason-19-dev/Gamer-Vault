@@ -8,14 +8,21 @@ import { AuthService } from 'src/services/auth/auth.service';
 import { CartService } from 'src/services/cart/cart.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
+import { TermsConditionsComponent } from 'src/app/modals/terms-conditions/terms-conditions.component';
+import { IonicModule,ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
   encapsulation: ViewEncapsulation.None,
-  // standalone: true,
+  standalone: true,
   imports: [
+    FormsModule,
+    CommonModule,
+    IonicModule,
+    ReactiveFormsModule
+    /*
     IonContent,
     CommonModule,
     FormsModule,
@@ -25,8 +32,9 @@ import { IonDatetime } from '@ionic/angular/standalone';
     IonText,
     ReactiveFormsModule,
     IonDatetime,
-    IonInput
-
+    IonInput,
+    IonicModule
+    */
   ]
 })
 export class SigninPage implements OnInit {
@@ -38,19 +46,20 @@ export class SigninPage implements OnInit {
     private router: Router, 
     private alertController: AlertController, 
     private authService: AuthService, 
+    private modalController: ModalController, 
     private cartService: CartService) 
     {
-      this.form_signin = this.fb.group(
-        {
-          username: ['', [Validators.required, Validators.maxLength(25)]],
-          birth_date:['', [Validators.required, minAgeValidator(18)]],
-          email: ['', [Validators.required, Validators.email]],
-          phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
-          password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-          password_confirm: ['', [Validators.required]],
-          termsAccepted: [false, [Validators.requiredTrue]]
-        }, { validators: passwordValidator('password_hash', 'password_confirm') }
-      );
+    this.form_signin = this.fb.group(
+      {
+        username: ['', [Validators.required, Validators.maxLength(25)]],
+        birth_date:['', [Validators.required, minAgeValidator(18)]],
+        email: ['', [Validators.required, Validators.email]],
+        phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
+        password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+        password_confirm: ['', [Validators.required]],
+        termsAccepted: [false, [Validators.requiredTrue]]
+      }, { validators: passwordValidator('password_hash', 'password_confirm') }
+    );
   }
 
   ngOnInit() {
@@ -81,8 +90,28 @@ export class SigninPage implements OnInit {
         this.alert('Error in registration', '', msg);
       }
     });
-    
+
   }
+async openTermsModal(event?: Event) {
+  if (event) event.preventDefault(); // Evita que se marque automáticamente
+
+  const modal = await this.modalController.create({
+    component: TermsConditionsComponent,
+    backdropDismiss: false,
+    cssClass: 'terms-modal-popup'
+  });
+
+  await modal.present();
+
+  const { data, role } = await modal.onDidDismiss();
+
+  if (role === 'accepted') {
+    this.form_signin.get('termsAccepted')?.setValue(true);
+  } else if (role === 'cancel') {
+    this.form_signin.get('termsAccepted')?.setValue(false);
+  }
+}
+
 
   async alert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({
@@ -126,8 +155,8 @@ function passwordValidator(passwordKey: string, confirmPasswordKey: string): Val
     if (password !== confirmPassword) {
       group.get(confirmPasswordKey)?.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
-    } 
-    
+    }
+
     return null;
   };
 }

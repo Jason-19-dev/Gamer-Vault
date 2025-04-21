@@ -49,6 +49,13 @@ export const routes: Routes = [
   {
     path: 'cart',
     loadComponent: () => import('./cart/cart/cart.page').then( m => m.CartPage)
+  },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./checkout/checkout.page').then( m => m.CheckoutPage)
+  },
+  {
+    path: "game-coins/:game",
+    loadComponent: () => import("./game-coins/game-coins.page").then((m) => m.GameCoinsPage),
   }
-
-];
+]

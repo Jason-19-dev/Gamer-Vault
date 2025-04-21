@@ -1,0 +1,57 @@
+<ion-header class="card-modal-header">
+  <ion-toolbar>
+    <ion-title>Card</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Simulación de la tarjeta -->
+  <div class="card-preview">
+    <div class="card-logo-container">
+      <img *ngIf="getCardType() === 'visa'" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
+        class="card-logo" />
+      <img *ngIf="getCardType() === 'mastercard'" src="https://img.icons8.com/color/48/mastercard-logo.png"
+        class="card-logo" />
+      <img *ngIf="getCardType() === 'amex'"
+        src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg"
+        class="card-logo" />
+      <img *ngIf="getCardType() === 'discover'"
+        src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Discover_Card_logo.svg" class="card-logo" />
+    </div>
+
+    <div class="card-number">{{ formatCardNumber(cardNumber) || '**** **** **** ****' }}</div>
+    <div class="card-footer">
+      <div class="card-holder">{{ cardHolder || 'NOMBRE Y APELLIDO' }}</div>
+      <div class="card-expiry">{{ expiry || 'MM/AA' }}</div>
+    </div>
+  </div>
+
+  <!-- Inputs -->
+  <ion-item class="styled-input">
+    <ion-label position="floating">Número de la tarjeta</ion-label>
+    <ion-input [(ngModel)]="cardNumber" maxlength="19" inputmode="numeric"></ion-input>
+  </ion-item>
+
+  <ion-item class="styled-input">
+    <ion-label position="floating">Nombre del titular</ion-label>
+    <ion-input [(ngModel)]="cardHolder"></ion-input>
+  </ion-item>
+
+  <div class="card-grid">
+    <ion-item class="half-input styled-input">
+      <ion-label position="floating">MM/AA</ion-label>
+      <ion-input [(ngModel)]="expiry" maxlength="5"></ion-input>
+    </ion-item>
+    <ion-item class="half-input styled-input">
+      <ion-label position="floating">CVC</ion-label>
+      <ion-input [(ngModel)]="cvc" maxlength="4" type="password"></ion-input>
+    </ion-item>
+  </div>
+
+  <ion-button expand="block" class="pay-button" (click)="payNow()">Guardar</ion-button>
+</ion-content>

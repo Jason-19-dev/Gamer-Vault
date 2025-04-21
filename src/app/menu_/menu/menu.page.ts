@@ -6,20 +6,27 @@ import {
   AlertController,
   IonContent,
   IonHeader,
-  IonIcon,
   IonTitle,
   IonToolbar,
   IonSearchbar,
-  IonChip,
-  IonLabel,
-  IonSpinner,
-} from "@ionic/angular/standalone"
-import type { Product } from "src/types"
+  IonSpinner, IonButton } from "@ionic/angular/standalone"
 import { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { HttpClient } from "@angular/common/http"
-import { environment } from "src/environments/environment";
+import { environment } from "src/environments/environment"
+
+export interface Product {
+  id: number
+  name: string
+  description: string
+  price: number
+  stock: number
+  available: boolean
+  image_url: string
+  create_at: string
+  game_name?: string // Optional property for game-specific products
+}
 
 // Interfaces para los datos de la API según la estructura real
 interface ApiCoinItem {
@@ -50,7 +57,7 @@ interface ApiGameItem {
   templateUrl: "./menu.page.html",
   styleUrls: ["./menu.page.scss"],
   standalone: true,
-  imports: [
+  imports: [IonButton, 
     IonContent,
     IonToolbar,
     CommonModule,
@@ -73,201 +80,110 @@ export class MenuPage implements OnInit {
   allProducts: any[] = []; // Almacena todos los productos para el filtrado
 
   // Consulta de búsqueda
-  searchQuery: string = "";
-
-  // Productos de respaldo en caso de error
-  fallbackGames: Product[] = [
-    {
-      id: 1,
-      name: "Spiderman 2",
-      description: "Spiderman 2",
-      price: 80.0,
-      stock: 10,
-      available: true,
-      image_url:
-        "https://www.apple.com/newsroom/images/2023/09/apple-unveils-iphone-15-pro-and-iphone-15-pro-max/article/Apple-iPhone-15-Pro-lineup-color-lineup-230912_big.jpg.large.jpg",
-      create_at: "2024-02-27T10:00:00Z",
-    },
-    {
-      id: 2,
-      name: "God of War Ragnarok",
-      description: "God of War Ragnarok",
-      price: 80.0,
-      stock: 5,
-      available: true,
-      image_url:
-        "https://www.sony.com.pa/image/6145c1d32e6ac8e63a46c912dc33c5bb?fmt=pjpeg&wid=165&bgcolor=FFFFFF&bgc=FFFFFF",
-      create_at: "2024-02-26T15:30:00Z",
-    },
-  ]
-
-  fallbackCoins: Product[] = [
-    {
-      id: 6,
-      name: "Fortnite V-Bucks",
-      description: "1000 V-Bucks para Fortnite",
-      price: 9.99,
-      stock: 999,
-      available: true,
-      image_url:
-        "https://cdn2.unrealengine.com/Fortnite/fortnite-game/v-bucks/V-Bucks_1000x1000-1000x1000-2f68d41a76e15d2fd2eafb62a186c410c167285d.png",
-      create_at: "2024-02-27T10:00:00Z",
-    },
-    {
-      id: 7,
-      name: "Roblox Robux",
-      description: "800 Robux para Roblox",
-      price: 9.99,
-      stock: 999,
-      available: true,
-      image_url: "https://images.rbxcdn.com/e452125426ae1abb1d19a4c06af31f29.svg",
-      create_at: "2024-02-27T10:00:00Z",
-    },
-  ]
+  searchQuery = "";
 
   constructor(
     private api_product: ProductsService,
     private alertController: AlertController,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router, // Añadir Router al constructor
+    private router: Router
   ) {}
 
   ngOnInit() {
     // Suscribirse a los cambios en los parámetros de la URL
     this.route.queryParams.subscribe((params) => {
-      const section = params["section"]
+      const section = params["section"];
 
       if (section === "coins") {
         // Mostrar monedas para juegos
-        this.title = "In-Game Coins"
-        this.categories = ["Fortnite", "Roblox", "League of Legends", "FIFA"]
-        this.loadCoinsFromAPI()
+        this.title = "In-Game Coins";
+        this.categories = ["Fortnite", "Roblox", "League of Legends", "FIFA"];
+        this.loadCoinsFromAPI();
       } else {
         // Mostrar videojuegos (por defecto)
-        this.title = "Videogames"
-        this.categories = ["Adventure", "Shooters", "Horror", "Action RPG"]
-        this.loadGamesFromAPI()
+        this.title = "Videogames";
+        this.categories = ["Adventure", "Shooters", "Horror", "Action RPG"];
+        this.loadGamesFromAPI();
       }
-    })
+    });
   }
 
   private loadCoinsFromAPI() {
     this.isLoading = true;
-    this.http
-      .get<ApiCoinItem[]>(`${environment.apiURL}/products/coins`)
-      .subscribe({
-        next: (data) => {
-          console.log("Monedas recibidas:", data);
+    this.http.get<ApiCoinItem[]>(`${environment.apiURL}/products/coins`).subscribe({
+      next: (data) => {
+        console.log("Coins received:", data);
 
-          this.products = data.map((item) => ({
-            id: item.product_id,
-            name: item.game_name || "Moneda de juego",
-            description: `Monedas para ${item.game_name}`,
-            price: 9.99,
-            stock: 999,
-            available: true,
-            image_url: item.image_url || "assets/images/default-image.png",
-            create_at: new Date().toISOString(),
-            category_name: item.category_name,
-            game_name: item.game_name,
-          }));
+        this.products = data.map((item) => ({
+          id: item.product_id,
+          name: item.game_name || "Game Coin",
+          description: `Coins for ${item.game_name}`,
+          price: 9.99,
+          stock: 999,
+          available: true,
+          image_url: item.image_url || "assets/images/default-image.png",
+          create_at: new Date().toISOString(),
+          category_name: item.category_name,
+          game_name: item.game_name,
+        }));
 
-          this.allProducts = [...this.products]; // Guarda todos los productos para el filtrado
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error("Error al obtener monedas:", err.message);
-          this.alert();
-          this.messageNotification();
-          this.products = this.fallbackCoins;
-          this.allProducts = [...this.products]; // Guarda los productos de respaldo
-          this.isLoading = false;
-        },
-      });
+        this.allProducts = [...this.products]; // Guarda todos los productos para el filtrado
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error("Error loading coins:", err.message);
+        this.products = []; // No mostrar productos si la API falla
+        this.isLoading = false;
+      },
+    });
   }
 
   private loadGamesFromAPI() {
     this.isLoading = true;
-    this.http
-      .get<ApiGameItem[]>(`${environment.apiURL}/products/videogames`)
-      .subscribe({
-        next: (data) => {
-          console.log("Juegos recibidos:", data);
+    this.http.get<ApiGameItem[]>(`${environment.apiURL}/products/videogames`).subscribe({
+      next: (data) => {
+        console.log("Games received:", data);
 
-          this.products = data.map((item) => ({
-            id: item.product_id,
-            name: item.name || "Videojuego",
-            description: this.formatGameDescription(item),
-            price: Number.parseFloat(item.price) || 0.0,
-            stock: 10,
-            available: true,
-            image_url: item.image_url || "assets/images/default-image.png",
-            create_at: item.created_at || new Date().toISOString(),
-            category_name: item.category_name,
-            developer: item.description?.developer,
-            genre: item.description?.genre,
-            platforms: item.description?.platforms,
-            release_year: item.description?.release_year,
-          }));
+        this.products = data.map((item) => ({
+          id: item.product_id,
+          name: item.name || "Videogame",
+          description: this.formatGameDescription(item),
+          price: Number.parseFloat(item.price) || 0.0,
+          stock: 10,
+          available: true,
+          image_url: item.image_url || "assets/images/default-image.png",
+          create_at: item.created_at || new Date().toISOString(),
+          category_name: item.category_name,
+          developer: item.description?.developer,
+          genre: item.description?.genre,
+          platforms: item.description?.platforms,
+          release_year: item.description?.release_year,
+        }));
 
-          this.allProducts = [...this.products]; // Guarda todos los productos para el filtrado
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error("Error al obtener juegos:", err.message);
-          this.alert();
-          this.messageNotification();
-          this.products = this.fallbackGames;
-          this.allProducts = [...this.products]; // Guarda los productos de respaldo
-          this.isLoading = false;
-        },
-      });
+        this.allProducts = [...this.products]; // Guarda todos los productos para el filtrado
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error("Error loading games:", err.message);
+        this.products = []; // No mostrar productos si la API falla
+        this.isLoading = false;
+      },
+    });
   }
 
   // Método para formatear la descripción del juego
   private formatGameDescription(game: ApiGameItem): string {
-    if (!game.description) return game.name
+    if (!game.description) return game.name;
 
-    const { developer, genre, release_year } = game.description
-    let description = game.name
+    const { developer, genre, release_year } = game.description;
+    let description = game.name;
 
-    if (developer) description += ` - ${developer}`
-    if (genre) description += ` | ${genre}`
-    if (release_year) description += ` (${release_year})`
+    if (developer) description += ` - ${developer}`;
+    if (genre) description += ` | ${genre}`;
+    if (release_year) description += ` (${release_year})`;
 
-    return description
-  }
-
-  selectCategory(category: string) {
-    if (this.selectedCategory === category) {
-      this.selectedCategory = null
-    } else {
-      this.selectedCategory = category
-    }
-
-    // Filtrar productos por categoría
-    if (this.title === "Videogames" && this.selectedCategory) {
-      // Para videojuegos, filtrar por género
-      this.filterGamesByGenre(this.selectedCategory)
-    } else if (this.title === "In-Game Coins" && this.selectedCategory) {
-      // Para monedas, filtrar por nombre del juego
-      this.filterCoinsByGame(this.selectedCategory)
-    }
-  }
-
-  // Filtrar videojuegos por género
-  private filterGamesByGenre(genre: string) {
-    // Implementar lógica de filtrado por género
-    // Por ahora, solo mostramos un mensaje en consola
-    console.log(`Filtrando juegos por género: ${genre}`)
-  }
-
-  // Filtrar monedas por juego
-  private filterCoinsByGame(game: string) {
-    // Implementar lógica de filtrado por juego
-    // Por ahora, solo mostramos un mensaje en consola
-    console.log(`Filtrando monedas por juego: ${game}`)
+    return description;
   }
 
   // Método para filtrar productos
@@ -317,6 +233,11 @@ export class MenuPage implements OnInit {
     this.router.navigate(["/product-detail", product.id], {
       queryParams: { type: productType },
     })
+  }
+
+  // Método para navegar a la página de monedas de un juego específico
+  goToGameCoins(gameName: string) {
+    this.router.navigate([`/game-coins/${encodeURIComponent(gameName)}`]); // Pasa el nombre del juego como parte de la URL
   }
 }
 

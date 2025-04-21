@@ -1,0 +1,21 @@
+<ion-content class="modal-content">
+  <div class="terms-wrapper">
+
+    <!-- Botón de cerrar -->
+    <ion-icon name="close-outline" class="close-icon" (click)="cancel()" slot="end">
+    </ion-icon>
+
+    <h2 class="terms-title">Terms and Conditions</h2>
+
+    <div class="terms-text">
+      <p><strong>1. Use:</strong> Gamer Vault is a secure platform for gamers.</p>
+      <p><strong>2. Privacy:</strong> Your data will be protected with high standards.</p>
+      <p><strong>3. Refunds:</strong> Apply under certain conditions.</p>
+    </div>
+
+    <ion-button expand="block" (click)="accept()" class="accept-button">
+      I ACCEPT
+    </ion-button>
+
+  </div>
+</ion-content>
