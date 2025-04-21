@@ -79,8 +79,6 @@ export class SigninPage implements OnInit {
 
     this.authService.register(formData).subscribe({
       next: (res) => {
-        const user_id = res.user_id;
-        this.cartService.addCart({ user_id }).subscribe();
         console.log("hola");
         this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
         this.router.navigateByUrl('home');

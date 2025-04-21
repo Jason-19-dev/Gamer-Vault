@@ -122,9 +122,9 @@ export class CartService {
     return this.http.post(`${this.apiURL}/update`, data, { headers: this.jsonHeaders });
   }
 
-  addCart(data: any): Observable<any> {    
-    return this.http.post(`${this.apiURL}/add`, data, { headers: this.jsonHeaders });
-  }
+  // addCart(data: any): Observable<any> {    
+  //   return this.http.post(`${this.apiURL}/add`, data, { headers: this.jsonHeaders });
+  // }
 
   getCart(data: any): Observable<any> {
     return this.http.post(`${this.apiURL}`, data, { headers: this.jsonHeaders });
