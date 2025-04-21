@@ -5,6 +5,7 @@ import { IonButton, IonCard, IonCheckbox, IonContent, IonInput, IonInputPassword
 import { addIcons } from 'ionicons';
 import * as icons from 'ionicons/icons';
 import { AuthService } from 'src/services/auth/auth.service';
+import { CartService } from 'src/services/cart/cart.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
 
@@ -32,18 +33,24 @@ export class SigninPage implements OnInit {
 
   form_signin: FormGroup;;
 
-  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private authService: AuthService) {
-    this.form_signin = this.fb.group(
-      {
-        username: ['', [Validators.required, Validators.maxLength(25)]],
-        birth_date:['', [Validators.required, minAgeValidator(18)]],
-        email: ['', [Validators.required, Validators.email]],
-        phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
-        password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-        password_confirm: ['', [Validators.required]],
-        termsAccepted: [false, [Validators.requiredTrue]]
-      }, { validators: passwordValidator('password_hash', 'password_confirm') }
-    );
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private alertController: AlertController, 
+    private authService: AuthService, 
+    private cartService: CartService) 
+    {
+      this.form_signin = this.fb.group(
+        {
+          username: ['', [Validators.required, Validators.maxLength(25)]],
+          birth_date:['', [Validators.required, minAgeValidator(18)]],
+          email: ['', [Validators.required, Validators.email]],
+          phone: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
+          password_hash: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+          password_confirm: ['', [Validators.required]],
+          termsAccepted: [false, [Validators.requiredTrue]]
+        }, { validators: passwordValidator('password_hash', 'password_confirm') }
+      );
   }
 
   ngOnInit() {
@@ -63,6 +70,8 @@ export class SigninPage implements OnInit {
 
     this.authService.register(formData).subscribe({
       next: (res) => {
+        const user_id = res.user_id;
+        this.cartService.addCart({ user_id }).subscribe();
         console.log("hola");
         this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
         this.router.navigateByUrl('home');
