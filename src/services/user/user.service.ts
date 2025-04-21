@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject } from "rxjs"
 
+
 export interface User {
   id?: string
   userName: string
@@ -36,6 +37,24 @@ export class UserService {
 
   getCurrentUser(): User | null {
     return this.currentUserSubject.value
+  }
+
+  getCurrentUserID(): string | null {
+    const token = localStorage.getItem('authToken');
+    console.log('Token desde user.service:', token);
+    
+    if (!token) return null;
+
+    try {
+      const payloadString = atob(token.split('.')[1]);
+      console.log('Payload decodificado:', payloadString);
+      const payload = JSON.parse(payloadString);
+      console.log('Payload como objeto:', payload);
+      return payload.user_id || null;
+    } catch (e) {
+      console.error('Error al decodificar token:', e);
+      return null;
+    }
   }
 
   clearCurrentUser(): void {
