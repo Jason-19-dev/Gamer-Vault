@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController,IonicModule } from '@ionic/angular'; // <- asegúrate de tener esto
+import { ModalController} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-terms-conditions',

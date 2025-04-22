@@ -17,7 +17,6 @@ import {
   IonContent,
   IonIcon
 } from '@ionic/angular/standalone';
-
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

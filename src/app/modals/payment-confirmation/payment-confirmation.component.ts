@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { navigate } from 'ionicons/icons';
 import { Router } from '@angular/router';
 
