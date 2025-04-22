@@ -128,6 +128,7 @@ async payNow() {
       this.ordersService.create_new_order(order_payload).subscribe({
         next: (res) => {
           console.log("res new order", res);
+          this.cartService.clearCart();
           this.showSuccessModal();
         },
         error: (err) => {
