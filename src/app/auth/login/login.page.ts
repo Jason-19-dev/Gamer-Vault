@@ -75,7 +75,9 @@ export class LoginPage implements OnInit {
       next: (response) => {
         console.log(response)
         if (response.token) {
-          // Store user information
+
+          const token = response.token;
+          localStorage.setItem('authToken', token);
           this.userService.setCurrentUser({
             userName: name,
             fullName: name.toUpperCase(), // Using username as fullName for demo

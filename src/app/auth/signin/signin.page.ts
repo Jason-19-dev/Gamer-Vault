@@ -5,6 +5,7 @@ import { IonButton, IonCard, IonCheckbox, IonContent, IonInput, IonInputPassword
 import { addIcons } from 'ionicons';
 import * as icons from 'ionicons/icons';
 import { AuthService } from 'src/services/auth/auth.service';
+import { CartService } from 'src/services/cart/cart.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
 import { TermsConditionsComponent } from 'src/app/modals/terms-conditions/terms-conditions.component';
@@ -40,7 +41,14 @@ export class SigninPage implements OnInit {
 
   form_signin: FormGroup;;
 
-  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private authService: AuthService,private modalController: ModalController) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private alertController: AlertController, 
+    private authService: AuthService, 
+    private modalController: ModalController, 
+    private cartService: CartService) 
+    {
     this.form_signin = this.fb.group(
       {
         username: ['', [Validators.required, Validators.maxLength(25)]],
