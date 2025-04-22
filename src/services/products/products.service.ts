@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Product } from 'src/types';
 import { environment } from 'src/environments/environment';
+import { HttpHeaderResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
