@@ -72,7 +72,8 @@ payNow() {
     cardNumber: this.cardNumber,
     cardHolder: this.cardHolder,
     expiry: this.expiry,
-    cardType: this.getCardType()
+    cardType: this.getCardType(),
+    cvc: this.cvc
   };
 
   this.modalCtrl.dismiss(cardData); // 👈 envía los datos al cerrar

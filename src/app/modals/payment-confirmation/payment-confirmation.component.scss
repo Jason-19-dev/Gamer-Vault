@@ -1,0 +1,30 @@
+.success-content {
+  --background: linear-gradient(to bottom, #0a1933, #1a3260);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-wrapper {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  font-size: 80px;
+  color: #ffc409;
+  margin-bottom: 20px;
+}
+
+.success-message {
+  font-size: 18px;
+  color: white;
+  margin-bottom: 24px;
+}
+
+.success-button {
+  --background: #ffc409;
+  --color: #0a1933;
+  font-weight: bold;
+  border-radius: 8px;
+}

@@ -5,7 +5,10 @@ import { FormsModule } from "@angular/forms"
 import { CommonModule } from "@angular/common"
 import { ModalController } from '@ionic/angular';
 import { PaymentMethodComponent } from 'src/app/modals/payment-method/payment-method.component';
+import { PaymentConfirmationComponent } from 'src/app/modals/payment-confirmation/payment-confirmation.component';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -13,6 +16,7 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
   imports: [
+    HttpClientModule,
     CommonModule,
     FormsModule,
     IonicModule,
@@ -28,7 +32,6 @@ export class CheckoutPage implements OnInit {
   useSavings = true;
   selectedMethod = '';
   savedCard: any = null;
-
   cardNumber = '';
   cardHolder = '';
   expiry = '';
@@ -37,11 +40,12 @@ export class CheckoutPage implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
-     this.cartItems = this.cartService.getCartItems();
+  this.cartItems = this.cartService.getCartItems();
   this.subtotal = this.cartService.getTotal();
   this.roundedTotal = Math.ceil(this.subtotal);
   this.savings = this.roundedTotal - this.subtotal;
@@ -62,7 +66,8 @@ export class CheckoutPage implements OnInit {
     }
   }
 
-payNow() {
+async  payNowx() {
+  /*
   const cardData = {
     number: this.cardNumber.replace(/\s+/g, ''),
     holder: this.cardHolder,
@@ -70,6 +75,46 @@ payNow() {
   };
 
   this.modalCtrl.dismiss(cardData);
+  */
+ const modal = await this.modalCtrl.create({
+    component: PaymentConfirmationComponent,
+    breakpoints: [0, 1],
+    initialBreakpoint: 1,
+    showBackdrop: true,
+    //backdropDismiss: false, // Para que no se cierre si el usuario toca fuera
+  });
+  await modal.present();
+}
+
+async payNow() {
+  if (!this.savedCard) {
+    console.log('No card selected');
+    return;
+  }
+
+  const payload = {
+    card_number: this.savedCard.number,
+    cvv: this.savedCard.cvc, // reemplaza con el real si lo tienes
+    expiration: this.savedCard.expiry,
+    amount: this.finalTotal,
+  };
+  console.log(payload)
+  try {
+    const response: any = await this.http.post(
+      'https://pq5e5sx8tb.execute-api.us-east-1.amazonaws.com/dev/pago',
+      payload
+    ).toPromise();
+
+    if (response.status === 'success') {
+      // Mostrar modal de éxito
+      this.showSuccessModal();
+    } else {
+      alert('Payment failed: ' + response.message);
+    }
+  } catch (error) {
+    console.error(error);
+    alert('Error processing payment :c');
+  }
 }
 
 async openCardModal() {
@@ -90,11 +135,24 @@ async openCardModal() {
       number: data.cardNumber,
       holder: data.cardHolder,
       expiry: data.expiry,
-      brand: data.cardType
+      brand: data.cardType,
+      cvc : data.cvc
     };
+    this.calculateTotals();
   }
+  console.log(data);
 }
 
+async showSuccessModal() {
+  const modal = await this.modalCtrl.create({
+    component: PaymentConfirmationComponent,
+    breakpoints: [0, 1],
+    initialBreakpoint: 1,
+    showBackdrop: true
+  });
+
+  await modal.present();
+}
 
 selectMethod(method: string) {
   this.selectedMethod = method;
