@@ -12,10 +12,10 @@ export class WalletService {
 
   private apiURL = `${environment.apiURL}/wallet`
 
-  constructor(private http: HttpClient, private headerService: HttpheaderService) {}
+  constructor(private http: HttpClient, private httpHeader: HttpheaderService) {}
 
   async balance() {
-    const headers = await this.headerService.getJsonHeaders();
+    const headers = await this.httpHeader.getJsonHeaders();
 
     return this.http.get<Wallet>(`${this.apiURL}`, { headers }).pipe(
       catchError(error => {

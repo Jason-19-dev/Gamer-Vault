@@ -7,10 +7,14 @@ import { StorageService } from '../storage/storage.service';
 })
 export class HttpheaderService {
 
-  constructor(private storageSercice: StorageService) { }
+  constructor(private storageService: StorageService) { }
+
+  getBasicJsonHeaders(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
 
   async getJsonHeaders(): Promise<HttpHeaders> {
-    const token = await this.storageSercice.getJwt();
+    const token = await this.storageService.getJwt();
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     if (token) {

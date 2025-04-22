@@ -22,6 +22,7 @@ export class StorageService {
       await this.init();
     }
     await this.storage.set('jwt', token);
+    this.getJwt()
   }
 
   // Método para obtener el JWT

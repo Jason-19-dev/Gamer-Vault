@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
     this.showPassword = !this.showPassword
   }
 
-  onLogin() {
+  async onLogin() {
 
     if (this.loginForm.invalid) {
       return
@@ -75,11 +75,11 @@ export class LoginPage implements OnInit {
     const { userName: name, password: pass } = this.loginForm.value
 
     this.authService.login(name, pass).subscribe({
-      next: (response) => {
+      next: async (response) => {
         console.log(response)
         if (response.token) {
           const token = response.token;
-          this.storageService.setJwt(token);
+          await this.storageService.setJwt(token);
           this.userService.setCurrentUser({
             userName: name,
             fullName: name.toUpperCase(), // Using username as fullName for demo
