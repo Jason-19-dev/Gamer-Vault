@@ -9,7 +9,7 @@ import {
   IonTitle,
   IonToolbar,
   IonSearchbar,
-  IonSpinner, IonButton } from "@ionic/angular/standalone"
+  IonSpinner} from "@ionic/angular/standalone"
 import { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
@@ -57,7 +57,7 @@ interface ApiGameItem {
   templateUrl: "./menu.page.html",
   styleUrls: ["./menu.page.scss"],
   standalone: true,
-  imports: [IonButton, 
+  imports: [ 
     IonContent,
     IonToolbar,
     CommonModule,

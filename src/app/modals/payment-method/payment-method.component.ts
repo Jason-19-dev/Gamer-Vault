@@ -10,9 +10,6 @@ import {
   IonToolbar,
   IonTitle,
   IonButtons,
-  IonGrid,
-  IonRow,
-  IonCol,
   ModalController,
   IonContent,
   IonIcon
@@ -39,9 +36,6 @@ import { CommonModule } from '@angular/common';
     IonToolbar,
     IonTitle,
     IonButtons,
-    IonGrid,
-    IonRow,
-    IonCol,
     IonIcon
   ]
 })

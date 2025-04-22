@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonMenuButton, IonRow, IonTitle, IonToast, IonToolbar } from '@ionic/angular/standalone';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { ToastController } from '@ionic/angular';
-import { order, Product } from 'src/types';
+import { order, GameItem } from 'src/types';
 import { BiometricService } from 'src/services/biometric/biometric.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -22,9 +22,6 @@ import { Router } from '@angular/router';
     FormsModule,
     TabsPagesPage,
     IonButton,
-    IonGrid,
-    IonRow,
-    IonCol,
     IonHeader,
     IonTitle,
     IonItem,

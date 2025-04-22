@@ -32,12 +32,8 @@ import { StorageService } from "src/services/storage/storage.service"
     ReactiveFormsModule,
     IonCard,
     IonButton,
-    IonIcon,
     IonInput,
-    IonText,
-    IonHeader,
-    IonToolbar,
-    IonTitle
+    IonText
   ],
 })
 export class LoginPage implements OnInit {

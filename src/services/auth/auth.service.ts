@@ -25,7 +25,7 @@ export class AuthService{
     login(username: string, password: string): Observable<any>{
         const headers = this.httpHeader.getBasicJsonHeaders();
         const body = {username, password};
-        console.log(headers);
+        console.log(headers)
         return this.http.post(`${this.apiURL}/login`, body, { headers });
     }
 }

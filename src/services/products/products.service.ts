@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
-import { Product } from 'src/types';
+import { catchError, Observable, throwError, from, switchMap } from 'rxjs';
+import { CoinItem, GameItem } from 'src/types';
 import { environment } from 'src/environments/environment';
-import { HttpHeaderResponse } from '@angular/common/http';
+import { HttpheaderService } from '../http-header/httpheader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,23 @@ import { HttpHeaderResponse } from '@angular/common/http';
 export class ProductsService {
   private apiUrl = `${environment.apiURL}/products`;
 
-  constructor(private http: HttpClient) {}
-
-  private get jsonHeaders(): HttpHeaders {
-    return new HttpHeaders({ 'Content-Type': 'application/json' });
-  }
+  constructor(private http: HttpClient, private httpHeader: HttpheaderService) {}
 
   // GET products from external API
-  public getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/videogames`, { headers : this.jsonHeaders }).pipe(
+  public getProducts(): Observable<GameItem[]> {
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+        return this.http.get<GameItem[]>(`${this.apiUrl}/videogames`, { headers });
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  public getCoins(): Observable<CoinItem[]> {
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+        return this.http.get<CoinItem[]>(`${this.apiUrl}/coins`, { headers });
+      }),
       catchError(this.handleError)
     );
   }

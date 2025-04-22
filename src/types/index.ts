@@ -1,16 +1,19 @@
 
 // 
-export type Product = {
-    id: number
+export type GameItem = {
+    id: string
     name: string
-    description: string
     price: number
-    stock: number
-    available: boolean
     image_url: string
-    create_at: string
-    category_name?: string
+    product_id?: string
   }
+
+export type CoinItem = {
+    id: string
+    game_name: string // Nombre del juego o moneda
+    image_url: string
+    product_id?: string
+}
   
 
 export type Customer = {
