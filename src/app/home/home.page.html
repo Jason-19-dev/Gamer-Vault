@@ -11,7 +11,7 @@
       'background-image': currentBannerImage
         ? 'url(' + currentBannerImage + ')'
         : 'none'
-    }">
+    }" (click)="navigateToProductDetail(gameProducts[bannerIndex], 'videogame', $event)">
     <div class="banner-content">
       <p class="banner-text">{{ currentBannerText }}</p>
     </div>
@@ -26,7 +26,7 @@
 
     <!-- Display coin products as circular images -->
     <div class="game-icons">
-      <div class="game-icon-item" *ngFor="let product of coinProducts">
+      <div class="game-icon-item" *ngFor="let product of coinProducts" (click)="navigateToProductDetail(product, 'coin', $event)">
         <div class="game-circle">
           <img
             [src]="product.image_url || 'assets/images/default-image.png'"
@@ -51,7 +51,7 @@
     </div>
 
     <div class="game-cards">
-      <div class="game-card" *ngFor="let product of gameProducts">
+      <div class="game-card" *ngFor="let product of gameProducts" (click)="navigateToProductDetail(product, 'videogame', $event)">
         <div class="game-image">
           <img
             [src]="product.image_url || 'assets/images/default-image.png'"
