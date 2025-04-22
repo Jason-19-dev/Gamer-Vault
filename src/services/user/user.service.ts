@@ -16,6 +16,7 @@ export interface User {
 export class UserService {
   private currentUserSubject = new BehaviorSubject<User | null>(null)
   public currentUser$ = this.currentUserSubject.asObservable()
+  userId$: any
 
   constructor() {
     // Load user from localStorage on service initialization
@@ -59,6 +60,7 @@ export class UserService {
 
   clearCurrentUser(): void {
     // Remove user from localStorage and update the subject
+    localStorage.removeItem("currentUser")
     localStorage.removeItem("currentUser")
     this.currentUserSubject.next(null)
   }
