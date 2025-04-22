@@ -44,3 +44,8 @@ export type items = {
     cantidad: number
     precio_unitario: number
 }
+
+export type Wallet = {
+    balance: number
+    user_id: string
+}

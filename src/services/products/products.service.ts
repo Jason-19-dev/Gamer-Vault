@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Product } from 'src/types';
 import { environment } from 'src/environments/environment';
+import { HttpheaderService } from '../http-header/httpheader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class ProductsService {
   private apiUrl = `${environment.apiURL}/products`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private headerService: HttpheaderService) {}
 
   private get jsonHeaders(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
