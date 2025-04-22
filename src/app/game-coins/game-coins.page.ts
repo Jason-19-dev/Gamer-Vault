@@ -70,7 +70,6 @@ interface GameInfo {
     IonBackButton,
     IonSpinner,
     IonButton,
-    IonIcon,
     TabsPagesPage,
   ],
 })
