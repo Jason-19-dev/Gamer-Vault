@@ -81,7 +81,7 @@ export class SigninPage implements OnInit {
       next: (res) => {
         console.log("hola");
         this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('login');
       },
       error: (err) => {
         const msg = 'User could not be registered';
