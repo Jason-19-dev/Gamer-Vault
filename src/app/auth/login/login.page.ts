@@ -18,6 +18,7 @@ import { AuthService } from "src/services/auth/auth.service"
 import { UserService } from "src/services/user/user.service"
 import { addIcons } from "ionicons"
 import { personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle } from "ionicons/icons"
+import { StorageService } from "src/services/storage/storage.service"
 
 @Component({
   selector: "app-login",
@@ -36,7 +37,7 @@ import { personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle
     IonText,
     IonHeader,
     IonToolbar,
-    IonTitle,
+    IonTitle
   ],
 })
 export class LoginPage implements OnInit {
@@ -49,6 +50,7 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
+    private storageService: StorageService
   ) {
     addIcons({ personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle });
 
@@ -65,6 +67,7 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
+
     if (this.loginForm.invalid) {
       return
     }
@@ -75,9 +78,8 @@ export class LoginPage implements OnInit {
       next: (response) => {
         console.log(response)
         if (response.token) {
-
           const token = response.token;
-          localStorage.setItem('authToken', token);
+          this.storageService.setJwt(token);
           this.userService.setCurrentUser({
             userName: name,
             fullName: name.toUpperCase(), // Using username as fullName for demo
