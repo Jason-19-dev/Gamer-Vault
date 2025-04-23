@@ -1,7 +1,7 @@
 import { Component, type OnInit, type OnDestroy } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
-import { Router } from "@angular/router"
+import  { Router } from "@angular/router"
 import {
   IonButton,
   IonContent,
@@ -12,13 +12,11 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
-  AlertController,
-  ToastController,
-  IonLabel,
-  IonGrid,
-  IonRow,
-  IonCol, IonButtons, IonBackButton } from "@ionic/angular/standalone"
-import { CartService, type CartItem } from "src/services/cart/cart.service"
+   AlertController,
+   ToastController,
+  IonSpinner,
+} from "@ionic/angular/standalone"
+import  { CartService, CartItem } from "src/services/cart/cart.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { cartOutline, trashOutline, closeCircleOutline } from "ionicons/icons"
@@ -41,6 +39,7 @@ import type { Subscription } from "rxjs"
     IonThumbnail,
     IonIcon,
     IonHeader,
+    IonSpinner,
     TabsPagesPage,
   ],
 })
@@ -50,7 +49,8 @@ export class CartPage implements OnInit, OnDestroy {
   roundedTotal = 0
   savings = 0
   finalTotal = 0
-  toastMessage: string | null = null; // Propiedad para el mensaje del toast
+  toastMessage: string | null = null
+  isLoading = false
   private cartSubscription: Subscription | null = null
 
   constructor(
@@ -59,16 +59,30 @@ export class CartPage implements OnInit, OnDestroy {
     private alertController: AlertController,
     private toastController: ToastController,
   ) {
-    addIcons({ trashOutline, closeCircleOutline, cartOutline });
+    addIcons({trashOutline,closeCircleOutline,cartOutline});
   }
 
   ngOnInit() {
-    this.loadCartItems()
-
-    // Subscribe to cart changes
+    // Subscribe to cart changes for real-time updates
     this.cartSubscription = this.cartService.cartItems$.subscribe(() => {
       this.loadCartItems()
     })
+  }
+
+  // Ionic lifecycle hook - called every time the page is about to enter
+  ionViewWillEnter() {
+    console.log("Cart page entering view - refreshing cart data")
+    this.isLoading = true
+    // Force a refresh of the cart data from the backend
+    this.cartService
+      .refreshCart()
+      .then(() => {
+        this.isLoading = false
+      })
+      .catch((error) => {
+        console.error("Error refreshing cart:", error)
+        this.isLoading = false
+      })
   }
 
   ngOnDestroy() {
@@ -107,8 +121,18 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   removeFromCart(product: CartItem) {
-    this.cartService.removeCart(product)
-    this.showToast(`${product.name} removed from cart`)
+    this.isLoading = true
+    this.cartService
+      .removeCart(product)
+      .then(() => {
+        this.showToast(`${product.name} removed from cart`)
+        this.isLoading = false
+      })
+      .catch((error) => {
+        console.error("Error removing item from cart:", error)
+        this.showToast("Failed to remove item from cart")
+        this.isLoading = false
+      })
   }
 
   async clearCart() {
@@ -123,8 +147,18 @@ export class CartPage implements OnInit, OnDestroy {
         {
           text: "Clear",
           handler: () => {
-            this.cartService.clearCart()
-            this.showToast("Cart cleared")
+            this.isLoading = true
+            this.cartService
+              .clearCart()
+              .then(() => {
+                this.showToast("Cart cleared")
+                this.isLoading = false
+              })
+              .catch((error) => {
+                console.error("Error clearing cart:", error)
+                this.showToast("Failed to clear cart")
+                this.isLoading = false
+              })
           },
         },
       ],
@@ -137,14 +171,14 @@ export class CartPage implements OnInit, OnDestroy {
     // Here you would implement the checkout process
     this.showToast("Processing payment...")
     // Navigate to a thank you page or payment processing page
-    this.router.navigate(['/checkout']);
+    this.router.navigate(["/checkout"])
   }
 
   showToast(message: string) {
-    this.toastMessage = message; // Actualiza el mensaje del toast
+    this.toastMessage = message // Actualiza el mensaje del toast
     setTimeout(() => {
-      this.toastMessage = null; // Limpia el mensaje después de 3 segundos
-    }, 3000);
+      this.toastMessage = null // Limpia el mensaje después de 3 segundos
+    }, 3000)
   }
 
   continueShopping() {

@@ -1,6 +1,7 @@
 import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule, ReactiveFormsModule, FormBuilder, type FormGroup, Validators } from "@angular/forms"
+import { CartService } from "src/services/cart/cart.service"
 import {
   IonCard,
   IonContent,
@@ -46,7 +47,8 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private cartService: CartService,
   ) {
     addIcons({ personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle });
 
@@ -69,7 +71,7 @@ export class LoginPage implements OnInit {
     }
 
     const { userName: name, password: pass } = this.loginForm.value
-
+  
     this.authService.login(name, pass).subscribe({
       next: async (response) => {
         console.log(response)
@@ -78,12 +80,20 @@ export class LoginPage implements OnInit {
           await this.storageService.setJwt(token);
           this.userService.setCurrentUser({
             userName: name,
-            fullName: name.toUpperCase(), // Using username as fullName for demo
-            email: `${name}@example.com`, // Demo email
-            profileImage: "https://ionicframework.com/docs/img/demos/avatar.svg", // Default profile image
+            fullName: name.toUpperCase(),
+            email: `${name}@example.com`,
+            profileImage: "https://ionicframework.com/docs/img/demos/avatar.svg",
           })
-
-          this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
+  
+          // 🔥 Aquí cargas el carrito del usuario
+          try {
+            await this.cartService.refreshCart()
+            console.log("Cart loaded successfully after login.")
+          } catch (err) {
+            console.error("Failed to load cart after login:", err)
+          }
+  
+          this.alert("Welcome! " + name.toUpperCase(), "", "")
           this.router.navigateByUrl("home")
         } else {
           this.alert("Incorrect username or password", "Try again", "")
@@ -95,6 +105,7 @@ export class LoginPage implements OnInit {
       },
     })
   }
+  
 
   onSignup() {
     this.router.navigateByUrl("signin")

@@ -42,12 +42,12 @@ export class SigninPage implements OnInit {
   form_signin: FormGroup;;
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router, 
-    private alertController: AlertController, 
-    private authService: AuthService, 
-    private modalController: ModalController, 
-    private cartService: CartService) 
+    private fb: FormBuilder,
+    private router: Router,
+    private alertController: AlertController,
+    private authService: AuthService,
+    private modalController: ModalController,
+    private cartService: CartService)
     {
     this.form_signin = this.fb.group(
       {
@@ -81,7 +81,7 @@ export class SigninPage implements OnInit {
       next: (res) => {
         console.log("hola");
         this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('login');
       },
       error: (err) => {
         const msg = 'User could not be registered';
@@ -106,7 +106,7 @@ async openTermsModal(event?: Event) {
   if (role === 'accepted') {
     this.form_signin.get('termsAccepted')?.setValue(true);
   } else if (role === 'cancel') {
-    this.form_signin.get('termsAccepted')?.setValue(false);
+
   }
 }
 

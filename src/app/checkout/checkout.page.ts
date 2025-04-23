@@ -9,6 +9,8 @@ import { PaymentConfirmationComponent } from 'src/app/modals/payment-confirmatio
 import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { OrdersService } from "src/services/orders/orders.service";
+import { UserService } from "src/services/user/user.service";
 
 @Component({
   standalone: true,
@@ -20,7 +22,7 @@ import { HttpClient } from '@angular/common/http';
     CommonModule,
     FormsModule,
     IonicModule,
-    TabsPagesPage,
+    TabsPagesPage
   ],
 })
 export class CheckoutPage implements OnInit {
@@ -40,6 +42,8 @@ export class CheckoutPage implements OnInit {
 
   constructor(
     private cartService: CartService,
+    private ordersService: OrdersService,
+    private userService: UserService,
     private modalCtrl: ModalController,
     private http: HttpClient
   ) {}
@@ -98,6 +102,9 @@ async payNow() {
     expiration: this.savedCard.expiry,
     amount: this.finalTotal,
   };
+
+
+
   console.log(payload)
   try {
     const response: any = await this.http.post(
@@ -106,8 +113,29 @@ async payNow() {
     ).toPromise();
 
     if (response.status === 'success') {
-      // Mostrar modal de éxito
-      this.showSuccessModal();
+      // Mostrar modal de éxito 
+
+      console.log("tarjeta tiene suficiente")
+
+      const order_payload = {
+        user_id: this.userService.getCurrentUserID(),
+        total: this.finalTotal,
+        savings: this.savings,
+        status: 'pending',
+        description: this.cartItems
+      };
+
+      this.ordersService.create_new_order(order_payload).subscribe({
+        next: (res) => {
+          console.log("res new order", res);
+          this.cartService.clearCart();
+          this.showSuccessModal();
+        },
+        error: (err) => {
+          console.error("API ERROR", err);
+        } 
+      })
+      
     } else {
       alert('Payment failed: ' + response.message);
     }

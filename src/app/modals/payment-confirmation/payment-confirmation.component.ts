@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { navigate } from 'ionicons/icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-confirmation',
@@ -10,10 +13,11 @@ import { ModalController, IonicModule } from '@ionic/angular';
 })
 export class PaymentConfirmationComponent {
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private modalCtrl: ModalController, private router: Router) {}
 
   close() {
     this.modalCtrl.dismiss();
+    this.router.navigate(["/home"])
 
 }
 }
