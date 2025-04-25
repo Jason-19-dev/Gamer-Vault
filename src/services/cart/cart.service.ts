@@ -39,7 +39,7 @@ export class CartService {
    * @returns Promise that resolves when cart is loaded
    */
   private async loadCart(): Promise<void> {
-    const userId = this.user.getCurrentUserID();
+    const userId = await this.user.getCurrentUserID();
   
     if (!userId) {
       console.error("No user ID found. Cannot load cart.");
