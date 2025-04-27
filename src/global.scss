@@ -135,3 +135,15 @@ ion-modal ion-toolbar {
     height: 100% !important;
   }
 }
+
+ion-content {
+  --background: #0a1933;
+  --color: white;
+}
+
+ion-header ion-toolbar {
+  --background: #0a1933;
+  --color: white;
+  --border-style: none;
+  --border-width: 0;
+}

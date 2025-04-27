@@ -24,5 +24,9 @@ export class OrdersService {
     return this.http.get(`${this.apiURL}/${userId}`, { headers: this.jsonHeaders });
   }
 
+  getOrderDescription(orderId: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/detail/${orderId}`, { headers: this.jsonHeaders });
+  }
+
 
 }

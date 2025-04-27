@@ -6,6 +6,7 @@ import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { OrdersService } from 'src/services/orders/orders.service';
 import { UserService } from 'src/services/user/user.service';
 import { Order } from 'src/types';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.page.html',
@@ -15,10 +16,11 @@ import { Order } from 'src/types';
 })
 export class OrderHistoryPage implements OnInit {
   orders: Order [] = [];
-  constructor( private ordersService: OrdersService,private userService: UserService) { }
+  constructor( private ordersService: OrdersService,private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.getUserOrder();
+  
   }
 
   async getUserOrder(){
@@ -37,8 +39,10 @@ export class OrderHistoryPage implements OnInit {
   })
   }
 
-  viewDetailOrder(order: any) {
-    console.log(order);
+  viewDetailOrder(orderDescription: any) {
+    console.log(orderDescription);
+    this.router.navigate(['/order-details', orderDescription]);
+
   }
 
 }
