@@ -7,6 +7,7 @@ import { Order, GameItem } from 'src/types';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { OrdersService } from 'src/services/orders/orders.service';
+import { jwtDecode } from 'jwt-decode';
 import { IonicModule } from '@ionic/angular';
 import { UserService } from 'src/services/user/user.service';
 import { Subscription } from 'rxjs';
@@ -65,6 +66,7 @@ export class WalletPage implements OnInit, OnDestroy {
       this.logoutSubscription.unsubscribe();
     }
   }
+
 
 
   async loadUserAndOrders() {
@@ -153,12 +155,9 @@ export class WalletPage implements OnInit, OnDestroy {
     }
   }
 
-  getOrderIconText(): string {
-    return 'Order';
-  }
 
-  viewDetailOrder(order: Order) {
-    console.log(order);
+
+  viewDetailOrder(orderId: any) { // Cambiado el tipo del parámetro a any
+    this.route.navigate(['/order-details', orderId]);
   }
 }
-
