@@ -1,10 +1,10 @@
 .item-thumbnail {
   --border-radius: 8px;
-  --size: 70px; /* Hice más grande la imagen */
+  --size: 60px; 
 }
 
 .cart-summary {
-  background: rgba(255, 255, 255, 0.05);
+  background: #041637;
   border-radius: 16px;
   padding: 20px;
 }
@@ -41,10 +41,7 @@ ion-item {
   background: rgba(41, 82, 128, 0.45);
   border-radius: 12px;
   margin-bottom: 14px;
-  min-height: 90px; /* Aquí hago más alto cada ion-item */
-  padding: 12px;
-  display: flex;
-  align-items: center;
+  padding: 3px;
 }
 
 .order-info {
@@ -53,12 +50,11 @@ ion-item {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  text-align: left;
 }
 
 .order-info p {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   max-width: 150px;
   white-space: nowrap;
   overflow: hidden;

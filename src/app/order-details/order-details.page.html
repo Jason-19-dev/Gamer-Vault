@@ -24,7 +24,7 @@
             <p>{{ details.name}}</p>
           </div>
           
-          <p>{{ details.price }}</p>
+          <p>$ {{ details.price }}</p>
         </div>
       </ion-item>
 
@@ -40,17 +40,17 @@
       </div>
       <div class="summary-row">
         <span class="summary-label">Status</span>
-        <span class="summary-value">{{orderItems.status}}</span>
+        <span class="summary-value">{{orderItems.status == 'pending' ? 'Pendiente 🕛 ' : 'Completed ✅'}}</span>
       </div>
       
       <div class="summary-row">
         <span class="summary-label">Savings</span>
-        <span class="summary-value discount">${{orderItems.savings}}</span>
+        <span class="summary-value discount">$ {{orderItems.savings}}</span>
       </div>
       
       <div class="summary-row total">
         <span class="summary-label">Total</span>
-        <span class="summary-value">${{orderItems.total}}</span>
+        <span class="summary-value">$ {{orderItems.total}}</span>
       </div>
     </div>
 
