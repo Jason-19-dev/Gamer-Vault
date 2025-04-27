@@ -39,7 +39,7 @@ export class CartService {
    * @returns Promise that resolves when cart is loaded
    */
   private async loadCart(): Promise<void> {
-    const userId = this.user.getCurrentUserID();
+    const userId = await this.user.getCurrentUserID();
   
     if (!userId) {
       console.error("No user ID found. Cannot load cart.");
@@ -80,8 +80,8 @@ export class CartService {
    * Save cart data to the backend
    * @returns Promise that resolves when cart is saved
    */
-  private saveCart(): Promise<void> {
-    const userId = this.user.getCurrentUserID()
+  private async saveCart(): Promise<void> {
+    const userId = await this.user.getCurrentUserID()
 
     if (!userId) {
       console.error("No user ID found. Cannot save cart.")

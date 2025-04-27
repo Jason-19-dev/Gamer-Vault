@@ -57,5 +57,17 @@ export const routes: Routes = [
   {
     path: "game-coins/:game",
     loadComponent: () => import("./game-coins/game-coins.page").then((m) => m.GameCoinsPage),
+  },  {
+    path: 'order-history',
+    loadComponent: () => import('./order-history/order-history.page').then( m => m.OrderHistoryPage)
+  },
+  {
+    path: 'change-password',
+    loadComponent: () => import('./change-password/change-password/change-password.page').then( m => m.ChangePasswordPage)
+  },
+  {
+    path: 'order-details',
+    loadComponent: () => import('./order-details/order-details.page').then( m => m.OrderDetailsPage)
   }
+
 ]

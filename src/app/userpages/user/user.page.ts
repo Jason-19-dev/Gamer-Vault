@@ -138,8 +138,7 @@ export class UserPage implements OnInit, OnDestroy {
   }
 
   orderHistory() {
-    console.log("Order history clicked")
-    // Navigate to order history page
+    this.router.navigateByUrl("/order-history")
   }
 
   managePayment() {
@@ -149,7 +148,7 @@ export class UserPage implements OnInit, OnDestroy {
 
   changePassword() {
     console.log("Change password clicked")
-    // Navigate to change password page
+    this.router.navigateByUrl("/change-password")
   }
 }
 

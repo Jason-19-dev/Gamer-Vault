@@ -11,7 +11,6 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonIcon,
   ToastController,
 } from "@ionic/angular/standalone"
 import { HttpClient } from "@angular/common/http"

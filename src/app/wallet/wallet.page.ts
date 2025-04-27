@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { ToastController } from '@ionic/angular';
+import { Order, GameItem,Product} from 'src/types';
 import { BiometricService } from 'src/services/biometric/biometric.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -16,13 +17,19 @@ import { IonicModule } from '@ionic/angular'; // Importa IonicModule
   styleUrls: ['./wallet.page.scss'],
   standalone: true,
   imports: [
+    IonContent,
+    IonHeader,
+    IonToolbar,
     CommonModule,
     FormsModule,
     TabsPagesPage,
+    IonButton,
+    IonHeader,
+    IonTitle,
+    IonItem,
     DatePipe,
-    IonicModule // Mantenemos solo IonicModule
+    IonicModule 
   ]
-
 })
 export class WalletPage implements OnInit {
 

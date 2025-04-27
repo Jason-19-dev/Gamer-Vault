@@ -14,7 +14,6 @@ import {
   IonToolbar,
    AlertController,
    ToastController,
-  IonSpinner,
 } from "@ionic/angular/standalone"
 import  { CartService, CartItem } from "src/services/cart/cart.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
@@ -39,7 +38,6 @@ import type { Subscription } from "rxjs"
     IonThumbnail,
     IonIcon,
     IonHeader,
-    IonSpinner,
     TabsPagesPage,
   ],
 })

@@ -17,26 +17,11 @@ import {
    Platform, // Changed from type-only import
 } from "@ionic/angular/standalone"
 // Keep this as a type-only import since it's just for type checking
-import type { Product } from "src/types"
+import type { GameItem, CoinItem } from "src/types"
 import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { chevronForwardCircle, chevronForwardCircleOutline } from "ionicons/icons"
 import  { ProductsService } from "src/services/products/products.service" // Changed from type-only import
-
-interface CoinItem {
-  id: string
-  game_name: string // Nombre del juego o moneda
-  image_url: string
-  product_id?: string
-}
-
-interface GameItem {
-  id: string // Make sure we have an id field
-  name: string
-  image_url: string
-  price: string
-  product_id?: string
-}
 
 @Component({
   selector: "app-home",
@@ -61,9 +46,6 @@ export class HomePage implements OnInit {
   saldo = 10.99
   message = ""
   isAndroid = false
-
-  products: Product[] = [] // Inicializa como un arreglo vacío
-  public results: Product[] = []
 
   // Add these properties for categorized products
   coinProducts: CoinItem[] = [] // Solo se llenará con datos de la API
@@ -104,7 +86,7 @@ export class HomePage implements OnInit {
   }
 
   private fetchCoinProducts() {
-    this.http.get<CoinItem[]>(`${environment.apiURL}/products/coins`).subscribe({
+    this.productsService.getCoins().subscribe({
       next: (data) => {
         console.log("Monedas recibidas:", data)
 
@@ -129,7 +111,7 @@ export class HomePage implements OnInit {
   }
 
   private fetchGameProducts() {
-    this.http.get<GameItem[]>(`${environment.apiURL}/products/videogames`).subscribe({
+    this.productsService.getProducts().subscribe({
       next: (data) => {
         console.log("Juegos recibidos:", data)
 

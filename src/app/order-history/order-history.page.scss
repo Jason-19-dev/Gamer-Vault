@@ -1,0 +1,43 @@
+ion-content {
+  --background: #0a1933;
+  --color: white;
+}
+
+ion-header ion-toolbar {
+  --background: #0a1933;
+  --color: white;
+  --border-style: none;
+  --border-width: 0;
+}
+
+ion-list{
+  background: transparent !important;
+}
+
+ion-item{
+  --background: transparent !important;
+  --color:white !important;
+  background: rgba(41, 82, 128, 0.45);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+ion-button{
+  --background: transparent !important;
+  --color:#DEAD1C!important;
+}
+.order-date {
+  flex: 0.7;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.order-info p {
+  margin: 0;
+}

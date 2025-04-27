@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject } from "rxjs"
-
+import { StorageService } from "../storage/storage.service"
 
 export interface User {
   id?: string
@@ -18,7 +18,7 @@ export class UserService {
   public currentUser$ = this.currentUserSubject.asObservable()
   userId$: any
 
-  constructor() {
+  constructor(private storageSercice: StorageService) {
     // Load user from localStorage on service initialization
     this.loadUserFromStorage()
   }
@@ -40,8 +40,8 @@ export class UserService {
     return this.currentUserSubject.value
   }
 
-  getCurrentUserID(): string | null {
-    const token = localStorage.getItem('authToken');
+  async getCurrentUserID(): Promise<string | null> {
+    const token = await this.storageSercice.getJwt();
     console.log('Token desde user.service:', token);
     
     if (!token) return null;
