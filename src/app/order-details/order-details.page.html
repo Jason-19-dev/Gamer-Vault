@@ -14,7 +14,7 @@
     </ion-toolbar>
   </ion-header>
     <div class="ion-padding">
-      <p class="ion-padding"> {{ orderItems.created_at}}</p>
+      <p> {{ orderItems.created_at}}</p>
       <ion-item *ngFor="let details of orderItems.description">
         <div class="order-info">
           <ion-thumbnail slot="start" class="item-thumbnail">
@@ -31,12 +31,16 @@
     <div class="cart-summary">
       <div class="summary-row">
         <span class="summary-label">Products Total</span>
-        <!-- <span class="summary-value">{{orderItems.description}}</span> -->
+        <span class="summary-value">{{orderItems.description?.length}}</span>
       </div>
       
       <div class="summary-row">
-        <span class="summary-label">Credit Card</span>
-        <!-- <span class="summary-value">${{subtotal.toFixed(2)}}</span> -->
+        <span class="summary-label">Payment Method</span>
+        <span class="summary-value">{{orderItems.payment_method}}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Status</span>
+        <span class="summary-value">{{orderItems.status}}</span>
       </div>
       
       <div class="summary-row">

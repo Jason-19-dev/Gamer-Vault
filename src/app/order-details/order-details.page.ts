@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonBackButton, IonButtons, IonItem, IonThumbnail, IonList } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonBackButton, IonButtons, IonItem, IonThumbnail, IonList, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/angular/standalone';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { Order, Order_Details } from 'src/types';
 import { OrdersService } from 'src/services/orders/orders.service';
@@ -12,7 +12,7 @@ import { ActivatedRoute} from '@angular/router';
   templateUrl: './order-details.page.html',
   styleUrls: ['./order-details.page.scss'],
   standalone: true,
-  imports: [IonList, IonItem, IonButtons, IonBackButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,TabsPagesPage,IonThumbnail]
+  imports: [IonItem, IonButtons, IonBackButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,TabsPagesPage,IonThumbnail]
 })
 export class OrderDetailsPage implements OnInit {
   orderItems:Order = {} as Order;

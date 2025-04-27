@@ -38,6 +38,7 @@ export type Order = {
     total: number
     savings: number
     created_at: string
+    payment_method: string
     description: Order_Details[]
 }
 

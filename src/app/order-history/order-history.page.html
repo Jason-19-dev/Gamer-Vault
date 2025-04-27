@@ -20,7 +20,7 @@
   <p class="ion-padding">Click your order to see more details.</p>
   
   <div class="ion-padding">
-    <ion-item *ngFor="let order of orders">
+    <ion-item *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">
       <div class="order-date">
         <p>{{ order.created_at | date:'yyyy-MM-dd' }}</p> 
       </div>

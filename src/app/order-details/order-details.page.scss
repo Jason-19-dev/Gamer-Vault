@@ -7,7 +7,6 @@
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   padding: 20px;
-  margin-top: 20px;
 }
 
 .summary-title {
@@ -60,4 +59,8 @@ ion-item {
 .order-info p {
   margin: 0;
   font-size: 16px;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
