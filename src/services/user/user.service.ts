@@ -42,15 +42,15 @@ export class UserService {
 
   async getCurrentUserID(): Promise<string | null> {
     const token = await this.storageSercice.getJwt();
-    // console.log('Token desde user.service:', token);
+    console.log('Token desde user.service:', token);
     
     if (!token) return null;
 
     try {
       const payloadString = atob(token.split('.')[1]);
-      // console.log('Payload decodificado:', payloadString);
+      console.log('Payload decodificado:', payloadString);
       const payload = JSON.parse(payloadString);
-      // console.log('Payload como objeto:', payload);
+      console.log('Payload como objeto:', payload);
       return payload.user_id || null;
     } catch (e) {
       console.error('Error al decodificar token:', e);

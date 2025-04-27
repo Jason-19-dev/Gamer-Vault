@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn , AbstractControl } from "@angular/forms";
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonInput, IonButton, IonIcon, AlertController, IonText, IonInputPasswordToggle} from '@ionic/angular/standalone';
+import { IonContent, IonCard, IonInput, IonButton, IonText} from '@ionic/angular/standalone';
 import { AuthService } from 'src/services/auth/auth.service';
 import { UserService } from 'src/services/user/user.service';
 import { Router } from '@angular/router';
@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
     IonButton,
     IonInput,
     IonText,
-    IonInputPasswordToggle
   ],
 })
 
@@ -45,14 +44,13 @@ export class ChangePasswordPage implements OnInit {
   );
   }
 
-  saveChanges(){
+  async saveChanges(){
 
     if (this.changePasswordForm.invalid) {
       return
     }
 
-    const user_id = this.user.getCurrentUserID()
-
+    const user_id = await this.user.getCurrentUserID()
     const {
       current_password,
       new_password,
@@ -69,8 +67,8 @@ export class ChangePasswordPage implements OnInit {
     
     this.authService.changePassword(data).subscribe({
       next: (res) => {
-        alert(res);
         console.log(res);
+        // alert(res);
         this.router.navigateByUrl('/login');
       },
       error: (err) => {
