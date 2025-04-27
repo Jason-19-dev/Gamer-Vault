@@ -32,20 +32,21 @@ export type Customer = {
 }
 
 
-export type order = {
-    nombre: string
-    fecha: string
-    tipo_entrega: string
+export type Order = {
+    order_id: number
+    status: string 
     total: number
-    estado: string
-    item: items[] // dymano
+    savings: number
+    created_at: string
+    details: order_details[]
 }
 
-export type items = {
-    item_id: number
-    name:string
-    cantidad: number
-    precio_unitario: number
+export type order_details = {
+    id: number
+    name: string
+    price: number
+    image_utl: string
+    quantity: number
 }
 
 export type Wallet = {
