@@ -13,56 +13,36 @@
           <div class="grid-square" *ngFor="let i of [1,2,3,4,5,6,7,8,9]"></div>
         </div>
       </div>
-      <div class="vault-balance">$0.99</div>
+      <div class="vault-balance">${{ saldo.toFixed(2) }}</div>
     </div>
-    
+
     <div class="vault-info">
       <p class="challenge-text">Complete the challenge and level up to earn more interests!</p>
-      
+
       <div class="progress-container">
         <div class="progress-bar">
           <div class="progress-fill" [style.width]="'40%'"></div>
         </div>
         <div class="level-indicator">1</div>
       </div>
-      
+
       <ion-button expand="block" class="learn-button" fill="clear">
         Learn about our challenges here!
       </ion-button>
     </div>
   </div>
 
-  <h2 class="section-title">Savings History</h2>
-  
-  <div class="savings-list">
-    <ion-item lines="none" class="savings-item">
-      <div class="game-icon fortnite">F</div>
-      <div class="game-info">
-        <div class="game-name">Fortnite</div>
-        <div class="game-description">Weekly subscription</div>
+  <h2 class="section-title">Order History</h2>
+  <div class="order-history-container">
+    <ion-item lines="none" class="order-item" *ngFor="let order of orders">
+      <div class="order-date">{{ order.created_at | date:'yyyy-MM-dd' }}</div>
+      <div class="order-details">
+        <div class="order-total">Total: ${{ order.total.toFixed(2) }}</div>
+        <div class="order-saved">Saved: ${{ order.savings.toFixed(2) }}</div>
       </div>
-      <div class="game-amount" slot="end">$12</div>
-    </ion-item>
-    
-    <ion-item lines="none" class="savings-item">
-      <div class="game-icon it-takes-two">IT</div>
-      <div class="game-info">
-        <div class="game-name">It Takes Two</div>
-        <div class="game-description">Weekly subscription</div>
-      </div>
-      <div class="game-amount" slot="end">$10</div>
-    </ion-item>
-    
-    <ion-item lines="none" class="savings-item">
-      <div class="game-icon elden-ring">E</div>
-      <div class="game-info">
-        <div class="game-name">Elden Ring</div>
-        <div class="game-description">Weekly subscription</div>
-      </div>
-      <div class="game-amount" slot="end">$2</div>
+      <ion-icon name="chevron-forward-outline" slot="end" color="light"></ion-icon>
     </ion-item>
   </div>
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>
-
