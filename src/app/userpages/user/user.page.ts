@@ -138,7 +138,6 @@ export class UserPage implements OnInit, OnDestroy {
   }
 
   orderHistory() {
-    console.log("Order history clicked")
     this.router.navigateByUrl("/order-history")
   }
 
