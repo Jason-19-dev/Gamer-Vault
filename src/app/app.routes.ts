@@ -60,6 +60,10 @@ export const routes: Routes = [
   },  {
     path: 'order-history',
     loadComponent: () => import('./order-history/order-history.page').then( m => m.OrderHistoryPage)
+  },
+  {
+    path: 'change-password',
+    loadComponent: () => import('./change-password/change-password/change-password.page').then( m => m.ChangePasswordPage)
   }
 
 ]

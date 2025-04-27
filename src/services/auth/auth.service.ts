@@ -28,4 +28,14 @@ export class AuthService{
         console.log(headers)
         return this.http.post(`${this.apiURL}/login`, body, { headers });
     }
+
+    changePassword(data: any): Observable<any>{
+        const headers = this.httpHeader.getBasicJsonHeaders();
+        return this.http.post(`${this.apiURL}/changepassword`, data, { headers });
+    }
+
+    deactivateUser(data: any): Observable<any>{
+        const headers = this.httpHeader.getBasicJsonHeaders();
+        return this.http.post(`${this.apiURL}/deactivateuser`, data, { headers });
+    }
 }

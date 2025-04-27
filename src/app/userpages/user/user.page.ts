@@ -149,7 +149,7 @@ export class UserPage implements OnInit, OnDestroy {
 
   changePassword() {
     console.log("Change password clicked")
-    // Navigate to change password page
+    this.router.navigateByUrl("/change-password")
   }
 }
 
