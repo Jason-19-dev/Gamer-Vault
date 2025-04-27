@@ -144,7 +144,7 @@ ion-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px; /* Ajusté el padding vertical */
+  padding: 0px 16px; /* Ajusté el padding vertical */
 }
 
 .order-date {
@@ -170,10 +170,10 @@ ion-item {
 }
 
 .order-saved {
-  color: #45a247; /* Un tono de verde similar al "Saved" de la imagen */
+  color: #DEAD1C!important;; /* Un tono de verde similar al "Saved" de la imagen */
 }
 
-ion-icon[slot="end"] {
-  color: #a8dadc !important; /* Un tono de azul claro para la flecha */
+.order-item ion-icon[slot="end"] {
+  color: #DEAD1C !important;
   font-size: 20px;
 }
