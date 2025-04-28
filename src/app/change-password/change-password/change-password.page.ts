@@ -68,13 +68,23 @@ export class ChangePasswordPage implements OnInit {
     this.authService.changePassword(data).subscribe({
       next: (res) => {
         console.log(res);
-        // alert(res);
-        this.router.navigateByUrl('/login');
+    
+        if (res.message) {
+          alert('Password changed successfully. Please log in with your new password.');
+          this.router.navigateByUrl('/login');
+        }
+        else {
+          alert(res.error);
+        }
       },
       error: (err) => {
-        console.log("error",err);
+        console.log("error", err.error);
+        alert('${err}');
+
+        
       }
-    })
+    });
+    
 
 
   }

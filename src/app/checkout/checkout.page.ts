@@ -118,7 +118,7 @@ async payNow() {
       console.log("tarjeta tiene suficiente")
 
       const order_payload = {
-        user_id: this.userService.getCurrentUserID(),
+        user_id: await this.userService.getCurrentUserID(),
         total: this.finalTotal,
         savings: this.savings,
         status: 'pending',
