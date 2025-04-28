@@ -87,6 +87,7 @@
     background: transparent;
     border: none;
     color: #333;
+    font-family: verdana;
     font-size: 16px;
     padding: 0;
 
@@ -110,6 +111,7 @@
     color: #DEAD1C;
     margin-top: 4px;
     margin-left: 8px;
+    font-family: verdana;
   }
 
 .terms-container {
@@ -137,11 +139,12 @@
   }
 
   .terms-label {
-    font-size: 14px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.4;
     margin: 0;
     cursor: pointer;
+    font-family: verdana;
   }
 
   .terms-link {
@@ -153,9 +156,10 @@
 
   .register-button {
     --background: #DEAD1C !important;
-    --color: #0a1933;
+    color: #0a1933;
     --border-radius: 12px;
     --box-shadow: 0 4px 8px rgba(222, 173, 28, 0.3);
+    font-family: verdana;
     font-weight: bold;
     margin: 0 auto;
     height: 48px;
@@ -171,6 +175,7 @@
   }
 
   .login-link {
+    font-family: verdana;
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
     padding-top: 5px;
