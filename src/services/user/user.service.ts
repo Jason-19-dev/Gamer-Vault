@@ -51,7 +51,7 @@ export class UserService {
       console.log('Payload decodificado:', payloadString);
       const payload = JSON.parse(payloadString);
       console.log('Payload como objeto:', payload);
-      return payload.user_id || null;
+      return payload.sub || null;
     } catch (e) {
       console.error('Error al decodificar token:', e);
       return null;
