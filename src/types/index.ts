@@ -38,14 +38,16 @@ export type Order = {
     total: number
     savings: number
     created_at: string
-    details: order_details[]
+    payment_method: string
+    description: Order_Details[]
 }
 
-export type order_details = {
-    id: number
+export type Order_Details = {
+    order_id: number
+    savings: number
     name: string
     price: number
-    image_utl: string
+    image_url: string
     quantity: number
 }
 

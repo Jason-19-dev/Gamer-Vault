@@ -11,7 +11,7 @@ export class OrdersService {
   constructor( private http: HttpClient) { }
 
   private apiURL = `${environment.apiURL}/orders`
-  
+
   private get jsonHeaders(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
@@ -21,7 +21,11 @@ export class OrdersService {
   }
 
   load_user_orders(userId: string): Observable<any> {
-    return this.http.get(`${this.apiURL}/${userId}`, { headers: this.jsonHeaders });
+    return this.http.get(`${environment.apiURL}/orders/${userId}`, { headers: this.jsonHeaders });
+  }
+
+  getOrderDescription(orderId: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/detail/${orderId}`, { headers: this.jsonHeaders });
   }
 
 

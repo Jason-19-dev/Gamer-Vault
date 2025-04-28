@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>orderDetails</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,4 +13,58 @@
       <ion-title size="large">orderDetails</ion-title>
     </ion-toolbar>
   </ion-header>
+    <div class="ion-padding">
+      <p> {{ orderItems.created_at}}</p>
+      <ion-item *ngFor="let details of orderItems.description">
+        <div class="order-info">
+          <ion-thumbnail slot="start" class="item-thumbnail">
+            <img alt="Product image" [src]="details.image_url" />
+          </ion-thumbnail>
+          <div>
+            <p>{{ details.name}}</p>
+          </div>
+          
+          <p>$ {{ details.price }}</p>
+        </div>
+      </ion-item>
+
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span class="summary-label">Products Total</span>
+        <span class="summary-value">{{orderItems.description?.length}}</span>
+      </div>
+      
+      <div class="summary-row">
+        <span class="summary-label">Payment Method</span>
+        <span class="summary-value">{{orderItems.payment_method}}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Status</span>
+        <span class="summary-value">{{orderItems.status == 'pending' ? 'Pendiente 🕛 ' : 'Completed ✅'}}</span>
+      </div>
+      
+      <div class="summary-row">
+        <span class="summary-label">Savings</span>
+        <span class="summary-value discount">$ {{orderItems.savings}}</span>
+      </div>
+      
+      <div class="summary-row total">
+        <span class="summary-label">Total</span>
+        <span class="summary-value">$ {{orderItems.total}}</span>
+      </div>
+    </div>
+
+  </div> 
+  
+  @if (!orderItems) {
+    
+    <div class="ion-padding">
+      <ion-item>
+        <div class="order-date">
+          <p>No details were  found.</p> 
+        </div>
+      </ion-item>
+    </div>
+  } 
 </ion-content>
+<app-tabs-pages></app-tabs-pages>
