@@ -13,20 +13,20 @@ import {
   IonTitle,
   IonToolbar,
    AlertController,
-   ToastController,
-} from "@ionic/angular/standalone"
+   ToastController, IonButtons } from "@ionic/angular/standalone"
 import  { CartService, CartItem } from "src/services/cart/cart.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { cartOutline, trashOutline, closeCircleOutline } from "ionicons/icons"
 import type { Subscription } from "rxjs"
+import { IonBackButton } from "@ionic/angular/standalone"
 
 @Component({
   selector: "app-cart",
   templateUrl: "./cart.page.html",
   styleUrls: ["./cart.page.scss"],
   standalone: true,
-  imports: [
+  imports: [IonButtons, 
     IonContent,
     IonTitle,
     IonToolbar,
@@ -39,6 +39,7 @@ import type { Subscription } from "rxjs"
     IonIcon,
     IonHeader,
     TabsPagesPage,
+    IonBackButton,
   ],
 })
 export class CartPage implements OnInit, OnDestroy {
@@ -166,11 +167,13 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   checkout() {
-    // Here you would implement the checkout process
-    this.showToast("Processing payment...")
-    // Navigate to a thank you page or payment processing page
-    this.router.navigate(["/checkout"])
+    this.showToast("Processing payment...");
+    
+    setTimeout(() => {
+      this.router.navigate(["/checkout"]);
+    }, 1000); // 1 segundos de espera
   }
+  
 
   showToast(message: string) {
     this.toastMessage = message // Actualiza el mensaje del toast
