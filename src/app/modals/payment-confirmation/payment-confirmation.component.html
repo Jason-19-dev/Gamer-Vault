@@ -1,7 +1,21 @@
 <ion-content class="success-content">
   <div class="success-wrapper">
-    <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
-    <p class="success-message">Thank you for your purchase!</p>
-    <ion-button expand="block" class="success-button" (click)="close()">OK</ion-button>
+    <ion-icon 
+      [name]="isSuccess ? 'checkmark-circle-outline' : 'close-circle-outline'" 
+      class="success-icon"
+      [class.error-icon]="isError">
+    </ion-icon>
+
+    <p class="success-message">
+      {{ isSuccess ? 'Thank you for your purchase!' : errorMessage }}
+    </p>
+
+    <ion-button 
+      expand="block" 
+      class="success-button" 
+      [class.error-button]="isError"
+      (click)="handleButtonClick()">
+      OK
+    </ion-button>
   </div>
 </ion-content>
