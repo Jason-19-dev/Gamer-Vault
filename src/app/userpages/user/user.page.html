@@ -1,6 +1,6 @@
 <ion-header class="has-shadow" [translucent]="true">
   <ion-toolbar>
-    <ion-title>Profile</ion-title>
+    <ion-title class="font2P">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
         <img [src]="currentUser.profileImage || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Profile picture" />
       </ion-avatar>
       <div class="name-container">
-        <h2>{{ currentUser.fullName || currentUser.userName }}</h2>
+        <h2 class="ion-text-color">{{ currentUser.fullName || currentUser.userName }}</h2>
         <ion-icon name="pencil-outline" (click)="editProfile()"></ion-icon>
       </div>
     </div>

@@ -71,7 +71,7 @@ export class HomePage implements OnInit {
     private productsService: ProductsService,
     private http: HttpClient,
   ) {
-    addIcons({ chevronForwardCircle, chevronForwardCircleOutline })
+    addIcons({chevronForwardCircle,chevronForwardCircleOutline});
   }
 
   ngOnInit() {

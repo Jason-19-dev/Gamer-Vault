@@ -69,6 +69,7 @@
     background: transparent;
     border: none;
     color: #333;
+    font-family: Verdana;
     font-size: 16px;
     padding: 0;
     
@@ -86,8 +87,9 @@
   }
   
   .error-message {
+    font-family: Verdana;
     font-size: 16px;
-    margin-top: 4px;
+    margin-top: 8px;
     margin-left: 8px;
     color: #DEAD1C;
   }
@@ -110,9 +112,10 @@
   
   .login-button {
     --background: #DEAD1C !important;
-    --color: #0a1933;
+    color: #0a1933;
     --border-radius: 8px;
     --box-shadow: 0 4px 8px rgba(222, 173, 28, 0.3);
+    font-family: Verdana;
     font-weight: bold;
     margin: 0 auto;
     height: 48px;
@@ -175,6 +178,7 @@
   
   .signup-link {
     color: rgba(255, 255, 255, 0.8);
+    font-family: Verdana;
     margin-bottom: 16px;
     
     a {

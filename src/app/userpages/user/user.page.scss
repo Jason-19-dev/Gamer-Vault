@@ -30,7 +30,8 @@ ion-header ion-toolbar {
 }
 
 .ion-text-color {
-  color: #DEAD1C;
+  font-family: Verdana;
+  color: #ffffff;
 }
 
 
@@ -143,6 +144,7 @@ ion-avatar {
 }
 
 .deactivate-button {
+  font-family: Verdana;
   color: #0a1933;
   font-size: 1.0rem;
 }

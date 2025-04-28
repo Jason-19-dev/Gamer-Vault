@@ -52,12 +52,14 @@ ion-header ion-toolbar {
 .product-name {
   color: white;
   margin: 0;
+  font-family: Verdana;
   font-size: 24px;
   font-weight: bold;
 }
 
 .section-title {
   color: white;
+  font-family: Verdana;
   font-size: 18px;
   margin: 16px 0px 8px;
 }
@@ -98,6 +100,7 @@ ion-header ion-toolbar {
 }
 
 .description-text {
+  font-family: Verdana;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.5;
   margin: 0;
@@ -117,12 +120,13 @@ ion-header ion-toolbar {
 
 .detail-label {
   color: rgba(255, 255, 255, 0.6);
+  font-family: Verdana;
   font-size: 14px;
 }
 
 .detail-value {
   color: white;
-  font-weight: 500;
+  font-family: Verdana;
 }
 
 .price-section {
@@ -148,14 +152,18 @@ ion-header ion-toolbar {
 
 .price-value {
   color: white;
+  font-family: monospace;
   font-size: 24px;
   font-weight: bold;
 }
 
 .add-to-cart-button {
-  --background: #e90052;
-  --color: white;
+  --background: #ffc409;
+  font-family: Verdana;
+  color: #0a1933;
+  font-weight: bold;
   margin: 0;
+  border-radius: 0;
 }
 
 .view-cart-button {

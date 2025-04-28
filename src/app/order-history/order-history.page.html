@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title class="font2P">
       Order History
     </ion-title>
   </ion-toolbar>
@@ -17,7 +17,7 @@
   </ion-header>
 @if (orders.length > 0){
 
-  <p class="ion-padding">Click your order to see more details.</p>
+  <p class="font-verdana">Click your order to see more details.</p>
   
   <div class="ion-padding">
     <ion-item *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">

@@ -55,6 +55,7 @@ ion-content {
   .game-title {
     color: white;
     margin: 0;
+    font-family: Verdana;
     font-size: 24px;
     font-weight: bold;
   }
@@ -62,6 +63,7 @@ ion-content {
   .game-developer {
     color: rgba(255, 255, 255, 0.8);
     margin: 4px 0 0 0;
+    font-family: Verdana;
     font-size: 14px;
   }
   
@@ -104,15 +106,17 @@ ion-content {
   .coin-name {
     color: white;
     margin: 0 0 8px 0;
+    font-family: Verdana;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 300;
   }
   
   .coin-amount {
     color: white;
     margin: 0 0 4px 0;
     font-size: 16px;
-    font-weight: 600;
+    font-family: Verdana;
+    font-weight: 300;
   }
   
   .coin-currency, .coin-delivery, .coin-platforms {
@@ -124,13 +128,16 @@ ion-content {
   .coin-price {
     color: #ffc409;
     margin: 8px 0 0 0;
+    font-family: Verdana;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 300;
   }
   
   .add-to-cart-button {
     --background: #ffc409;
-    --color: #0a1933;
+    font-family: Verdana;
+    color: #0a1933;
+    font-weight: bold;
     margin: 0;
     border-radius: 0;
   }

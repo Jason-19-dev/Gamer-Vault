@@ -26,6 +26,7 @@ ion-title {
 
 .summary-title {
   color: white;
+  font-family: Verdana;
   font-size: 18px;
   margin: 0 0 16px 0;
   font-weight: 600;
@@ -35,6 +36,7 @@ ion-title {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
+  font-family: Verdana;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -52,7 +54,7 @@ ion-title {
 
 .pay-button {
   --background: #ffc409;
-  --color: #0a1933;
+  color: #0a1933;
   --border-radius: 12px;
   --box-shadow: none;
   margin-top: 20px;
