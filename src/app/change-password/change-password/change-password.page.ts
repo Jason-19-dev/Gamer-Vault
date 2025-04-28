@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn , AbstractControl } from "@angular/forms";
-import { IonContent, IonCard, IonInput, IonButton, IonText} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonCard, IonInput, IonButton, IonText, IonToolbar, IonButtons, IonBackButton, IonTitle} from '@ionic/angular/standalone';
 import { AuthService } from 'src/services/auth/auth.service';
 import { UserService } from 'src/services/user/user.service';
 import { Router } from '@angular/router';
@@ -20,6 +20,11 @@ import { Router } from '@angular/router';
     IonButton,
     IonInput,
     IonText,
+    IonHeader,
+    IonToolbar,
+    IonButtons, 
+    IonBackButton,
+    IonTitle
   ],
 })
 
