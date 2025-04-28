@@ -113,27 +113,7 @@ export class UserPage implements OnInit, OnDestroy {
   }
 
   async deleteAccount() {
-    const alert = await this.alertController.create({
-      header: "Delete Account",
-      message: "Are you sure you want to delete your account? This action cannot be undone.",
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel",
-        },
-        {
-          text: "Delete",
-          cssClass: "alert-button-danger",
-          handler: () => {
-            // Clear user data and redirect to login
-            this.userService.clearCurrentUser()
-            this.router.navigateByUrl("/login")
-          },
-        },
-      ],
-    })
-
-    await alert.present()
+    this.router.navigateByUrl("/deactivate-account")
   }
 
   orderHistory() {
