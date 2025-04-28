@@ -10,6 +10,34 @@ ion-header ion-toolbar {
   --border-width: 0;
 }
 
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  background-color:  rgba(41, 82, 128, 0.45);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.button-container:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.input-icon {
+  color: #DEAD1C;
+  width: 25px;
+  height: 25px;
+  margin-right: 12px;
+}
+
+.ion-text-color {
+  color: #DEAD1C;
+}
+
+
+ion-item-color {
+  --background:  rgba(41, 82, 128, 0.45);;
+}
+
 ion-title {
   font-size: 1.2rem;
   font-weight: 600;
@@ -110,8 +138,13 @@ ion-avatar {
 
 .delete-button ion-icon { 
   margin-right: 8px; 
-  font-size: 1.1rem; 
-  color: #ff3b30;
+  font-size: 1.3rem; 
+  color: #0a1933;
+}
+
+.deactivate-button {
+  color: #0a1933;
+  font-size: 1.0rem;
 }
 
 .no-user-container {

@@ -27,8 +27,7 @@ import {
   trashOutline,
   linkOutline,
   shieldOutline,
-  helpCircleOutline,
-} from "ionicons/icons"
+  helpCircleOutline, personRemoveOutline } from "ionicons/icons"
 import { UserService, type User } from "src/services/user/user.service"
 import type { Subscription } from "rxjs"
 
@@ -62,7 +61,7 @@ export class UserPage implements OnInit, OnDestroy {
     private userService: UserService,
   ) {
     // Register Ionicons
-    addIcons({pencilOutline, timeOutline, cardOutline, lockClosedOutline, logOutOutline, trashOutline, linkOutline, shieldOutline, helpCircleOutline});
+    addIcons({pencilOutline,timeOutline,lockClosedOutline,logOutOutline,personRemoveOutline,cardOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline});
   }
 
   ngOnInit() {

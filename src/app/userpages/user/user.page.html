@@ -4,8 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="page-background">
   <div class="profile-container" *ngIf="currentUser">
+    
     <div class="avatar-section">
       <ion-avatar>
         <img [src]="currentUser.profileImage || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Profile picture" />
@@ -17,7 +18,30 @@
     </div>
 
     <div class="menu-items">
-      <ion-item detail="false" lines="none" button (click)="orderHistory()">
+
+
+      <div class="button-container" (click)="orderHistory()">
+        <div class="button-wrapper">
+          <ion-icon name="time-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">Order history</ion-label>
+        </div>
+      </div>
+
+      <div class="button-container" (click)="changePassword()">
+        <div class="button-wrapper">
+          <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">Change password</ion-label>
+        </div>
+      </div>
+
+      <div class="button-container" (click)="logout()">
+        <div class="button-wrapper">
+          <ion-icon name="log-out-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">Log out</ion-label>
+        </div>
+      </div>
+
+      <!-- <ion-item detail="false" lines="none" button (click)="orderHistory()" class="ion-item-color">
         <ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
         <ion-label>Order history</ion-label>
       </ion-item>
@@ -35,13 +59,14 @@
       <ion-item detail="false" lines="none" button (click)="logout()">
         <ion-icon name="log-out-outline" slot="start" color="primary"></ion-icon>
         <ion-label>Log Out</ion-label>
-      </ion-item>
+      </ion-item> -->
+
     </div>
 
     <div class="delete-account-container">
       <ion-button fill="clear" class="delete-button" (click)="deleteAccount()">
-        <ion-icon name="trash-outline" slot="start"></ion-icon>
-        <span>Delete account</span>
+        <ion-icon name="person-remove-outline" slot="start"></ion-icon>
+        <span class="deactivate-button">Deactivate account</span>
       </ion-button>
     </div>
     
