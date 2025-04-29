@@ -8,7 +8,6 @@ import { PaymentMethodComponent } from 'src/app/modals/payment-method/payment-me
 import {  HttpClientModule, HttpErrorResponse} from '@angular/common/http';
 import { ModalController } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
-
 //import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from "src/services/orders/orders.service";
@@ -149,9 +148,17 @@ export class CheckoutPage implements OnInit {
         // Get wallet balance and then deduct it.
         this.walletService.getWalletBalance(userId).subscribe(
           async (walletData: any) => {
-            const walletBalance = walletData.balance;
+            //const walletBalance = walletData.balance;
 
-            this.walletService.deductWalletBalance(userId, walletBalance).subscribe(
+            const discount = Math.min(this.walletBalance, this.originalTotal);
+            console.log("wallet : "+this.walletBalance)
+            console.log("original total  : "+this.originalTotal)
+            console.log("final total : "+this.finalTotal);
+
+            this.finalTotal = this.originalTotal - discount;
+
+            console.log(`Aplicando descuento de Wallet v2: -$${discount}`);
+            this.walletService.deductWalletBalance(userId, this.originalTotal).subscribe(
               async (response: any) => {
                 if (response.error) {
                   errorMessage = response.error;
@@ -340,7 +347,7 @@ export class CheckoutPage implements OnInit {
     if (this.payWithWallet) {
       const discount = Math.min(this.walletBalance, this.originalTotal);
       this.finalTotal = this.originalTotal - discount;
-      console.log(`Aplicando descuento de Wallet: -$${discount}`);
+      //console.log(`Aplicando descuento de Wallet: -$${discount}`);
     } else {
       this.finalTotal = this.originalTotal;
       console.log('Descuento de Wallet eliminado.');

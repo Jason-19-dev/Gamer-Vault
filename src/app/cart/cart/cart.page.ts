@@ -26,7 +26,7 @@ import { IonBackButton } from "@ionic/angular/standalone"
   templateUrl: "./cart.page.html",
   styleUrls: ["./cart.page.scss"],
   standalone: true,
-  imports: [IonButtons, 
+  imports: [IonButtons,
     IonContent,
     IonTitle,
     IonToolbar,
@@ -168,12 +168,12 @@ export class CartPage implements OnInit, OnDestroy {
 
   checkout() {
     this.showToast("Processing payment...");
-    
+
     setTimeout(() => {
       this.router.navigate(["/checkout"]);
-    }, 1000); // 1 segundos de espera
+    }, 300); // 1 segundos de espera
   }
-  
+
 
   showToast(message: string) {
     this.toastMessage = message // Actualiza el mensaje del toast
