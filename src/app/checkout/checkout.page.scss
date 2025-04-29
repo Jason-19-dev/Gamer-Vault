@@ -128,7 +128,7 @@ ion-title {
   display: flex;
   justify-content: flex-start;
   gap: 16px;
-  margin: 20px;
+  margin-bottom: 24px;
 
   .method-card {
     background: linear-gradient(135deg, #1c1c3c, #2a3f88);
@@ -187,8 +187,7 @@ ion-title {
 
 
 .saved-card-checkout {
-  padding: 0 20px;
-
+  margin-bottom: 24px;
   .checkout-card {
     background: linear-gradient(135deg, #1c1c3c, #2a3f88);
     border-radius: 14px;
@@ -232,13 +231,12 @@ ion-title {
 }
 
 //NEW
-
 .wallet-card {
   background: linear-gradient(135deg, #0d3a71, #3a72b8);
   /* azul realista */
   border-radius: 20px;
-  padding: 16px 20px;
-  margin: 20px;
+  padding: 0px 20px;
+  margin-bottom: 24px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -262,13 +260,13 @@ ion-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .wallet-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   /* separación entre el logo y el texto */
 }
 
@@ -285,26 +283,23 @@ ion-title {
 }
 
 .wallet-balance {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
   font-size: 22px;
   font-weight: bold;
 }
-
-.wallet-footer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  font-size: 12px;
-  opacity: 0.8;
+.wallet-user {
+  font-size: 22px;
   padding-left: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
-
 
 .wallet-checkbox {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 16px 20px 0 20px;
+  margin-bottom: 24px;
   color: red;
   font-size: 14px;
   font-weight: 400;
@@ -333,14 +328,14 @@ ion-title {
   --size: 20px;
 }
 .wallet-title-payment {
-  margin: 20px 20px 8px 20px;
+  margin: 20px 20px 8px 4px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
   letter-spacing: 1px;
 }
 .wallet-title-payment-wallet{
-  margin: 20px 20px 18px 20px;
+  margin: 20px 20px 18px 4px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 500;

@@ -38,6 +38,7 @@
       </div>
     </div>
   </div>
+  
 <div class="wallet-title-payment">
   Wallet as payment method
 </div>
@@ -47,13 +48,14 @@
     <div class="wallet-header">
       <div class="wallet-title">
         <img src="assets/icon/favicon.png" alt="Gamer Vault Logo" class="wallet-chip-img" />
-        <span class="wallet-label">GAMER VAULT</span>
+        <span class="wallet-label font2P" >GAMER VAULT</span>
       </div>
-      <div class="wallet-balance">${{ walletBalance.toFixed(2) }}</div>
     </div>
 
     <div class="wallet-footer">
-      <div class="wallet-user">{{ userName || 'Usuario' }}</div>
+      <div class="wallet-user">{{ currentUser?.userName || 'Usuario' }}</div>
+      <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
+      </div>
     </div>
   </div>
 </div>

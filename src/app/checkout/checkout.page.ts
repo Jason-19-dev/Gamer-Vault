@@ -9,12 +9,12 @@ import {  HttpClientModule, HttpErrorResponse} from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from "src/services/orders/orders.service";
-import { UserService } from "src/services/user/user.service";
+//import { UserService } from "src/services/user/user.service";
 import { Router } from "@angular/router";
 import { PaymentConfirmationComponent } from 'src/app/modals/payment-confirmation/payment-confirmation.component'; // Import the PaymentConfirmationComponent
 import { WalletService } from 'src/services/wallet/wallet.service'; // asegúrate de importar
 import { Wallet } from 'src/types';
-
+import { UserService, type User } from "src/services/user/user.service"
 @Component({
   standalone: true,
   selector: 'app-checkout',
@@ -29,6 +29,7 @@ import { Wallet } from 'src/types';
   ],
 })
 export class CheckoutPage implements OnInit {
+  currentUser: User | null = null
   walletUser: Wallet [] = [];
   cartItems: CartItem[] = [];
   subtotal = 0;
@@ -56,6 +57,7 @@ originalTotal: number = 0; // Para guardar el total sin descuentos
     private router: Router,
     private http: HttpClient,
     private walletService: WalletService,
+
   ) {}
 
   ngOnInit() {
@@ -66,6 +68,8 @@ originalTotal: number = 0; // Para guardar el total sin descuentos
   this.finalTotal = this.roundedTotal;
   this.originalTotal = this.finalTotal;
   this.getUserBalance();
+  // Get current user
+  this.currentUser = this.userService.getCurrentUser()
   }
 
   calculateTotals() {
