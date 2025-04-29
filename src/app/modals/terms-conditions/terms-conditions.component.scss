@@ -11,12 +11,12 @@
   background: #0b1e3c;
   border: 2px solid #f1c40f;
   border-radius: 20px;
-  padding: 30px;
+  padding: 25px;
   width: 100%;
   color: #fff;
   text-align: center;
   box-shadow: 0 0 12px #000;
-  height: 100%;
+  height: auto;
 }
 
 .terms-title {
@@ -31,7 +31,7 @@
   text-align: left;
   font-size: 15px;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .terms-text p {
@@ -39,11 +39,20 @@
 }
 
 .accept-button {
-  --background: #f1c40f;
-  --color: #0b1e3c;
-  border-radius: 8px;
+--background: #DEAD1C !important;
+  --color: #0a1933;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 8px rgba(222, 173, 28, 0.3);
+  margin: 0 auto;
+  height: 48px;
+  width: 200px;
   font-weight: bold;
+  font-size: 16px;
+  text-transform: none;
+  padding-top: 5px;
+  margin-bottom: 25px;
 }
+
 .close-icon {
   font-size: 24px;
   color: #f1c40f;
@@ -53,3 +62,72 @@
   z-index: 10;
   cursor: pointer;
 }
+
+.scroll-text {
+  max-height: 300px;
+  /* Ajusta según quieras */
+  overflow-y: auto;
+  padding-right: 10px;
+  /* Para que el scroll no tape el texto */
+}
+/*
+.modal-content {
+  --background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.terms-wrapper {
+  background: #0b1e3c;
+  border: 2px solid #f1c40f;
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0 12px #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+}
+
+.terms-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  font-weight: bold;
+  color: #f1c40f;
+  margin-bottom: 16px;
+}
+
+.terms-text {
+  width: 100%;
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.accept-button {
+  --background: #f1c40f;
+  --color: #0b1e3c;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: auto;
+  //Empuja hacia abajo
+  margin-bottom: 10px;
+}
+
+.close-icon {
+  font-size: 24px;
+  color: #f1c40f;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  cursor: pointer;
+}
+*/

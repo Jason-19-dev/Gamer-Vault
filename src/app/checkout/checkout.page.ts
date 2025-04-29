@@ -11,7 +11,8 @@ import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from "src/services/orders/orders.service";
 import { UserService } from "src/services/user/user.service";
-
+import { WalletService } from 'src/services/wallet/wallet.service'; // asegúrate de importar
+import { Wallet } from 'src/types';
 @Component({
   standalone: true,
   selector: 'app-checkout',
@@ -26,6 +27,7 @@ import { UserService } from "src/services/user/user.service";
   ],
 })
 export class CheckoutPage implements OnInit {
+  walletUser: Wallet [] = [];
   cartItems: CartItem[] = [];
   subtotal = 0;
   roundedTotal = 0;
@@ -38,6 +40,10 @@ export class CheckoutPage implements OnInit {
   cardHolder = '';
   expiry = '';
   cvc = '';
+  userId: string = '';
+  walletBalance = 1;
+  userName = 'Carlos'; // Aquí podrías traer el nombre dinámicamente del usuario
+originalTotal: number = 0; // Para guardar el total sin descuentos
 
 
   constructor(
@@ -45,7 +51,9 @@ export class CheckoutPage implements OnInit {
     private ordersService: OrdersService,
     private userService: UserService,
     private modalCtrl: ModalController,
-    private http: HttpClient
+    private http: HttpClient,
+    private walletService: WalletService,
+
   ) {}
 
   ngOnInit() {
@@ -54,6 +62,8 @@ export class CheckoutPage implements OnInit {
   this.roundedTotal = Math.ceil(this.subtotal);
   this.savings = this.roundedTotal - this.subtotal;
   this.finalTotal = this.roundedTotal;
+  this.originalTotal = this.finalTotal;
+  this.getUserBalance();
   }
 
   calculateTotals() {
@@ -61,25 +71,40 @@ export class CheckoutPage implements OnInit {
     this.roundedTotal = Math.ceil(this.subtotal);
     this.savings = this.roundedTotal - this.subtotal;
     this.finalTotal = this.roundedTotal;
+    this.originalTotal = this.finalTotal;
 
     if (this.cartItems.length === 0) {
       this.subtotal = 0;
       this.roundedTotal = 0;
       this.savings = 0;
       this.finalTotal = 0;
+      this.originalTotal = 0;
     }
   }
 
-async  payNowx() {
-  /*
-  const cardData = {
-    number: this.cardNumber.replace(/\s+/g, ''),
-    holder: this.cardHolder,
-    expiry: this.expiry,
-  };
+  async getUserBalance(){
+    console.log("in");
+    const user_id = await this.userService.getCurrentUserID();
+    console.log("value : "+user_id);
 
-  this.modalCtrl.dismiss(cardData);
-  */
+    if (!user_id) {
+      console.error("No user ID found. Cannot load orders.");
+      return;
+    }
+    console.log("pasaste");
+    this.walletService.getWalletBalance(user_id).subscribe({
+      next: (res) => {
+        this.walletUser = res;
+        this.walletBalance = res.balance;
+        console.log(res);
+    },
+    error: (err) => {
+      console.error("Error loading wallet balance:", err);
+    }
+  })
+  }
+
+async  payNowx() {
  const modal = await this.modalCtrl.create({
     component: PaymentConfirmationComponent,
     breakpoints: [0, 1],
@@ -113,7 +138,7 @@ async payNow() {
     ).toPromise();
 
     if (response.status === 'success') {
-      // Mostrar modal de éxito 
+      // Mostrar modal de éxito
 
       console.log("tarjeta tiene suficiente")
 
@@ -124,7 +149,7 @@ async payNow() {
         status: 'pending',
         description: this.cartItems
       };
-
+      console.log(this.savings);
       this.ordersService.create_new_order(order_payload).subscribe({
         next: (res) => {
           console.log("res new order", res);
@@ -133,9 +158,9 @@ async payNow() {
         },
         error: (err) => {
           console.error("API ERROR", err);
-        } 
+        }
       })
-      
+
     } else {
       alert('Payment failed: ' + response.message);
     }
@@ -198,6 +223,21 @@ getCardLogo(type: string): string {
 formatCardNumber(num: string = ''): string {
   return num.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
 }
+payWithWallet: boolean = false;
+
+toggleWalletPayment() {
+  console.log('¿Pagar con Wallet?', this.payWithWallet);
+
+  if (this.payWithWallet) {
+    const discount = Math.min(this.walletBalance, this.originalTotal);
+    this.finalTotal = this.originalTotal - discount;
+    console.log(`Aplicando descuento de Wallet: -$${discount}`);
+  } else {
+    this.finalTotal = this.originalTotal;
+    console.log('Descuento de Wallet eliminado.');
+  }
+}
+
 
 
 }

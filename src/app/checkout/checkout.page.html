@@ -6,6 +6,15 @@
 
 <ion-content class="ion-padding">
 
+<!--
+<img _ngcontent-ng-c437055410="" src="assets/icon/favicon.png" alt="logo" width="100" height="100" priority="">
+-->
+<!-- Wallet Card -->
+
+<!-- Wallet Card -->
+<div class="wallet-title-payment-wallet">
+  Saved cards
+</div>
   <div *ngIf="savedCard" class="saved-card-checkout">
     <div class="checkout-card">
       <div class="checkout-card-logo">
@@ -26,8 +35,35 @@
       </div>
     </div>
   </div>
+<div class="wallet-title-payment">
+  Wallet as payment method
+</div>
 
+<div class="wallet-card">
+  <div class="wallet-content">
+    <div class="wallet-header">
+      <div class="wallet-title">
+        <img src="assets/icon/favicon.png" alt="Gamer Vault Logo" class="wallet-chip-img" />
+        <span class="wallet-label">GAMER VAULT</span>
+      </div>
+      <div class="wallet-balance">${{ walletBalance.toFixed(2) }}</div>
+    </div>
 
+    <div class="wallet-footer">
+      <div class="wallet-user">{{ userName || 'Usuario' }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="wallet-checkbox">
+  <ion-checkbox [(ngModel)]="payWithWallet" (ionChange)="toggleWalletPayment()" class="custom-wallet-checkbox"
+    justify="start"></ion-checkbox>
+
+  <label class="wallet-checkbox-text">
+    Do you wish to user your <span class="highlight">savings</span>
+    as part of your payment?
+  </label>
+</div>
 
   <div class="method-cards">
     <div class="method-card" [class.selected]="selectedMethod === 'card'" (click)="selectMethod('card')">
@@ -42,20 +78,17 @@
   </div>
 
 
-
-
   <div class="summary-card">
-    <h2 class="summary-title">Resumen de compra</h2>
-
     <div class="summary-row">
       <span class="summary-label">Productos</span>
       <span class="summary-value">{{ cartItems.length }}</span>
     </div>
 
-    <div class="summary-row">
+        <div class="summary-row">
       <span class="summary-label">Subtotal</span>
       <span class="summary-value">${{subtotal.toFixed(2)}}</span>
     </div>
+
 
     <div class="summary-row">
       <span class="summary-label">Total redondeado</span>

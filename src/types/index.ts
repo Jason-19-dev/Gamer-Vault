@@ -1,5 +1,5 @@
 
-// 
+//
 export type GameItem = {
     id: string
     name: string
@@ -14,7 +14,7 @@ export type CoinItem = {
     image_url: string
     product_id?: string
 }
-  
+
 
 export type Customer = {
     id: number
@@ -31,10 +31,9 @@ export type Customer = {
 
 }
 
-
 export type Order = {
     order_id: number
-    status: string 
+    status: string
     total: number
     savings: number
     created_at: string
