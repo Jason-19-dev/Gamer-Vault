@@ -68,6 +68,7 @@ ion-content {
 
   .item-name {
     color: white;
+    font-family: Verdana;
     font-size: 16px;
     margin: 0 0 4px 0;
     font-weight: 500;
@@ -81,7 +82,8 @@ ion-content {
 
   .item-price {
     color: #ffc409;
-    font-weight: 600;
+    font-family: Verdana;
+    font-weight: 500;
   }
 
   .item-quantity {
@@ -121,6 +123,7 @@ ion-content {
 
   .summary-title {
     color: white;
+    font-family: Verdana;
     font-size: 18px;
     margin: 0 0 16px 0;
     font-weight: 600;
@@ -130,6 +133,7 @@ ion-content {
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
+    font-family: Verdana;
     color: rgba(255, 255, 255, 0.8);
   }
 
@@ -137,6 +141,7 @@ ion-content {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 8px;
     padding-top: 16px;
+    font-family: Verdana;
     font-weight: 600;
     color: white;
   }
@@ -147,10 +152,11 @@ ion-content {
 
   .pay-button {
     --background: #ffc409;
-    --color: #0a1933;
+    color: #0a1933;
     --border-radius: 12px;
     --box-shadow: none;
     margin-top: 20px;
+    font-family: Verdana;
     font-weight: 600;
     height: 48px;
   }

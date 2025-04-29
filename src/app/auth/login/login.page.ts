@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
       password: ["", [Validators.required, Validators.maxLength(50)]],
     })
   }
-
+                           
   ngOnInit() {}
 
   togglePassword() {

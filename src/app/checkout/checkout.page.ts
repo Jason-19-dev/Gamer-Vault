@@ -3,16 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { CartService, CartItem } from 'src/services/cart/cart.service';
 import { FormsModule } from "@angular/forms"
 import { CommonModule } from "@angular/common"
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { PaymentMethodComponent } from 'src/app/modals/payment-method/payment-method.component';
-import { PaymentConfirmationComponent } from 'src/app/modals/payment-confirmation/payment-confirmation.component';
-import { HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule, HttpErrorResponse} from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from "src/services/orders/orders.service";
 import { UserService } from "src/services/user/user.service";
+import { Router } from "@angular/router";
+import { PaymentConfirmationComponent } from 'src/app/modals/payment-confirmation/payment-confirmation.component'; // Import the PaymentConfirmationComponent
 import { WalletService } from 'src/services/wallet/wallet.service'; // asegúrate de importar
 import { Wallet } from 'src/types';
+
 @Component({
   standalone: true,
   selector: 'app-checkout',
@@ -40,20 +42,20 @@ export class CheckoutPage implements OnInit {
   cardHolder = '';
   expiry = '';
   cvc = '';
+loading = false; // Track loading state
   userId: string = '';
   walletBalance = 1;
   userName = 'Carlos'; // Aquí podrías traer el nombre dinámicamente del usuario
 originalTotal: number = 0; // Para guardar el total sin descuentos
-
-
   constructor(
     private cartService: CartService,
     private ordersService: OrdersService,
     private userService: UserService,
     private modalCtrl: ModalController,
+    private navCtrl: NavController,
+    private router: Router,
     private http: HttpClient,
     private walletService: WalletService,
-
   ) {}
 
   ngOnInit() {
@@ -105,6 +107,15 @@ originalTotal: number = 0; // Para guardar el total sin descuentos
   }
 
 async  payNowx() {
+  /*
+  const cardData = {
+    number: this.cardNumber.replace(/\s+/g, ''),
+    holder: this.cardHolder,
+    expiry: this.expiry,
+  };
+
+  this.modalCtrl.dismiss(cardData);
+  */
  const modal = await this.modalCtrl.create({
     component: PaymentConfirmationComponent,
     breakpoints: [0, 1],
@@ -117,31 +128,35 @@ async  payNowx() {
 
 async payNow() {
   if (!this.savedCard) {
-    console.log('No card selected');
+     this.showErrorModal('No card selected. Please add a card.');
     return;
   }
 
-  const payload = {
-    card_number: this.savedCard.number,
-    cvv: this.savedCard.cvc, // reemplaza con el real si lo tienes
-    expiration: this.savedCard.expiry,
-    amount: this.finalTotal,
-  };
+    this.loading = true; // Start loading
+    const payload = {
+      card_number: this.savedCard.number,
+      cvv: this.savedCard.cvc,
+      expiration: this.savedCard.expiry,
+      amount: this.finalTotal,
+    };
 
+    console.log(payload);
+    let paymentSuccessful = false; // Track payment status
+    let errorMessage = '';
+    try {
+      // Simulate network delay (remove in production)
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-
-  console.log(payload)
-  try {
-    const response: any = await this.http.post(
-      'https://pq5e5sx8tb.execute-api.us-east-1.amazonaws.com/dev/pago',
-      payload
-    ).toPromise();
+      const response: any = await this.http.post(
+        'https://pq5e5sx8tb.execute-api.us-east-1.amazonaws.com/dev/pago',
+        payload
+      ).toPromise();
 
     if (response.status === 'success') {
       // Mostrar modal de éxito
 
       console.log("tarjeta tiene suficiente")
-
+      paymentSuccessful = true;
       const order_payload = {
         user_id: await this.userService.getCurrentUserID(),
         total: this.finalTotal,
@@ -149,26 +164,40 @@ async payNow() {
         status: 'pending',
         description: this.cartItems
       };
-      console.log(this.savings);
+
       this.ordersService.create_new_order(order_payload).subscribe({
-        next: (res) => {
+         next: async (res) => {
           console.log("res new order", res);
           this.cartService.clearCart();
-          this.showSuccessModal();
+          await this.showSuccessModal();
         },
-        error: (err) => {
+        error: async (err) => {
           console.error("API ERROR", err);
+          errorMessage = 'Failed to create order. Please try again.';
+          await this.showErrorModal(errorMessage);
+          paymentSuccessful = false;
         }
-      })
+      });
 
     } else {
-      alert('Payment failed: ' + response.message);
+        errorMessage = response.message || 'Payment failed';
+        await this.showErrorModal(errorMessage);
     }
-  } catch (error) {
-    console.error(error);
-    alert('Error processing payment :c');
+  } catch (error: any) {
+      console.error(error);
+      if (error instanceof HttpErrorResponse) {
+        errorMessage = error.error?.message || 'Error processing payment'; // Accede al mensaje del error del backend
+      } else {
+        errorMessage =  'Error processing payment: ' + error.message;
+      }
+      await this.showErrorModal(errorMessage);
+    } finally {
+      this.loading = false;
+      if (paymentSuccessful) {
+        this.router.navigate(['/home']);
+      }
+    }
   }
-}
 
 async openCardModal() {
   const modal = await this.modalCtrl.create({
@@ -179,34 +208,48 @@ async openCardModal() {
     cssClass: 'card-full-modal'
   });
 
-  await modal.present();
+    await modal.present();
 
-  const { data } = await modal.onDidDismiss();
+    const { data } = await modal.onDidDismiss();
 
-  if (data) {
-    this.savedCard = {
-      number: data.cardNumber,
-      holder: data.cardHolder,
-      expiry: data.expiry,
-      brand: data.cardType,
-      cvc : data.cvc
-    };
-    this.calculateTotals();
+    if (data) {
+      this.savedCard = {
+        number: data.cardNumber,
+        holder: data.cardHolder,
+        expiry: data.expiry,
+        brand: data.cardType,
+        cvc: data.cvc
+      };
+      this.calculateTotals();
+    }
+    console.log(data);
   }
-  console.log(data);
-}
-
-async showSuccessModal() {
-  const modal = await this.modalCtrl.create({
-    component: PaymentConfirmationComponent,
-    breakpoints: [0, 1],
-    initialBreakpoint: 1,
-    showBackdrop: true
-  });
+  async showSuccessModal() {
+    const modal = await this.modalCtrl.create({
+      component: PaymentConfirmationComponent,
+      componentProps: {
+        isSuccess: true,
+      },
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      showBackdrop: true
+    });
 
   await modal.present();
 }
-
+async showErrorModal(message: string) {
+    const modal = await this.modalCtrl.create({
+      component: PaymentConfirmationComponent,
+      componentProps: {
+        errorMessage: message,
+        isError: true
+      },
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      showBackdrop: true
+    });
+    await modal.present();
+  }
 selectMethod(method: string) {
   this.selectedMethod = method;
 
@@ -237,8 +280,10 @@ toggleWalletPayment() {
     console.log('Descuento de Wallet eliminado.');
   }
 }
-
-
-
+goBack() {
+    if (this.router.url === '/checkout') {
+      this.navCtrl.back();
+    }
+  }
 }
 

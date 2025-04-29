@@ -9,12 +9,13 @@ import {
   IonTitle,
   IonToolbar,
   IonSearchbar,
-  IonSpinner} from "@ionic/angular/standalone"
+  IonSpinner, IonButtons } from "@ionic/angular/standalone"
 import { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { HttpClient } from "@angular/common/http"
 import { environment } from "src/environments/environment"
+import { IonBackButton } from "@ionic/angular/standalone"
 
 export interface Product {
   id: number
@@ -57,7 +58,7 @@ interface ApiGameItem {
   templateUrl: "./menu.page.html",
   styleUrls: ["./menu.page.scss"],
   standalone: true,
-  imports: [ 
+  imports: [IonButtons,  
     IonContent,
     IonToolbar,
     CommonModule,
@@ -67,6 +68,7 @@ interface ApiGameItem {
     IonTitle,
     IonSearchbar,
     IonSpinner,
+    IonBackButton,
   ],
 })
 export class MenuPage implements OnInit {

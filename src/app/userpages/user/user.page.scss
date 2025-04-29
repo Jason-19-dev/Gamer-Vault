@@ -1,14 +1,3 @@
-ion-content {
-  --background: #0a1933;
-  --color: white;
-}
-
-ion-header ion-toolbar {
-  --background: #0a1933;
-  --color: white;
-  --border-style: none;
-  --border-width: 0;
-}
 
 .button-wrapper {
   display: flex;
@@ -30,7 +19,8 @@ ion-header ion-toolbar {
 }
 
 .ion-text-color {
-  color: #DEAD1C;
+  font-family: Verdana;
+  color: #ffffff;
 }
 
 
@@ -143,6 +133,7 @@ ion-avatar {
 }
 
 .deactivate-button {
+  font-family: Verdana;
   color: #0a1933;
   font-size: 1.0rem;
 }

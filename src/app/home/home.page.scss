@@ -16,11 +16,6 @@ ion-header ion-toolbar {
   --border-width: 0;
 }
 
-ion-title {
-  font-family: monospace;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
 
 ion-searchbar {
   --background: #ffffff;
@@ -115,6 +110,7 @@ ion-searchbar {
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
+  font-family: Verdana;
 }
 
 .section-header h2 {
@@ -190,6 +186,7 @@ ion-searchbar {
 
 .game-name {
   color: white;
+  font-family: Verdana;
   font-size: 12px;
   margin: 0;
   padding: 0;
@@ -353,6 +350,7 @@ ion-searchbar {
 
 .game-name {
   color: white;
+  font-family: Verdana;
   font-size: 12px;
   margin: 0;
   padding: 0;
@@ -369,7 +367,7 @@ ion-searchbar {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
-  padding: 16px;
+  //padding: 16px;
 }
 
 // Game card styling
@@ -409,8 +407,9 @@ ion-searchbar {
 
 .game-title, .videogame-title {
   margin: 0;
+  font-family: Verdana;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 300;
   color: white;
   line-height: 1.3;
   /* Remove these properties to show full text */
@@ -421,9 +420,10 @@ ion-searchbar {
 
 .game-price, .videogame-price {
   color: white;
-  font-size: 12px;
+  font-family: Verdana;
+  font-size: 13px;
   margin: 4px 0 0;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 // Platforms

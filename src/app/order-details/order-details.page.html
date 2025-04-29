@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Order Details</ion-title>
+    <ion-title class="font2P">Order Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     </ion-toolbar>
   </ion-header>
     <div class="ion-padding">
-      <p> {{ orderItems.created_at}}</p>
+      <p class="font-verdana"> {{ orderItems.created_at}}</p>
       <ion-item *ngFor="let details of orderItems.description">
         <div class="order-info">
           <ion-thumbnail slot="start" class="item-thumbnail">

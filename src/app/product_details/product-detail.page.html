@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/menu"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ product?.name }}</ion-title>
+    <ion-title class="font2P">{{ product?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -35,7 +35,7 @@
       <div class="tags-scroll-container">
         <div class="tags-container">
           <ion-chip *ngFor="let tag of productTags" class="tag-chip">
-            <ion-label>{{ tag }}</ion-label>
+            <ion-label class="detail-value">{{ tag }}</ion-label>
           </ion-chip>
         </div>
       </div>

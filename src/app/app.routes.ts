@@ -69,6 +69,10 @@ export const routes: Routes = [
   {
     path: 'order-details/:id',
     loadComponent: () => import('./order-details/order-details.page').then( m => m.OrderDetailsPage)
+  },  {
+    path: 'deactivate-account',
+    loadComponent: () => import('./deactivate-account/deactivate-account.page').then( m => m.DeactivateAccountPage)
   }
+
 
 ]

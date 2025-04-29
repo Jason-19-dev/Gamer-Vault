@@ -16,7 +16,12 @@
   font-weight: 600;
 }
 
+.font-verdana{
+  font-family: Verdana;
+}
+
 .summary-row {
+  font-family: Verdana;
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
@@ -45,6 +50,7 @@ ion-item {
 }
 
 .order-info {
+  font-family: Verdana;
   display: flex;
   flex-direction: row;
   align-items: center;

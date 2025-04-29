@@ -19,10 +19,17 @@ ion-button{
   --color:#DEAD1C!important;
 }
 .order-date {
+  font-family: Verdana;
   flex: 0.7;
 }
 
+.font-verdana{
+  font-family: Verdana;
+  padding: 0px 20px;
+}
+
 .order-info {
+  font-family: Verdana;
   display: flex;
   flex-direction: column;
   text-align: left;

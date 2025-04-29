@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ToastController, Platform, IonicModule } from '@ionic/angular';
 import { BiometricService } from 'src/services/biometric/biometric.service';
-import { Order, GameItem } from 'src/types';
-import { Platform } from '@ionic/angular';
+import { Order } from 'src/types';
 import { Router } from '@angular/router';
 import { OrdersService } from 'src/services/orders/orders.service';
-import { IonicModule } from '@ionic/angular';
 import { UserService } from 'src/services/user/user.service';
 import { Subscription } from 'rxjs';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
@@ -31,18 +29,6 @@ export class WalletPage implements OnInit, OnDestroy {
   userId: string = '';
   orders: Order[] = [];
   private ordersSubscription?: Subscription;
-  private logoutSubscription?: Subscription;
-
-  transactions: any[] = [
-    {
-      date: '03-marzo-2025',
-      amount: 1.40,
-      origin: '****8713',
-      state: "COMPLETADO",
-      type: "Recarga",
-      time: '11:17'
-    }
-  ];
 
   constructor(
     private toastController: ToastController,
@@ -51,9 +37,14 @@ export class WalletPage implements OnInit, OnDestroy {
     private route: Router,
     private ordersService: OrdersService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit() {
+    this.loadUserAndOrders();
+  }
+
+  ionViewWillEnter() {
+    console.log("WalletPage will enter, refreshing orders...");
     this.loadUserAndOrders();
   }
 
@@ -61,12 +52,7 @@ export class WalletPage implements OnInit, OnDestroy {
     if (this.ordersSubscription) {
       this.ordersSubscription.unsubscribe();
     }
-    if (this.logoutSubscription) {
-      this.logoutSubscription.unsubscribe();
-    }
   }
-
-
 
   async loadUserAndOrders() {
     this.userId = await this.userService.getCurrentUserID() || '';
@@ -79,6 +65,10 @@ export class WalletPage implements OnInit, OnDestroy {
   }
 
   loadOrders() {
+    if (this.ordersSubscription) {
+      this.ordersSubscription.unsubscribe();
+    }
+
     if (this.userId) {
       this.ordersSubscription = this.ordersService.load_user_orders(this.userId).subscribe({
         next: (res) => {
@@ -137,12 +127,6 @@ export class WalletPage implements OnInit, OnDestroy {
     await toast.present();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.authenticate();
-    });
-  }
-
   async authenticate() {
     try {
       const result = await this.biometricService.verifyIdentity("Autenticación requerida");
@@ -154,9 +138,7 @@ export class WalletPage implements OnInit, OnDestroy {
     }
   }
 
-
-
-  viewDetailOrder(orderId: any) { // Cambiado el tipo del parámetro a any
+  viewDetailOrder(orderId: any) {
     this.route.navigate(['/order-details', orderId]);
   }
 }

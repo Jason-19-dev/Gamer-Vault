@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Checkout</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font2P">Checkout</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -109,7 +112,6 @@
 
     <ion-button expand="block" class="pay-button" (click)="payNow()">
       Pay Now
-      <ion-icon name="cart-outline" slot="end"></ion-icon>
     </ion-button>
   </div>
 

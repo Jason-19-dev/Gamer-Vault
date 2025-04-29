@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { ModalController} from '@ionic/angular/standalone';
+import { Component, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular';
-import { navigate } from 'ionicons/icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,11 +12,21 @@ import { Router } from '@angular/router';
 })
 export class PaymentConfirmationComponent {
 
+  @Input() isSuccess = false;
+  @Input() isError = false;
+  @Input() errorMessage = '';
+
   constructor(private modalCtrl: ModalController, private router: Router) {}
 
-  close() {
-    this.modalCtrl.dismiss();
-    this.router.navigate(["/home"])
-
-}
+  async handleButtonClick() {
+    if (this.isSuccess) {
+      // Si es éxito: primero cerrar modal y luego navegar
+      await this.modalCtrl.dismiss();
+      await new Promise(resolve => setTimeout(resolve, 300)); // Pequeña pausa para que se vea el cierre
+      this.router.navigate(['/home']);
+    } else {
+      // Si hay error: solo cerrar modal
+      await this.modalCtrl.dismiss();
+    }
+  }
 }

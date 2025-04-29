@@ -26,6 +26,7 @@ ion-title {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 16px;
+  font-family: verdana;
 }
 
 .vault-title {
@@ -33,7 +34,7 @@ ion-title {
   flex-direction: column;
   gap: 8px;
   color: #fff;
-  font-weight: bold;
+  font-family: PressStart2P;
   font-size: 14px;
 }
 
@@ -59,6 +60,7 @@ ion-title {
 }
 
 .vault-info {
+  font-family: verdana;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -106,12 +108,15 @@ ion-title {
 }
 
 .learn-button {
-  --color: #fff;
+  
   --background: rgba(255, 255, 255, 0.1);
   --border-radius: 8px;
   --padding-top: 8px;
   --padding-bottom: 8px;
+  color: #0a1933;
+  font-family: verdana;
   font-size: 12px;
+  font-weight: bold;
   margin: 0;
   text-transform: none;
 }
@@ -122,7 +127,7 @@ ion-title {
   font-weight: bold;
   margin-top: 24px;
   margin-bottom: 16px;
-  font-family: monospace;
+  font-family: verdana;
   letter-spacing: 1px;
 }
 
@@ -149,6 +154,7 @@ ion-item {
 
 .order-date {
   flex: 0.7;
+  font-family: verdana;
   font-size: 16px;
   color: #f1faee; /* Un color blanco hueso */
 }
@@ -161,16 +167,18 @@ ion-item {
 
 .order-info p {
   margin: 0;
+  font-family: verdana;
   font-size: 14px;
 }
 
 .order-total {
-  font-weight: bold;
+  font-family: verdana;
   color: #f1faee; /* Un color blanco hueso */
 }
 
 .order-saved {
-  color: #DEAD1C!important;; /* Un tono de verde similar al "Saved" de la imagen */
+  color: #DEAD1C!important;;
+  font-family: verdana; /* Un tono de verde similar al "Saved" de la imagen */
 }
 
 .order-item ion-icon[slot="end"] {
