@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError, forkJoin, of } from 'rxjs';
+import { Observable, catchError, throwError, from, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Wallet } from 'src/types';
 import { HttpheaderService } from '../http-header/httpheader.service';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
@@ -13,12 +13,11 @@ export class WalletService {
 
   constructor(private http: HttpClient, private httpHeader: HttpheaderService) { }
 
-  private get jsonHeaders(): HttpHeaders {
-    return new HttpHeaders({ 'Content-Type': 'application/json' });
-  }
-
   getWalletBalance(userId: string): Observable<any> {
-    return this.http.get(`${this.apiURL}/${userId}`, { headers: this.jsonHeaders });
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+          switchMap((headers) => {
+            return this.http.get(`${this.apiURL}/${userId}`, { headers });
+          }));
   }
 
   /**
@@ -29,17 +28,21 @@ export class WalletService {
    */
   deductWalletBalance(userId: string, amount: number): Observable<any> {
     const body = { amount };
-    return this.http.post(`${this.apiURL}/${userId}/deduct`, body, { headers: this.jsonHeaders });
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+        return this.http.post(`${this.apiURL}/${userId}/deduct`, body, { headers });
+      }));
+    
   }
 
-  async balance() {
-    const headers = await this.httpHeader.getJsonHeaders();
+  // async balance() {
+  //   const headers = await this.httpHeader.getJsonHeaders();
 
-    return this.http.get<Wallet>(`${this.apiURL}`, { headers }).pipe(
-      catchError(error => {
-        console.error('Error fetching balance:', error);
-        return throwError(() => error);
-      })
-    );
-  }
+  //   return this.http.get<Wallet>(`${this.apiURL}`, { headers }).pipe(
+  //     catchError(error => {
+  //       console.error('Error fetching balance:', error);
+  //       return throwError(() => error);
+  //     })
+  //   );
+  // }
 }
