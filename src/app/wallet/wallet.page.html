@@ -5,33 +5,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- <div class="vault-card">
-    <div class="vault-header">
-      <div class="vault-title">
-        <span>GAMER VAULT</span>
-        <div class="grid-icon">
-          <div class="grid-square" *ngFor="let i of [1,2,3,4,5,6,7,8,9]"></div>
-        </div>
-      </div>
-      <div class="vault-balance">${{ .toFixed(2) }}</div>
-    </div>
-
-    <div class="vault-info">
-      <p class="challenge-text">Complete the challenge and level up to earn more interests!</p>
-
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div class="progress-fill" [style.width]="'40%'"></div>
-        </div>
-        <div class="level-indicator">1</div>
-      </div>
-
-      <ion-button expand="block" class="learn-button" fill="clear">
-        Learn about our challenges here!
-      </ion-button>
-    </div>
-  </div> -->
-
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
   <div class="wallet-card">
     <div class="wallet-content">
       <div class="wallet-header">

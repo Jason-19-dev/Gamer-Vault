@@ -11,6 +11,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
   <!-- Toast message container -->
   <div *ngIf="toastMessage" class="toast-message">
     {{ toastMessage }}

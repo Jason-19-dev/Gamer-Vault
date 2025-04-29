@@ -2,18 +2,7 @@ import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule, ReactiveFormsModule, FormBuilder, type FormGroup, Validators } from "@angular/forms"
 import { CartService } from "src/services/cart/cart.service"
-import {
-  IonCard,
-  IonContent,
-  IonButton,
-  IonInput,
-  IonIcon,
-  AlertController,
-  IonText,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-} from "@ionic/angular/standalone"
+import { IonCard, IonContent, IonButton, IonInput, AlertController, IonText} from "@ionic/angular/standalone"
 import { Router } from "@angular/router"
 import { AuthService } from "src/services/auth/auth.service"
 import { UserService } from "src/services/user/user.service"
@@ -26,16 +15,7 @@ import { StorageService } from "src/services/storage/storage.service"
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"],
   standalone: true,
-  imports: [
-    IonContent,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonCard,
-    IonButton,
-    IonInput,
-    IonText
-  ],
+  imports: [ IonContent, CommonModule, FormsModule, ReactiveFormsModule, IonCard, IonButton, IonInput, IonText],
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup
@@ -93,7 +73,6 @@ export class LoginPage implements OnInit {
             console.error("Failed to load cart after login:", err)
           }
   
-          this.alert("Welcome! " + name.toUpperCase(), "", "")
           this.router.navigateByUrl("home")
         } else {
           this.alert("Incorrect username or password", "Try again", "")
@@ -120,22 +99,6 @@ export class LoginPage implements OnInit {
     })
 
     await alert.present()
-  }
-
-  signinGoogle() {
-    // Google sign in logic
-    console.log("Google sign in clicked")
-
-    // For demo purposes, let's simulate a Google login
-    const mockUser = {
-      userName: "google_user",
-      fullName: "Google User",
-      email: "google_user@gmail.com",
-      profileImage: "https://ionicframework.com/docs/img/demos/avatar.svg",
-    }
-
-    this.userService.setCurrentUser(mockUser)
-    this.router.navigateByUrl("home")
   }
 }
 

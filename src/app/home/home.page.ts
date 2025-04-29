@@ -5,40 +5,21 @@ import  { Router } from "@angular/router" // Changed from type-only import
 import  { HttpClient } from "@angular/common/http" // Changed from type-only import
 import { environment } from "src/environments/environment"
 
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonSearchbar,
-  IonNote,
-  IonIcon,
-   AlertController, // Changed from type-only import
-   Platform, // Changed from type-only import
-} from "@ionic/angular/standalone"
+import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher} from "@ionic/angular/standalone"
 // Keep this as a type-only import since it's just for type checking
 import type { GameItem, CoinItem } from "src/types"
 import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
 import { chevronForwardCircle, chevronForwardCircleOutline } from "ionicons/icons"
 import  { ProductsService } from "src/services/products/products.service" // Changed from type-only import
+import { UserService } from "src/services/user/user.service"
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
   styleUrls: ["./home.page.scss"],
   standalone: true,
-  imports: [
-    IonContent,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonSearchbar,
-    IonNote,
-    IonHeader,
-    TabsPagesPage,
-    IonIcon,
+  imports: [IonRefresher, IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonSearchbar,IonNote,IonHeader,TabsPagesPage,IonIcon,IonRefresherContent
   ],
 })
 export class HomePage implements OnInit {
@@ -46,7 +27,7 @@ export class HomePage implements OnInit {
   saldo = 10.99
   message = ""
   isAndroid = false
-
+  username = this.userService.getCurrentUser()?.userName
   // Add these properties for categorized products
   coinProducts: CoinItem[] = [] // Solo se llenará con datos de la API
   gameProducts: GameItem[] = [] // Solo se llenará con datos de la API
@@ -70,6 +51,7 @@ export class HomePage implements OnInit {
     private router: Router,
     private productsService: ProductsService,
     private http: HttpClient,
+    private userService: UserService
   ) {
     addIcons({chevronForwardCircle,chevronForwardCircleOutline});
   }
@@ -88,7 +70,7 @@ export class HomePage implements OnInit {
   private fetchCoinProducts() {
     this.productsService.getCoins().subscribe({
       next: (data) => {
-        console.log("Monedas recibidas:", data)
+
 
         // Ensure each coin has an id property
         this.coinProducts = data.map((coin) => {
@@ -113,7 +95,7 @@ export class HomePage implements OnInit {
   private fetchGameProducts() {
     this.productsService.getProducts().subscribe({
       next: (data) => {
-        console.log("Juegos recibidos:", data)
+       
 
         // Ensure each game has an id property
         const gamesWithIds = data.map((game) => {
@@ -275,6 +257,13 @@ export class HomePage implements OnInit {
         type: type,
       },
     })
+  }
+  handleRefresh(event: CustomEvent) {
+    this.fetchGameProducts()
+    this.fetchCoinProducts()
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
   }
 }
 

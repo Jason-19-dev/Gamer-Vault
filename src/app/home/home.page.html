@@ -1,10 +1,14 @@
 <ion-header class="has-shadow">
   <ion-toolbar>
-    <ion-title class="font2P">Home</ion-title>
+    <ion-title class="font2P">Home </ion-title>
+    <p>Welcome {{ username }}</p>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
   <ion-searchbar placeholder="Search" [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
 
   <div class="banner" [ngStyle]="{

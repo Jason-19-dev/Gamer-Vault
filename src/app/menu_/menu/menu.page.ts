@@ -2,14 +2,7 @@ import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
-import {
-  AlertController,
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonSearchbar,
-  IonSpinner, IonButtons } from "@ionic/angular/standalone"
+import {AlertController,IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonSpinner, IonButtons, IonRefresher, IonRefresherContent } from "@ionic/angular/standalone"
 import { ProductsService } from "src/services/products/products.service"
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
@@ -58,7 +51,7 @@ interface ApiGameItem {
   templateUrl: "./menu.page.html",
   styleUrls: ["./menu.page.scss"],
   standalone: true,
-  imports: [IonButtons,  
+  imports: [IonRefresherContent, IonRefresher, IonButtons,  
     IonContent,
     IonToolbar,
     CommonModule,
@@ -76,7 +69,7 @@ export class MenuPage implements OnInit {
   categories = ["Adventure", "Shooters", "Horror", "Action RPG"];
   selectedCategory: string | null = null;
   isLoading = true;
-
+  section: string | null = null;
   // Productos que se mostrarán
   products: any[] = [];
   allProducts: any[] = []; // Almacena todos los productos para el filtrado
@@ -95,9 +88,9 @@ export class MenuPage implements OnInit {
   ngOnInit() {
     // Suscribirse a los cambios en los parámetros de la URL
     this.route.queryParams.subscribe((params) => {
-      const section = params["section"];
+      this.section = params["section"];
 
-      if (section === "coins") {
+      if (this.section === "coins") {
         // Mostrar monedas para juegos
         this.title = "In-Game Coins";
         this.categories = ["Fortnite", "Roblox", "League of Legends", "FIFA"];
@@ -115,7 +108,7 @@ export class MenuPage implements OnInit {
     this.isLoading = true;
     this.http.get<ApiCoinItem[]>(`${environment.apiURL}/products/coins`).subscribe({
       next: (data) => {
-        console.log("Coins received:", data);
+        
 
         this.products = data.map((item) => ({
           id: item.product_id,
@@ -145,7 +138,6 @@ export class MenuPage implements OnInit {
     this.isLoading = true;
     this.http.get<ApiGameItem[]>(`${environment.apiURL}/products/videogames`).subscribe({
       next: (data) => {
-        console.log("Games received:", data);
 
         this.products = data.map((item) => ({
           id: item.product_id,
@@ -241,6 +233,15 @@ export class MenuPage implements OnInit {
   goToGameCoins(gameName: string) {
     this.router.navigate([`/game-coins/${encodeURIComponent(gameName)}`]); // Pasa el nombre del juego como parte de la URL
   }
+  
+  handleRefresh(event: CustomEvent) {
+   this.section === "coins" ? this.loadCoinsFromAPI() : this.loadGamesFromAPI();
+
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
+  }
+
 }
 
 export default MenuPage
