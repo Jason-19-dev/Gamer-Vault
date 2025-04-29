@@ -19,7 +19,6 @@ export class UserService {
   userId$: any
 
   constructor(private storageSercice: StorageService) {
-    // Load user from localStorage on service initialization
     this.loadUserFromStorage()
   }
 
@@ -37,7 +36,6 @@ export class UserService {
   }
 
   getCurrentUser(): User | null {
-    console.log(this.currentUserSubject.value);
     return this.currentUserSubject.value
   }
 
@@ -49,9 +47,9 @@ export class UserService {
 
     try {
       const payloadString = atob(token.split('.')[1]);
-      console.log('Payload decodificado:', payloadString);
+     
       const payload = JSON.parse(payloadString);
-      console.log('Payload como objeto:', payload);
+    
       return payload.sub || null;
     } catch (e) {
       console.error('Error al decodificar token:', e);
@@ -60,8 +58,6 @@ export class UserService {
   }
 
   clearCurrentUser(): void {
-    // Remove user from localStorage and update the subject
-    localStorage.removeItem("currentUser")
     localStorage.removeItem("currentUser")
     this.currentUserSubject.next(null)
   }

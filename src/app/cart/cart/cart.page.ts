@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
    AlertController,
-   ToastController, IonButtons } from "@ionic/angular/standalone"
+   ToastController, IonButtons, IonRefresher, IonRefresherContent } from "@ionic/angular/standalone"
 import  { CartService, CartItem } from "src/services/cart/cart.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
@@ -26,7 +26,7 @@ import { IonBackButton } from "@ionic/angular/standalone"
   templateUrl: "./cart.page.html",
   styleUrls: ["./cart.page.scss"],
   standalone: true,
-  imports: [IonButtons,
+  imports: [IonRefresherContent, IonRefresher, IonButtons,
     IonContent,
     IonTitle,
     IonToolbar,
@@ -184,6 +184,12 @@ export class CartPage implements OnInit, OnDestroy {
 
   continueShopping() {
     this.router.navigate(["/home"])
+  }
+  handleRefresh(event: CustomEvent) {
+    this.loadCartItems()
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
   }
 }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonItem, IonButton, IonBackButton, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonItem, IonButton, IonBackButton, IonButtons, IonRefresherContent, IonRefresher } from '@ionic/angular/standalone';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { OrdersService } from 'src/services/orders/orders.service';
 import { UserService } from 'src/services/user/user.service';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './order-history.page.html',
   styleUrls: ['./order-history.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonBackButton, IonButton, IonItem, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, TabsPagesPage]
+  imports: [IonRefresher, IonRefresherContent, IonButtons, IonBackButton, IonButton, IonItem, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, TabsPagesPage]
 })
 export class OrderHistoryPage implements OnInit {
   orders: Order [] = [];
@@ -44,5 +44,12 @@ export class OrderHistoryPage implements OnInit {
     this.router.navigate(['/order-details', orderDescription]);
 
   }
+  handleRefresh(event: CustomEvent) {
+    this.getUserOrder();
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 2000);
+  }
+  
 
 }

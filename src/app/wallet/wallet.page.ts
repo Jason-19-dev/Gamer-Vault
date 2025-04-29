@@ -16,13 +16,7 @@ import { WalletService } from 'src/services/wallet/wallet.service';
   templateUrl: './wallet.page.html',
   styleUrls: ['./wallet.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DatePipe,
-    TabsPagesPage
-  ]
+  imports: [CommonModule,FormsModule,IonicModule,DatePipe,TabsPagesPage]
 })
 export class WalletPage implements OnInit, OnDestroy {
   puntos: number = 6;
@@ -168,5 +162,13 @@ export class WalletPage implements OnInit, OnDestroy {
 
   viewDetailOrder(orderId: any) {
     this.route.navigate(['/order-details', orderId]);
+  }
+
+  handleRefresh(event: CustomEvent) {
+    this.loadOrders();
+    this.loadUserAndOrders();
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 2000);
   }
 }
