@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core"
-import { BehaviorSubject, type Observable, catchError, tap, of, firstValueFrom } from "rxjs"
-import {  HttpClient, HttpHeaders } from "@angular/common/http"
+import { BehaviorSubject, type Observable, catchError, tap, of, firstValueFrom, from, switchMap } from "rxjs"
+import {  HttpClient } from "@angular/common/http"
 import { environment } from "src/environments/environment"
 import  { UserService } from "../user/user.service"
+import { HttpheaderService } from "../http-header/httpheader.service"
 
 export interface CartItem {
   id: string
@@ -29,6 +30,7 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private user: UserService,
+    private httpHeader: HttpheaderService
   ) {
     // Load cart from backend when service initializes
     this.loadCart()
@@ -189,19 +191,16 @@ export class CartService {
   }
 
   /**
-   * Get JSON headers for HTTP requests
-   */
-  private get jsonHeaders(): HttpHeaders {
-    return new HttpHeaders({ "Content-Type": "application/json" })
-  }
-
-  /**
    * Update cart on the backend
    * @param data Cart data to update
    * @returns Observable of the response
    */
   updateCart(data: any): Observable<any> {
-    return this.http.post(`${this.apiURL}/update`, data, { headers: this.jsonHeaders })
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+        return this.http.post(`${this.apiURL}/update`, data, { headers });
+      })
+    );
   }
 
   /**
@@ -210,6 +209,10 @@ export class CartService {
    * @returns Observable of the cart data
    */
   getCart(data: any): Observable<any> {
-    return this.http.post(`${this.apiURL}`, data, { headers: this.jsonHeaders })
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+        return this.http.post(`${this.apiURL}`, data, { headers })
+      })
+    );
   }
 }

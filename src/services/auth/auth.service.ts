@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Observable, from, switchMap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { HttpheaderService } from "../http-header/httpheader.service";
 
@@ -12,10 +12,6 @@ export class AuthService{
     private apiURL = `${environment.apiURL}/auth`;
 
     constructor(private http: HttpClient, private httpHeader: HttpheaderService) {}
-
-    private get jsonHeaders(): HttpHeaders {
-        return new HttpHeaders({ 'Content-Type': 'application/json' });
-    }
 
     register(data: any): Observable<any>{
         const headers = this.httpHeader.getBasicJsonHeaders();
@@ -30,12 +26,18 @@ export class AuthService{
     }
 
     changePassword(data: any): Observable<any>{
-        const headers = this.httpHeader.getBasicJsonHeaders();
-        return this.http.post(`${this.apiURL}/changepassword`, data, { headers });
+        return from(this.httpHeader.getJsonHeaders()).pipe(
+            switchMap((headers) => {
+                return this.http.post(`${this.apiURL}/changepassword`, data, { headers });
+            })
+          );
     }
 
     deactivateUser(data: any): Observable<any>{
-        const headers = this.httpHeader.getBasicJsonHeaders();
-        return this.http.post(`${this.apiURL}/deactivateuser`, data, { headers });
+        return from(this.httpHeader.getJsonHeaders()).pipe(
+            switchMap((headers) => {
+                return this.http.post(`${this.apiURL}/deactivateuser`, data, { headers });
+            })
+          );
     }
 }
