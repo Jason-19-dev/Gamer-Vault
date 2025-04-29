@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { CartService, CartItem } from 'src/services/cart/cart.service';
 import { FormsModule } from "@angular/forms"
 import { CommonModule } from "@angular/common"
-import { ModalController, NavController } from '@ionic/angular';
+//import { ModalController, NavController } from '@ionic/angular';
 import { PaymentMethodComponent } from 'src/app/modals/payment-method/payment-method.component';
 import {  HttpClientModule, HttpErrorResponse} from '@angular/common/http';
-import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
+
+//import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from "src/services/orders/orders.service";
 //import { UserService } from "src/services/user/user.service";
@@ -15,18 +18,31 @@ import { PaymentConfirmationComponent } from 'src/app/modals/payment-confirmatio
 import { WalletService } from 'src/services/wallet/wallet.service';
 import { Wallet } from 'src/types';
 import { UserService, type User } from "src/services/user/user.service"
+import { IonCheckbox, IonButton, IonContent, IonHeader, IonToolbar, IonTitle, IonBackButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+
+
 @Component({
   standalone: true,
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
   imports: [
-    HttpClientModule,
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TabsPagesPage
-  ],
+  CommonModule,
+  FormsModule,
+  HttpClientModule,
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  TabsPagesPage,
+  IonBackButton,
+  IonButtons,
+  IonCheckbox,
+  IonButton,
+  IonIcon,
+  //ModalController,
+]
+
 })
 export class CheckoutPage implements OnInit {
   currentUser: User | null = null
