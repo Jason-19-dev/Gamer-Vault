@@ -3,12 +3,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastController, Platform, IonicModule } from '@ionic/angular';
 import { BiometricService } from 'src/services/biometric/biometric.service';
-import { Order } from 'src/types';
+import { Order, Wallet } from 'src/types';
 import { Router } from '@angular/router';
 import { OrdersService } from 'src/services/orders/orders.service';
-import { UserService } from 'src/services/user/user.service';
+import { UserService, type User } from 'src/services/user/user.service';
 import { Subscription } from 'rxjs';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
+import { WalletService } from 'src/services/wallet/wallet.service';
 
 @Component({
   selector: 'app-wallet',
@@ -25,7 +26,9 @@ import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 })
 export class WalletPage implements OnInit, OnDestroy {
   puntos: number = 6;
-  saldo: number = 10.99;
+  currentUser: User | null = null
+  walletBalance = 1;
+  walletUser:Wallet [] = [];
   userId: string = '';
   orders: Order[] = [];
   private ordersSubscription?: Subscription;
@@ -36,11 +39,14 @@ export class WalletPage implements OnInit, OnDestroy {
     private biometricService: BiometricService,
     private route: Router,
     private ordersService: OrdersService,
-    private userService: UserService
+    private userService: UserService,
+    private walletService: WalletService
   ) {}
 
   ngOnInit() {
     this.loadUserAndOrders();
+    this.getUserBalance();
+    this.currentUser = this.userService.getCurrentUser();
   }
 
   ionViewWillEnter() {
@@ -52,6 +58,28 @@ export class WalletPage implements OnInit, OnDestroy {
     if (this.ordersSubscription) {
       this.ordersSubscription.unsubscribe();
     }
+  }
+
+  async getUserBalance() {
+    console.log("in");
+    const user_id = await this.userService.getCurrentUserID();
+    console.log("value : " + user_id);
+
+    if (!user_id) {
+      console.error("No user ID found. Cannot load orders.");
+      return;
+    }
+    console.log("pasaste");
+    this.walletService.getWalletBalance(user_id).subscribe({
+      next: (res) => {
+        this.walletUser = res;
+        this.walletBalance = res.balance;
+        console.log(res);
+      },
+      error: (err) => {
+        console.error("Error loading wallet balance:", err);
+      }
+    })
   }
 
   async loadUserAndOrders() {
@@ -102,7 +130,7 @@ export class WalletPage implements OnInit, OnDestroy {
 
         this.ordersService.create_new_order(data).subscribe({
           next: () => {
-            this.saldo += amount;
+            this.walletBalance += amount;
             this.toast_alert('top', 'Recarga exitosa');
             this.loadOrders();
           },

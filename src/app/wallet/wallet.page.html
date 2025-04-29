@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="vault-card">
+  <!-- <div class="vault-card">
     <div class="vault-header">
       <div class="vault-title">
         <span>GAMER VAULT</span>
@@ -13,7 +13,7 @@
           <div class="grid-square" *ngFor="let i of [1,2,3,4,5,6,7,8,9]"></div>
         </div>
       </div>
-      <div class="vault-balance">${{ saldo.toFixed(2) }}</div>
+      <div class="vault-balance">${{ .toFixed(2) }}</div>
     </div>
 
     <div class="vault-info">
@@ -29,6 +29,23 @@
       <ion-button expand="block" class="learn-button" fill="clear">
         Learn about our challenges here!
       </ion-button>
+    </div>
+  </div> -->
+
+  <div class="wallet-card">
+    <div class="wallet-content">
+      <div class="wallet-header">
+        <div class="wallet-title">
+          <img src="assets/icon/favicon.png" alt="Gamer Vault Logo" class="wallet-chip-img" />
+          <span class="wallet-label font2P" >GAMER VAULT</span>
+        </div>
+      </div>
+  
+      <div class="wallet-footer">
+        <div class="wallet-user">{{ currentUser?.userName || 'Usuario' }}</div>
+        <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
+        </div>
+      </div>
     </div>
   </div>
 
