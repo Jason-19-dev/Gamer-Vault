@@ -2,29 +2,11 @@ import { Component, type OnInit, type OnDestroy } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
-import {
-  IonAvatar,
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonLabel,
-  IonTitle,
-  IonToolbar,
-  AlertController,
+import {IonAvatar,IonButton,IonContent,IonHeader,IonIcon,IonLabel,IonTitle,IonToolbar,AlertController,
 } from "@ionic/angular/standalone"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
-import {
-  pencilOutline,
-  timeOutline,
-  cardOutline,
-  lockClosedOutline,
-  logOutOutline,
-  trashOutline,
-  linkOutline,
-  shieldOutline,
-  helpCircleOutline, personRemoveOutline } from "ionicons/icons"
+import {pencilOutline,timeOutline,cardOutline,lockClosedOutline,logOutOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline, personRemoveOutline } from "ionicons/icons"
 import { UserService, type User } from "src/services/user/user.service"
 import type { Subscription } from "rxjs"
 
@@ -33,19 +15,7 @@ import type { Subscription } from "rxjs"
   templateUrl: "./user.page.html",
   styleUrls: ["./user.page.scss"],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    CommonModule,
-    FormsModule,
-    IonToolbar,
-    TabsPagesPage,
-    IonAvatar,
-    IonIcon,
-    IonLabel,
-    IonButton,
-  ],
+  imports: [IonContent,IonHeader,IonTitle,CommonModule,FormsModule,IonToolbar,TabsPagesPage,IonAvatar,IonIcon,IonLabel,IonButton,],
 })
 export class UserPage implements OnInit, OnDestroy {
   currentUser: User | null = null

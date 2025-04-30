@@ -1,23 +1,9 @@
-ion-content {
-  --background: #0a1933;
-  --color: white;
-}
 
 ion-header {
   &.has-shadow {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   }
 }
-
-ion-header ion-toolbar {
-  --background: #0a1933;
-  --color: white;
-  --border-style: none;
-  --border-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
 
 ion-searchbar {
   --background: #ffffff;
@@ -171,19 +157,6 @@ ion-header {
   &.has-shadow {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   }
-}
-
-ion-header ion-toolbar {
-  --background: #0a1933;
-  --color: white;
-  --border-style: none;
-  --border-width: 0;
-}
-
-ion-title {
-  font-family: monospace;
-  letter-spacing: 1px;
-  font-weight: bold;
 }
 
 ion-searchbar {
@@ -376,10 +349,6 @@ ion-searchbar {
   font-weight: 300;
   color: white;
   line-height: 1.3;
-  /* Remove these properties to show full text */
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
 }
 
 .game-price, .videogame-price {

@@ -5,7 +5,7 @@ import  { Router } from "@angular/router" // Changed from type-only import
 import  { HttpClient } from "@angular/common/http" // Changed from type-only import
 import { environment } from "src/environments/environment"
 
-import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher} from "@ionic/angular/standalone"
+import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher, IonButtons } from "@ionic/angular/standalone"
 // Keep this as a type-only import since it's just for type checking
 import type { GameItem, CoinItem } from "src/types"
 import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"

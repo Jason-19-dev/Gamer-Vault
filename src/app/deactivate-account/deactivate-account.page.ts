@@ -20,7 +20,6 @@ import { UserService } from 'src/services/user/user.service';
     FormsModule, 
     IonButtons, 
     IonBackButton, 
-    IonIcon, 
     IonInput, 
     IonButton,
     ReactiveFormsModule

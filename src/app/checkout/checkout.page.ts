@@ -18,7 +18,8 @@ import { WalletService } from 'src/services/wallet/wallet.service';
 import { Wallet } from 'src/types';
 import { UserService, type User } from "src/services/user/user.service"
 import { IonCheckbox, IonButton, IonContent, IonHeader, IonToolbar, IonTitle, IonBackButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
-
+import { Capacitor } from "@capacitor/core";
+import { BiometricService } from "src/services/biometric/biometric.service";
 
 @Component({
   standalone: true,
@@ -73,6 +74,7 @@ export class CheckoutPage implements OnInit {
     private router: Router,
     private http: HttpClient,
     private walletService: WalletService,
+    private biometricService: BiometricService
   ) {}
 
   ngOnInit() {
@@ -138,6 +140,16 @@ export class CheckoutPage implements OnInit {
     this.loading = true;
     let errorMessage = '';
     let paymentSuccessful = false;
+
+    if (Capacitor.getPlatform() === 'android') {
+      const biometricSuccess = await this.biometricService.verifyIdentity('Confirmar pago', 'Autenticación biométrica');
+
+    if (!biometricSuccess) {  
+      await this.showErrorModal('Autenticación biométrica fallida o cancelada.');
+      this.loading = false;
+      
+      return;
+    }}
   
     try {
       const userId = await this.userService.getCurrentUserID();
