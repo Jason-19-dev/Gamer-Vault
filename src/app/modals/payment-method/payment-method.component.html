@@ -26,19 +26,19 @@
 
     <div class="card-number">{{ formatCardNumber(cardNumber) || '**** **** **** ****' }}</div>
     <div class="card-footer">
-      <div class="card-holder">{{ cardHolder || 'NOMBRE Y APELLIDO' }}</div>
+      <div class="card-holder">{{ cardHolder || 'Full Name' }}</div>
       <div class="card-expiry">{{ expiry || 'MM/AA' }}</div>
     </div>
   </div>
 
   <!-- Inputs -->
   <ion-item class="styled-input">
-    <ion-label position="floating">Número de la tarjeta</ion-label>
+    <ion-label position="floating">Card Number</ion-label>
     <ion-input [(ngModel)]="cardNumber" maxlength="19" inputmode="numeric"></ion-input>
   </ion-item>
 
   <ion-item class="styled-input">
-    <ion-label position="floating">Nombre del titular</ion-label>
+    <ion-label position="floating">Name</ion-label>
     <ion-input [(ngModel)]="cardHolder"></ion-input>
   </ion-item>
 
@@ -53,5 +53,5 @@
     </ion-item>
   </div>
 
-  <ion-button expand="block" class="pay-button" (click)="payNow()">Guardar</ion-button>
+  <ion-button expand="block" class="pay-button" (click)="payNow()">Save Card</ion-button>
 </ion-content>
