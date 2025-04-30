@@ -80,8 +80,13 @@ export class SigninPage implements OnInit {
     this.authService.register(formData).subscribe({
       next: (res) => {
         console.log("hola");
-        this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
-        this.router.navigateByUrl('login');
+        if (res.message) {
+          this.alert('Successful registration', '', `Welcome ${formData.username.toUpperCase()}!`);
+          this.router.navigateByUrl('login');
+        }
+        else {
+          this.alert('Error in registration', '', res.error);
+        }
       },
       error: (err) => {
         const msg = 'User could not be registered';
