@@ -194,7 +194,8 @@ export class CheckoutPage implements OnInit {
                   total: this.finalTotal,
                   savings: this.savings,
                   status: 'pending',
-                  description: this.cartItems
+                  description: this.cartItems,
+                  payment_method: this.savedCard.number
                 };
   
                 this.ordersService.create_new_order(order_payload).subscribe({
@@ -300,7 +301,8 @@ export class CheckoutPage implements OnInit {
               total: this.originalTotal,
               savings: this.savings,
               status: 'pending',
-              description: this.cartItems
+              description: this.cartItems,
+              payment_method: this.enmascararTarjeta(this.savedCard.number)
             };
   
             this.ordersService.create_new_order(order_payload).subscribe({
@@ -420,5 +422,11 @@ export class CheckoutPage implements OnInit {
     if (this.router.url === '/checkout') {
       this.navCtrl.back();
     }
+  }
+  // enmascarar tarjeta el número 
+  enmascararTarjeta(numCard: string): string {
+    const last = numCard.slice(-4);
+    const enmascarar = '*'.repeat(numCard.length - 4);
+    return enmascarar+ last;
   }
 }
