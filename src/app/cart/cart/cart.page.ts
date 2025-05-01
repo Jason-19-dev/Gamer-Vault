@@ -2,7 +2,7 @@ import { Component, type OnInit, type OnDestroy } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import  { Router } from "@angular/router"
-import {IonButton,IonContent,IonHeader,IonIcon,IonItem,IonList,IonThumbnail,IonTitle,IonToolbar,AlertController,ToastController, IonButtons, IonRefresher, IonRefresherContent } from "@ionic/angular/standalone"
+import {IonButton,IonContent,IonHeader,IonIcon,IonItem,IonThumbnail,IonTitle,IonToolbar,AlertController,ToastController, IonButtons, IonRefresher, IonRefresherContent, IonItemSliding, IonItemOptions } from "@ionic/angular/standalone"
 import  { CartService, CartItem } from "src/services/cart/cart.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
@@ -15,7 +15,7 @@ import { IonBackButton } from "@ionic/angular/standalone"
   templateUrl: "./cart.page.html",
   styleUrls: ["./cart.page.scss"],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButtons,IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonItem,IonList,IonButton,IonThumbnail,IonIcon,IonHeader,TabsPagesPage,IonBackButton,
+  imports: [IonItemOptions, IonItemSliding, IonRefresherContent, IonRefresher, IonButtons,IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonItem,IonButton,IonThumbnail,IonIcon,IonHeader,TabsPagesPage,IonBackButton,
   ],
 })
 export class CartPage implements OnInit, OnDestroy {
@@ -96,6 +96,7 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   removeFromCart(product: CartItem) {
+    console.log("Removing item from cart:", product)
     this.isLoading = true
     this.cartService
       .removeCart(product)

@@ -38,10 +38,13 @@ ion-content {
     padding-bottom: 80px;
   }
 
-  ion-list {
-    background: transparent;
+  ion-item {
+    --background: transparent;
     padding: 0;
   }
+ion-item-options {
+  --background: transparent !important;
+}
 
   .cart-item {
     --background: rgba(255, 255, 255, 0.05);

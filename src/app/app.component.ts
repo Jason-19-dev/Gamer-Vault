@@ -1,18 +1,22 @@
 import { Component } from "@angular/core"
-import { IonApp, IonRouterOutlet, Platform } from "@ionic/angular/standalone"
+import { IonApp, IonRouterOutlet, Platform, IonSpinner } from "@ionic/angular/standalone"
 import { StatusBar, Style } from "@capacitor/status-bar"
 import { SplashScreen } from "@capacitor/splash-screen"
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
   standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonSpinner, IonApp, IonRouterOutlet, NgIf],
 })
 export class AppComponent {
+  showSplash = true;
   constructor(private platform: Platform) {
     this.initializeApp()
+    this.showSplashScreen();
   }
 
   async initializeApp() {
@@ -31,4 +35,11 @@ export class AppComponent {
       console.log("Esta funcionalidad solo está disponible en dispositivos nativos", err)
     }
   }
+  
+  showSplashScreen() {
+    setTimeout(() => {
+      this.showSplash = false;
+    },1000);
+  }
+  
 }

@@ -26,21 +26,7 @@ import { BiometricService } from "src/services/biometric/biometric.service";
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
-  imports: [
-  CommonModule,
-  FormsModule,
-  HttpClientModule,
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  TabsPagesPage,
-  IonBackButton,
-  IonButtons,
-  IonCheckbox,
-  IonButton,
-  IonIcon,
-  //ModalController,
+  imports: [CommonModule,FormsModule,HttpClientModule,IonContent,IonHeader,IonToolbar,IonTitle,TabsPagesPage,IonBackButton,IonButtons,IonCheckbox,IonButton,IonIcon,
 ]
 
 })
@@ -74,7 +60,6 @@ export class CheckoutPage implements OnInit {
     private router: Router,
     private http: HttpClient,
     private walletService: WalletService,
-    private biometricService: BiometricService
   ) {}
 
   ngOnInit() {
@@ -141,15 +126,15 @@ export class CheckoutPage implements OnInit {
     let errorMessage = '';
     let paymentSuccessful = false;
 
-    if (Capacitor.getPlatform() === 'android') {
-      const biometricSuccess = await this.biometricService.verifyIdentity('Confirmar pago', 'Autenticación biométrica');
+    // if (Capacitor.getPlatform() === 'android') {
+    //   const biometricSuccess = await this.biometricService.verifyIdentity('Confirmar pago', 'Autenticación biométrica');
 
-    if (!biometricSuccess) {  
-      await this.showErrorModal('Autenticación biométrica fallida o cancelada.');
-      this.loading = false;
+    // if (!biometricSuccess) {  
+    //   await this.showErrorModal('Autenticación biométrica fallida o cancelada.');
+    //   this.loading = false;
       
-      return;
-    }}
+    //   return;
+    // }}
   
     try {
       const userId = await this.userService.getCurrentUserID();

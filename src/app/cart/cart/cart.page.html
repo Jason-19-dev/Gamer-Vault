@@ -21,9 +21,9 @@
 
   <div class="cart-container">
     <div class="cart-items">
-      <ion-list lines="none">
-        <ion-item *ngFor="let item of cartItems" class="cart-item">
-          <ion-thumbnail slot="start" class="item-thumbnail">
+      <ion-item-sliding *ngFor="let item of cartItems" class="cart-item" (ionSwipe)="removeFromCart(item)"> 
+        <ion-item>
+            <ion-thumbnail slot="start" class="item-thumbnail">
             <img alt="Product image" [src]="item.image_url || '/placeholder.svg'" />
           </ion-thumbnail>
           <div class="item-details">
@@ -36,7 +36,9 @@
             <ion-icon name="close-circle-outline"></ion-icon>
           </ion-button>
         </ion-item>
-      </ion-list>
+        <ion-item-options>
+        </ion-item-options>
+    </ion-item-sliding> 
 
       <div class="empty-cart-message" *ngIf="cartItems.length === 0">
         <ion-icon name="cart-outline" class="empty-cart-icon"></ion-icon>
