@@ -25,6 +25,13 @@
     </div>
   </div>
 
+  <div class ="progress-container">
+  <ion-progress-bar [value]="userProgress" class="custom-progress" [ngClass]="getGradientClass()"></ion-progress-bar>
+  <img src="assets/silver-coin.svg"  class="progress-silver" [ngClass]="silverColor()" />
+  <img src="assets/gold-coin.svg"  class="progress-gold"  [ngClass]="goldColor()" />
+  <img src="assets/diamond.svg"  class="progress-diamond"  [ngClass]="diamondColor()" />
+  </div>
+
   <h2 class="section-title">Order History</h2>
   <div class="order-history-container">
     <ion-item lines="none" class="order-item" *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">

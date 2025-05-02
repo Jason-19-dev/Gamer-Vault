@@ -13,6 +13,76 @@ ion-title {
   font-weight: bold;
 }
 
+
+.custom-progress {
+  --background: #3a73b841;
+  height: 20px;
+  border-radius: 8px;
+  overflow: hidden; // Importante para recortar el degradado
+
+  .progress-bar {
+    position: relative;
+  }
+
+  .progress-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 6px;
+  }
+}
+
+.low-gradient::part(progress) {
+  background: linear-gradient(90deg, #00b09b, #96c93d);
+}
+
+.silver-gradient::part(progress) {
+  background: linear-gradient(90deg, #aaecf8, #8eafda);
+}
+
+.gold-gradient::part(progress) {
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+}
+
+.diamond-gradient::part(progress) {
+  background: linear-gradient(90deg, #00ffff,#10a0ff);
+}
+
+.progress-container {
+  position: relative;
+}
+
+.gray-filter {
+  filter: invert(0%) sepia(0%) saturate(250%) hue-rotate(28deg) brightness(90%) contrast(50%);
+}
+
+.progress-silver{
+  width: 38px;
+  height: 38px;
+  top: -9px;
+  left: 95px;
+  position: absolute;
+}
+
+.progress-gold{
+  width: 38px;
+  height: 38px;
+  top: -9px;
+  left: 206px;
+  position: absolute;
+}
+
+.progress-diamond{
+  width: 42px;
+  height: 42px;
+  top: -10px;
+  left: 347px;
+  position: absolute;
+}
+
+
+
 .wallet-content {
   width: 100%;
   height: 100%;

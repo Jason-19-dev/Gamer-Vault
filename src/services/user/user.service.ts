@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject } from "rxjs"
 import { StorageService } from "../storage/storage.service"
+import { environment } from "src/environments/environment";
+import { HttpheaderService } from "../http-header/httpheader.service";
+import { HttpClient } from "@angular/common/http";
+import { Observable, from, switchMap } from "rxjs";
+
 
 export interface User {
   id?: string
@@ -14,11 +19,14 @@ export interface User {
   providedIn: "root",
 })
 export class UserService {
+
+  private apiURL = `${environment.apiURL}/users`;
+
   private currentUserSubject = new BehaviorSubject<User | null>(null)
   public currentUser$ = this.currentUserSubject.asObservable()
   userId$: any
 
-  constructor(private storageSercice: StorageService) {
+  constructor(private storageSercice: StorageService, private http: HttpClient, private httpHeader: HttpheaderService) {
     this.loadUserFromStorage()
   }
 
@@ -56,6 +64,15 @@ export class UserService {
       return null;
     }
   }
+
+
+getUserLevel(data: any): Observable<any>{
+  return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+          return this.http.post(`${this.apiURL}/getlevel`, data, { headers });
+      })
+    );
+}
 
   clearCurrentUser(): void {
     localStorage.removeItem("currentUser")

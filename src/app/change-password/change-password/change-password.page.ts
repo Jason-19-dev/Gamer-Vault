@@ -68,7 +68,6 @@ export class ChangePasswordPage implements OnInit {
       new_password,
       password_confirm
     }
-
     
     this.authService.changePassword(data).subscribe({
       next: (res) => {

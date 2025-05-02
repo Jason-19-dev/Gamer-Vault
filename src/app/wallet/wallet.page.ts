@@ -25,6 +25,9 @@ export class WalletPage implements OnInit, OnDestroy {
   walletUser:Wallet [] = [];
   userId: string = '';
   orders: Order[] = [];
+  userProgress: number = 0;
+  userLevel: number = 0;
+  userLevelName: string = '';
   private ordersSubscription?: Subscription;
 
   constructor(
@@ -40,12 +43,14 @@ export class WalletPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadUserAndOrders();
     this.getUserBalance();
+    this.LoadUserLevel();
     this.currentUser = this.userService.getCurrentUser();
   }
 
   ionViewWillEnter() {
     console.log("WalletPage will enter, refreshing orders...");
     this.loadUserAndOrders();
+    this.LoadUserLevel();
   }
 
   ngOnDestroy() {
@@ -81,8 +86,71 @@ export class WalletPage implements OnInit, OnDestroy {
     if (this.userId) {
       this.loadOrders();
     } else {
-      console.error('No se pudo obtener el ID del usuario.');
-      this.toast_alert('bottom', 'Error al obtener la información del usuario.');
+      console.error('Could not get user ID.');
+      this.toast_alert('bottom', 'Could not get user ID.');
+    }
+  }
+
+  async LoadUserLevel() {
+
+    const user_id = await this.userService.getCurrentUserID();
+
+    this.userService.getUserLevel({user_id}).subscribe({
+      next: (res) => {
+        if (res.error) {
+          this.toast_alert('bottom', res.error);
+          console.error(res.error);
+          return;
+        }
+
+        this.userProgress = res.user_progress/10;
+        this.userLevel = res.user_level;
+        this.userLevelName = res.user_level_name;
+
+      },
+      error: (err) => {
+        console.error("Error loading users level:", err);
+      }
+    })
+  }
+
+  
+  getGradientClass() {
+    if (this.userProgress < 0.3) {
+      return 'low-gradient';
+    } else if (this.userProgress < 0.6) {
+      return 'silver-gradient';
+    } else if (this.userProgress < 1) {
+      return 'gold-gradient';
+    } else {
+      return 'diamond-gradient';
+    }
+  }
+
+  silverColor() {
+    if (this.userProgress < 0.3) {
+      return "gray-filter";
+    }
+    else {
+      return "";
+    }
+  }
+
+  goldColor() {
+    if (this.userProgress < 0.6) {
+      return "gray-filter";
+    }
+    else {
+      return "";
+    }
+  }
+
+  diamondColor() {
+    if (this.userProgress < 1) {
+      return "gray-filter";
+    }
+    else {
+      return "";
     }
   }
 
@@ -171,4 +239,7 @@ export class WalletPage implements OnInit, OnDestroy {
       (event.target as HTMLIonRefresherElement).complete();
     }, 2000);
   }
+
+
+
 }
