@@ -25,11 +25,33 @@
     </div>
   </div>
 
-  <div class ="progress-container">
-  <ion-progress-bar [value]="userProgress" class="custom-progress" [ngClass]="getGradientClass()"></ion-progress-bar>
-  <img src="assets/silver-coin.svg"  class="progress-silver" [ngClass]="silverColor()" />
-  <img src="assets/gold-coin.svg"  class="progress-gold"  [ngClass]="goldColor()" />
-  <img src="assets/diamond.svg"  class="progress-diamond"  [ngClass]="diamondColor()" />
+  <h2 class="section-title">Vault Rewards</h2>
+
+  <div class="reward-section">
+     
+     <ion-text class="level-text">Current Level: {{ userLevelName }}</ion-text>
+     <ion-text class="plain-text" *ngIf="userLevel != 3">Complete {{userLevelUp}} more purchases to level up and earn more rewards!</ion-text>
+    <ion-text class="plain-text" *ngIf="userLevel == 3">You've completed all the challenges. Well played!</ion-text>
+
+
+    <div class="progress-container">
+      <ion-progress-bar [value]="userProgress" class="custom-progress" [ngClass]="getGradientClass()"></ion-progress-bar>
+    
+      <div class="milestone progress-silver">
+        <img src="assets/silver-coin.svg" [ngClass]="silverColor()" />
+        <div class="tooltip tooltip-silver"><b>SILVER</b><br>Challenge: Complete 3 purchases<br>Reward: 4% annual interest</div>
+      </div>
+    
+      <div class="milestone progress-gold">
+        <img src="assets/gold-coin.svg" [ngClass]="goldColor()" />
+        <div class="tooltip tooltip-gold"><b>GOLD</b><br>Challenge: Complete 6 purchases<br>Reward: 6% annual interest</div>
+      </div>
+    
+      <div class="milestone progress-diamond">
+        <img src="assets/diamond.svg" [ngClass]="diamondColor()" />
+        <div class="tooltip tooltip-diamond"><b>DIAMOND</b><br>Challenge: Complete 10 purchases<br>Reward: 8% annual interest</div>
+      </div>
+    </div>
   </div>
 
   <h2 class="section-title">Order History</h2>

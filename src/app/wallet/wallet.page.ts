@@ -27,6 +27,7 @@ export class WalletPage implements OnInit, OnDestroy {
   orders: Order[] = [];
   userProgress: number = 0;
   userLevel: number = 0;
+  userLevelUp: number = 0;
   userLevelName: string = '';
   private ordersSubscription?: Subscription;
 
@@ -106,6 +107,16 @@ export class WalletPage implements OnInit, OnDestroy {
         this.userProgress = res.user_progress/10;
         this.userLevel = res.user_level;
         this.userLevelName = res.user_level_name;
+
+        if (this.userLevel == 0) {
+          this.userLevelUp = 3-res.user_progress;
+        }
+        if (this.userLevel == 1) {
+          this.userLevelUp = 6-res.user_progress;
+        }
+        if (this.userLevel == 2) {
+          this.userLevelUp = 10-res.user_progress;
+        }
 
       },
       error: (err) => {
