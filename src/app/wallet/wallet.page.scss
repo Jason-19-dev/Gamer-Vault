@@ -52,21 +52,22 @@ ion-title {
   }
 }
 
-.low-gradient::part(progress) {
-  background: linear-gradient(90deg, #00b09b, #96c93d);
+.low-gradient {
+  --progress-background: linear-gradient(90deg, #00b09b, #96c93d);
 }
 
-.silver-gradient::part(progress) {
-  background: linear-gradient(90deg, #93A2AA, #8eafda);
+.silver-gradient {
+  --progress-background: linear-gradient(90deg, #93A2AA, #8eafda);
 }
 
-.gold-gradient::part(progress) {
-  background: linear-gradient(90deg, #FFD700, #FFA500);
+.gold-gradient {
+  --progress-background: linear-gradient(90deg, #FFD700, #FFA500);
 }
 
-.diamond-gradient::part(progress) {
-  background: linear-gradient(90deg, #00ffff,#10a0ff);
+.diamond-gradient {
+  --progress-background: linear-gradient(90deg, #00ffff, #10a0ff);
 }
+
 
 .progress-container {
   position: relative;
