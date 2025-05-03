@@ -4,7 +4,6 @@ import { FormsModule } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import {AlertController,IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonSpinner, IonButtons, IonRefresher, IonRefresherContent } from "@ionic/angular/standalone"
 import { ProductsService } from "src/services/products/products.service"
-import { LocalNotifications } from "@capacitor/local-notifications"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { HttpClient } from "@angular/common/http"
 import { environment } from "src/environments/environment"
@@ -51,18 +50,7 @@ interface ApiGameItem {
   templateUrl: "./menu.page.html",
   styleUrls: ["./menu.page.scss"],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButtons,  
-    IonContent,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonHeader,
-    TabsPagesPage,
-    IonTitle,
-    IonSearchbar,
-    IonSpinner,
-    IonBackButton,
-  ],
+  imports: [IonRefresherContent, IonRefresher, IonButtons,IonContent,IonToolbar,CommonModule,FormsModule,IonHeader,TabsPagesPage,IonTitle,IonSearchbar,IonSpinner,IonBackButton],
 })
 export class MenuPage implements OnInit {
   title = "Videogames";
@@ -204,19 +192,7 @@ export class MenuPage implements OnInit {
     await alert.present()
   }
 
-  messageNotification() {
-    LocalNotifications.schedule({
-      notifications: [
-        {
-          id: 1,
-          title: this.title,
-          body: `Has ahorrado $0.50, sigue así.`,
-          schedule: { at: new Date(Date.now() + 1000) }, // para que mande en un segundo
-          sound: "default",
-        },
-      ],
-    })
-  }
+ 
 
   // Método para navegar a la página de detalles del producto
   goToProductDetail(product: any) {

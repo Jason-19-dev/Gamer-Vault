@@ -1,9 +1,10 @@
-import { Component } from "@angular/core"
+import { Component, OnInit } from "@angular/core"
 import { IonApp, IonRouterOutlet, Platform, IonSpinner } from "@ionic/angular/standalone"
 import { StatusBar, Style } from "@capacitor/status-bar"
 import { SplashScreen } from "@capacitor/splash-screen"
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { NgIf } from "@angular/common";
+import { NotificationsService } from "src/services/notifications/notifications.service";
 
 @Component({
   selector: "app-root",
@@ -12,12 +13,16 @@ import { NgIf } from "@angular/common";
   standalone: true,
   imports: [IonSpinner, IonApp, IonRouterOutlet, NgIf],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   showSplash = true;
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform, private notification: NotificationsService) {
     this.initializeApp()
     this.showSplashScreen();
   }
+  ngOnInit() {
+    this.notification.initNotifications();
+  }
+ 
 
   async initializeApp() {
     await this.platform.ready()
@@ -25,7 +30,7 @@ export class AppComponent {
     try {
       // Configurar la barra de estado
       await StatusBar.setStyle({ style: Style.Dark })
-      await StatusBar.setBackgroundColor({ color: "#0a1933" })
+      // await StatusBar.setBackgroundColor({ color: "#0a1933" })
       await StatusBar.setOverlaysWebView({ overlay: false })
       await ScreenOrientation.lock({ orientation: 'portrait' });
 
@@ -41,5 +46,8 @@ export class AppComponent {
       this.showSplash = false;
     },1000);
   }
+
+
+
   
 }

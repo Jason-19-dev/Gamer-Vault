@@ -13,7 +13,7 @@
 
   .clear-button {
     --color: white; /* Color del texto/ícono */
-    --background: #f44336 !important; /* Color de fondo rojo */
+    --background: transparent !important;
     --border-radius: 4px;
     --padding-start: 8px;
     --padding-end: 8px;
@@ -90,9 +90,10 @@ ion-item-options {
   }
 
   .remove-button {
-    --background: #f44336 !important;
+    --background: transparent !important;
     --padding-start: 4px;
     --padding-end: 4px;
+    --padding-bottom: 30px;
     margin: 0;
     height: 36px;
   }

@@ -33,7 +33,7 @@
             </div>
           </div>
           <ion-button fill="clear" class="remove-button" (click)="removeFromCart(item)">
-            <ion-icon name="close-circle-outline"></ion-icon>
+            <ion-icon name="close-outline"></ion-icon>
           </ion-button>
         </ion-item>
         <ion-item-options>
@@ -68,7 +68,7 @@
       </div>
 
       <div class="summary-row" *ngIf="savings > 0">
-        <span class="summary-label">Savings</span>
+        <span class="summary-label">To My Wallet</span>
         <span class="summary-value discount">${{savings.toFixed(2)}}</span>
       </div>
 

@@ -32,6 +32,7 @@ export class OrdersService {
   getOrderDescription(orderId: string): Observable<any> {
     return from(this.httpHeader.getJsonHeaders()).pipe(
       switchMap((headers) => {
+        console.log(headers)
         return this.http.get(`${this.apiURL}/detail/${orderId}`, { headers });
       })
     );

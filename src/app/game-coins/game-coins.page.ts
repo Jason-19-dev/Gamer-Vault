@@ -96,7 +96,7 @@ export class GameCoinsPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.gameName = params.get("game") || "";
-      console.log("Game name received:", this.gameName);
+      
 
       // Decodificar el nombre del juego si está codificado en la URL
       const decodedGameName = decodeURIComponent(this.gameName);
@@ -113,21 +113,21 @@ export class GameCoinsPage implements OnInit {
   // Nuevo método para cargar la información del juego
   loadGameInfo(gameName: string) {
     const apiUrl = `${this.apiURL}/products/videogames`;
-    console.log("Requesting game info from:", apiUrl);
+    
 
     this.http.get<GameInfo[]>(apiUrl).subscribe({
       next: (games) => {
-        console.log("Games data received:", games);
+     
 
         // Buscar el juego por nombre (ignorando mayúsculas/minúsculas)
         const game = games.find((g) => g.name.toLowerCase() === gameName.toLowerCase());
 
         if (game) {
-          console.log("Game found:", game);
+          
           this.gameInfo = game;
           this.bannerImageUrl = game.image_url;
         } else {
-          console.log("Game not found in the API response");
+        
           // Usar URL de respaldo para el banner
           this.bannerImageUrl = `https://d1th0hc7ymkxpv.cloudfront.net/games/Default_Banner.webp`;
         }
@@ -145,11 +145,11 @@ export class GameCoinsPage implements OnInit {
 
     // Usar la URL directa de la API
     const apiUrl = `${this.apiURL}/products/coins/${encodeURIComponent(game)}`;
-    console.log("Requesting API URL:", apiUrl);
+    
 
     this.http.get<CoinOption[]>(apiUrl).subscribe({
       next: (data) => {
-        console.log("API Response:", data);
+      
 
         if (data && data.length > 0) {
           this.coinOptions = data.map((coin) => {
@@ -166,7 +166,6 @@ export class GameCoinsPage implements OnInit {
           // Sort by amount (lowest to highest)
           this.coinOptions.sort((a, b) => (a.amount || 0) - (b.amount || 0));
 
-          console.log("Processed coin options:", this.coinOptions);
         } else {
           console.log("No coin options returned from API");
           this.coinOptions = [];
@@ -176,7 +175,7 @@ export class GameCoinsPage implements OnInit {
       },
       error: (err) => {
         console.error(`Error loading coin options for ${game}:`, err);
-        this.coinOptions = []; // No mostrar productos si la API falla
+        this.coinOptions = []; 
         this.isLoading = false;
       },
     });

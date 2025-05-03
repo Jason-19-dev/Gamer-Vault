@@ -20,6 +20,7 @@ import { UserService, type User } from "src/services/user/user.service"
 import { IonCheckbox, IonButton, IonContent, IonHeader, IonToolbar, IonTitle, IonBackButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { Capacitor } from "@capacitor/core";
 import { BiometricService } from "src/services/biometric/biometric.service";
+import { NotificationsService } from "src/services/notifications/notifications.service";
 
 @Component({
   standalone: true,
@@ -50,6 +51,7 @@ export class CheckoutPage implements OnInit {
   walletBalance = 1;
   userName = 'Carlos';
   originalTotal: number = 0;
+  paymentSuccessful = false;
 
   constructor(
     private cartService: CartService,
@@ -60,6 +62,7 @@ export class CheckoutPage implements OnInit {
     private router: Router,
     private http: HttpClient,
     private walletService: WalletService,
+    private notificationsService: NotificationsService,
   ) {}
 
   ngOnInit() {
@@ -90,20 +93,17 @@ export class CheckoutPage implements OnInit {
   }
 
   async getUserBalance() {
-    console.log("in");
     const user_id = await this.userService.getCurrentUserID();
-    console.log("value : " + user_id);
 
     if (!user_id) {
       console.error("No user ID found. Cannot load orders.");
       return;
     }
-    console.log("pasaste");
+  
     this.walletService.getWalletBalance(user_id).subscribe({
       next: (res) => {
         this.walletUser = res;
         this.walletBalance = res.balance;
-        console.log(res);
       },
       error: (err) => {
         console.error("Error loading wallet balance:", err);
@@ -124,7 +124,7 @@ export class CheckoutPage implements OnInit {
   async payNow() {
     this.loading = true;
     let errorMessage = '';
-    let paymentSuccessful = false;
+    
 
     // if (Capacitor.getPlatform() === 'android') {
     //   const biometricSuccess = await this.biometricService.verifyIdentity('Confirmar pago', 'Autenticación biométrica');
@@ -174,7 +174,7 @@ export class CheckoutPage implements OnInit {
                       .toPromise();
   
                     if (response.status === 'success') {
-                      paymentSuccessful = true;
+                      this.paymentSuccessful = true;
                     } else {
                       await this.showErrorModal(response.message || "Card payment failed");
                       this.loading = false;
@@ -195,12 +195,13 @@ export class CheckoutPage implements OnInit {
                   savings: this.savings,
                   status: 'pending',
                   description: this.cartItems,
-                  payment_method: this.savedCard.number
+                  payment_method: this.enmascararTarjeta(this.savedCard.number)
                 };
   
                 this.ordersService.create_new_order(order_payload).subscribe({
                   next: async (res) => {
                     this.cartService.clearCart();
+                    await this.notificationsService.notifyPurchaseWithSavings(this.savings);
                     await this.showSuccessModal();
                   },
                   error: async () => {
@@ -244,7 +245,7 @@ export class CheckoutPage implements OnInit {
                   return;
                 }
   
-                paymentSuccessful = true;
+                this.paymentSuccessful = true;
                 const order_payload = {
                   user_id: userId,
                   total: this.finalTotal,
@@ -294,7 +295,7 @@ export class CheckoutPage implements OnInit {
             .toPromise();
   
           if (response.status === 'success') {
-            paymentSuccessful = true;
+            this.paymentSuccessful = true;
   
             const order_payload = {
               user_id: userId,
@@ -309,6 +310,7 @@ export class CheckoutPage implements OnInit {
               next: async (res) => {
                 this.cartService.clearCart();
                 await this.showSuccessModal();
+                this.notificationsService.notifyPurchaseWithSavings(this.savings);
               },
               error: async () => {
                 await this.showErrorModal("Failed to create order. Please try again.");

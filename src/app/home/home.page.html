@@ -5,6 +5,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <div *ngIf="username" style="color: white !important; font-size: 17px !important; font-weight: bold !important;">
+    <p>¡Hello, {{ username.toUpperCase() }}!</p>
+  </div>
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
   </ion-refresher>

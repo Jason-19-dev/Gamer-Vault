@@ -54,7 +54,6 @@ export class LoginPage implements OnInit {
   
     this.authService.login(name, pass).subscribe({
       next: async (response) => {
-        console.log(response)
         if (response.token) {
           const token = response.token;
           await this.storageService.setJwt(token);
@@ -68,7 +67,7 @@ export class LoginPage implements OnInit {
           // 🔥 Aquí cargas el carrito del usuario
           try {
             await this.cartService.refreshCart()
-            console.log("Cart loaded successfully after login.")
+            
           } catch (err) {
             console.error("Failed to load cart after login:", err)
           }

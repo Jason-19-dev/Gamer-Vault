@@ -46,7 +46,7 @@ export class CartPage implements OnInit, OnDestroy {
 
   // Ionic lifecycle hook - called every time the page is about to enter
   ionViewWillEnter() {
-    console.log("Cart page entering view - refreshing cart data")
+    
     this.isLoading = true
     // Force a refresh of the cart data from the backend
     this.cartService

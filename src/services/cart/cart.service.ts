@@ -74,7 +74,6 @@ export class CartService {
    * @returns Promise that resolves when cart is refreshed
    */
   refreshCart(): Promise<void> {
-    console.log("Refreshing cart data from backend")
     return this.loadCart()
   }
 
@@ -86,7 +85,7 @@ export class CartService {
     const userId = await this.user.getCurrentUserID()
 
     if (!userId) {
-      console.error("No user ID found. Cannot save cart.")
+
       return Promise.reject(new Error("No user ID found"))
     }
 
@@ -105,7 +104,7 @@ export class CartService {
           return of(null)
         }),
         tap((res) => {
-          console.log("Cart updated on backend:", res)
+          
           this.isLoadingSubject.next(false)
         }),
       ),

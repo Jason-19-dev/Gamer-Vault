@@ -246,6 +246,8 @@ export class WalletPage implements OnInit, OnDestroy {
   handleRefresh(event: CustomEvent) {
     this.loadOrders();
     this.loadUserAndOrders();
+    this.getUserBalance();
+    this.LoadUserLevel();
     setTimeout(() => {
       (event.target as HTMLIonRefresherElement).complete();
     }, 2000);

@@ -49,7 +49,6 @@ export class UserService {
 
   async getCurrentUserID(): Promise<string | null> {
     const token = await this.storageSercice.getJwt();
-    console.log('Token desde user.service:', token);
 
     if (!token) return null;
 

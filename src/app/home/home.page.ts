@@ -5,7 +5,7 @@ import  { Router } from "@angular/router" // Changed from type-only import
 import  { HttpClient } from "@angular/common/http" // Changed from type-only import
 import { environment } from "src/environments/environment"
 
-import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher, IonButtons } from "@ionic/angular/standalone"
+import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher, IonButtons, IonToast } from "@ionic/angular/standalone"
 // Keep this as a type-only import since it's just for type checking
 import type { GameItem, CoinItem } from "src/types"
 import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
@@ -19,7 +19,7 @@ import { UserService } from "src/services/user/user.service"
   templateUrl: "./home.page.html",
   styleUrls: ["./home.page.scss"],
   standalone: true,
-  imports: [IonRefresher, IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonSearchbar,IonNote,IonHeader,TabsPagesPage,IonIcon,IonRefresherContent
+  imports: [IonToast, IonRefresher, IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonSearchbar,IonNote,IonHeader,TabsPagesPage,IonIcon,IonRefresherContent
   ],
 })
 export class HomePage implements OnInit {
@@ -57,8 +57,9 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchGameProducts()
-    this.fetchCoinProducts()
+    this.fetchGameProducts();
+    this.fetchCoinProducts();
+    
   }
 
   ngOnDestroy() {
@@ -111,9 +112,8 @@ export class HomePage implements OnInit {
 
         // Seleccionar 10 videojuegos aleatorios
         this.gameProducts = this.getRandomItems(gamesWithIds, 10)
-        this.allGameProducts = [...this.gameProducts] // Guarda los datos originales para la búsqueda
+        this.allGameProducts = [...this.gameProducts] 
 
-        console.log("Juegos seleccionados aleatoriamente:", this.gameProducts)
 
         this.startBannerRotation()
       },
@@ -232,7 +232,7 @@ export class HomePage implements OnInit {
         return
       }
 
-      console.log(`Navigating to game-coins for ${product.game_name}:`, product)
+      
 
       // Navigate to game-coins page with the game name
       this.router.navigate(["/game-coins", encodeURIComponent(product.game_name)])
@@ -244,12 +244,12 @@ export class HomePage implements OnInit {
     const productId = product.id || product.product_id || product.id_product
 
     if (!productId) {
-      console.log("Product object:", product)
+      
       console.error("Cannot navigate: Product ID is missing. Available fields:", Object.keys(product))
       return
     }
 
-    console.log(`Navigating to ${type} detail:`, product)
+        
 
     // Navigate to product detail page with the product ID and type
     this.router.navigate(["/product-detail", productId], {
@@ -265,6 +265,7 @@ export class HomePage implements OnInit {
       (event.target as HTMLIonRefresherElement).complete();
     }, 1000);
   }
+
 }
 
 export default HomePage

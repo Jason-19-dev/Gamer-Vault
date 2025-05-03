@@ -112,7 +112,7 @@ export class ProductDetailPage implements OnInit, OnDestroy {
 
     this.http.get<any>(apiUrl).subscribe({
       next: (data) => {
-        console.log("Detalles del juego recibidos:", data)
+        
 
         // Usar directamente los datos de la API
         this.isVideoGame = true
@@ -162,7 +162,7 @@ export class ProductDetailPage implements OnInit, OnDestroy {
 
     this.http.get<any>(apiUrl).subscribe({
       next: (data) => {
-        console.log("Detalles de la moneda recibidos:", data)
+        
 
         // Usar directamente los datos de la API
         this.isVideoGame = false

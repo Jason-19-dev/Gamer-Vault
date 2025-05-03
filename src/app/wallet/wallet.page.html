@@ -18,7 +18,7 @@
       </div>
   
       <div class="wallet-footer">
-        <div class="wallet-user">{{ currentUser?.userName || 'Usuario' }}</div>
+        <div class="wallet-user">{{ currentUser?.userName?.toUpperCase() || 'Usuario' }}</div>
         <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
         </div>
       </div>
@@ -64,6 +64,14 @@
       </div>
       <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
     </ion-item>
+    
+    <div class="ion-padding" *ngIf="orders.length == 0">
+      <ion-item>
+        <div>
+          <p>No orders found.</p> 
+        </div>
+      </ion-item>
+    </div>
   </div>
 </ion-content>
 
