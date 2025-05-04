@@ -38,7 +38,17 @@ export class LoginPage implements OnInit {
     })
   }
                            
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.checkToken();
+
+    this.storageService.getJwt().then(token => {
+
+      if (token && !this.authService.isTokenExpired(token)) {
+        this.userService.loadCurrentUser()
+        this.router.navigate(['/home']);
+      }
+    });
+  }
 
   togglePassword() {
     this.showPassword = !this.showPassword
@@ -54,17 +64,11 @@ export class LoginPage implements OnInit {
   
     this.authService.login(name, pass).subscribe({
       next: async (response) => {
-        if (response.token) {
+        if (response.token && !this.authService.isTokenExpired(response.token)) {
           const token = response.token;
           await this.storageService.setJwt(token);
-          this.userService.setCurrentUser({
-            userName: name,
-            firstName: name.toUpperCase(),
-            email: `${name}@example.com`,
-            profileImage: "https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif",
-          })
-  
-          // 🔥 Aquí cargas el carrito del usuario
+
+          this.userService.loadCurrentUser()
           try {
             await this.cartService.refreshCart()
             

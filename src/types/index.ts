@@ -16,21 +16,6 @@ export type CoinItem = {
 }
 
 
-export type Customer = {
-    id: number
-    nameUser: string
-    email: string
-    phone: string
-    birthday_date: string
-    address:string
-    contry:string
-    password: string
-    is_active: boolean
-    role: string
-    create_at: string
-
-}
-
 export type Order = {
     order_id: number
     status: string

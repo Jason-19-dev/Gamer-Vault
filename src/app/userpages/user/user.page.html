@@ -9,10 +9,10 @@
     
     <div class="avatar-section">
       <ion-avatar>
-        <img [src]="currentUser.profileImage || 'https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif'" alt="Profile picture"  width="100" height="100"/>
+        <img [src]="currentUser.avatar || 'https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif'" alt="Profile picture"  width="100" height="100"/>
       </ion-avatar>
       <div>
-        <h2 class="ion-text-color">{{currentUser.userName.toUpperCase()}}</h2>
+        <h2 class="ion-text-color">{{currentUser.first_name.toUpperCase()}} {{currentUser.last_name.toUpperCase()}}</h2>
         
       </div>
     </div>

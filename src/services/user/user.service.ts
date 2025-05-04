@@ -7,15 +7,18 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, from, switchMap } from "rxjs";
 
 
-export interface User {
-  id?: string
-  userName: string
-  email?: string
-  firstName?: string
-  lastName?: string
-  phone?: string
-  profileImage?: string
-}
+export type User = {
+  avatar: string;
+  birth_date: string; 
+  created_at: string; 
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  user_id: string;
+  username: string;
+};
+
 
 @Injectable({
   providedIn: "root",
@@ -23,30 +26,44 @@ export interface User {
 export class UserService {
 
   private apiURL = `${environment.apiURL}/users`;
-
-  private currentUserSubject = new BehaviorSubject<User | null>(null)
-  public currentUser$ = this.currentUserSubject.asObservable()
-  userId$: any
+  currentUser: User | any = null
 
   constructor(private storageSercice: StorageService, private http: HttpClient, private httpHeader: HttpheaderService) {
     this.loadUserFromStorage()
+    
   }
 
   private loadUserFromStorage(): void {
+
     const storedUser = localStorage.getItem("currentUser")
+
     if (storedUser) {
-      this.currentUserSubject.next(JSON.parse(storedUser))
+      this.currentUser = JSON.parse(storedUser)
     }
+
   }
 
-  setCurrentUser(user: User): void {
-    // Store user in localStorage and update the subject
-    localStorage.setItem("currentUser", JSON.stringify(user))
-    this.currentUserSubject.next(user)
+  async loadCurrentUser(){
+
+    const user_id = await this.getCurrentUserID()
+    if (!user_id) return
+
+    this.http.get<User>(`${this.apiURL}/${user_id}`).subscribe(
+      (response) => {
+
+        this.currentUser = response
+
+        localStorage.setItem("currentUser", JSON.stringify(this.currentUser))
+
+      },
+      (error) => {
+        console.error(error)
+      }
+    );  
   }
 
   getCurrentUser(): User | null {
-    return this.currentUserSubject.value
+    return JSON.parse(localStorage.getItem("currentUser") || "null")
   }
 
   async getCurrentUserID(): Promise<string | null> {
@@ -58,7 +75,7 @@ export class UserService {
       const payloadString = atob(token.split('.')[1]);
      
       const payload = JSON.parse(payloadString);
-    
+
       return payload.sub || null;
     } catch (e) {
       console.error('Error al decodificar token:', e);
@@ -66,7 +83,7 @@ export class UserService {
     }
   }
 
-
+  
 getUserLevel(data: any): Observable<any>{
   return from(this.httpHeader.getJsonHeaders()).pipe(
       switchMap((headers) => {
@@ -77,6 +94,6 @@ getUserLevel(data: any): Observable<any>{
 
   clearCurrentUser(): void {
     localStorage.removeItem("currentUser")
-    this.currentUserSubject.next(null)
+    this.currentUser = {}
   }
 }

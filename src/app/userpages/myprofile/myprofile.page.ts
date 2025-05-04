@@ -20,6 +20,7 @@ export class MyprofilePage implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.getCurrentUser();
+
     
   }
 

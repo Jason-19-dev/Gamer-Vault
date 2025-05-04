@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
   saldo = 10.99
   message = ""
   isAndroid = false
-  username = this.userService.getCurrentUser()?.userName
+  username = this.userService.getCurrentUser()?.username
   // Add these properties for categorized products
   coinProducts: CoinItem[] = [] // Solo se llenará con datos de la API
   gameProducts: GameItem[] = [] // Solo se llenará con datos de la API

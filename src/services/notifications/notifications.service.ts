@@ -51,7 +51,7 @@ export class NotificationsService {
 
     setInterval(() => {
       
-      this.http.post(this.url, {type: type, user: this.currentUser?.userName} ).subscribe(
+      this.http.post(this.url, {type: type, user: this.currentUser?.username} ).subscribe(
         (response: any) => {
           const body = JSON.parse(response.body)
           console.log(body.title);

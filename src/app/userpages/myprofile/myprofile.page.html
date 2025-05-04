@@ -11,7 +11,7 @@
   
   <div class="avatar-section">
     <ion-avatar>
-      <img [src]="currentUser.profileImage" alt="Profile picture"  width="100" height="100"/>
+      <img [src]="currentUser.avatar || 'https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif'" alt="Profile picture"  width="100" height="100"/>
     </ion-avatar>
     <ion-icon name="camera-outline" class="input-icon" (click)="shooseImage()"></ion-icon> 
   </div>
@@ -19,7 +19,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="12"> 
-        <ion-input class="custom-input" label="User" labelPlacement="floating" type="text" [(ngModel)]="currentUser.userName"></ion-input>
+        <ion-input class="custom-input" label="User" labelPlacement="floating" type="text" [(ngModel)]="currentUser.username"></ion-input>
       </ion-col>
       <ion-col size="1"><ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
     </ion-row>
@@ -28,7 +28,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="12"> 
-        <ion-input name="firstName" class="custom-input" label="First Name" labelPlacement="floating" type="text" [(ngModel)]="currentUser.firstName"></ion-input>
+        <ion-input name="firstName" class="custom-input" label="First Name" labelPlacement="floating" type="text" [(ngModel)]="currentUser.first_name"></ion-input>
       </ion-col>
       <ion-col size="1">
         <ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
@@ -38,7 +38,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="12"> 
-        <ion-input name="lastName" class="custom-input" label="Last Name" labelPlacement="floating" type="text" [(ngModel)]="currentUser.lastName"></ion-input>
+        <ion-input name="lastName" class="custom-input" label="Last Name" labelPlacement="floating" type="text" [(ngModel)]="currentUser.last_name"></ion-input>
       </ion-col>
       <ion-col size="1">
         <ion-icon name="chevron-forward-outline"></ion-icon></ion-col>

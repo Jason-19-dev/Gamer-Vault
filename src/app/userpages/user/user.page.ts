@@ -9,6 +9,7 @@ import { addIcons } from "ionicons"
 import {pencilOutline,timeOutline,cardOutline,lockClosedOutline,logOutOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline, personRemoveOutline, personOutline } from "ionicons/icons"
 import { UserService, type User } from "src/services/user/user.service"
 import type { Subscription } from "rxjs"
+import { StorageService } from "src/services/storage/storage.service"
 
 @Component({
   selector: "app-user",
@@ -25,19 +26,16 @@ export class UserPage implements OnInit, OnDestroy {
     private router: Router,
     private alertController: AlertController,
     private userService: UserService,
+    private storageService: StorageService
   ) {
     // Register Ionicons
     addIcons({personOutline,timeOutline,lockClosedOutline,logOutOutline,personRemoveOutline,pencilOutline,cardOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline});
   }
 
   ngOnInit() {
-    // Get current user
-    this.currentUser = this.userService.getCurrentUser()
 
-    // Subscribe to user changes
-    this.userSubscription = this.userService.currentUser$.subscribe((user) => {
-      this.currentUser = user
-    })
+    this.currentUser =  this.userService.getCurrentUser()
+
 
     // If no user is logged in, redirect to login
     if (!this.currentUser) {
@@ -67,7 +65,7 @@ export class UserPage implements OnInit, OnDestroy {
         {
           text: "Logout",
           handler: () => {
-            // Clear user data and redirect to login
+            this.storageService.removeJwt();
             this.userService.clearCurrentUser()
             this.router.navigateByUrl("/login")
           },
