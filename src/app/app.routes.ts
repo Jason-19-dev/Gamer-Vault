@@ -23,10 +23,6 @@ export const routes: Routes = [
     loadComponent: () => import('./menu_/menu/menu.page').then( m => m.MenuPage)
   },
   {
-    path: 'new-product',
-    loadComponent: () => import('./menu_/new-product/new-product.page').then( m => m.NewProductPage)
-  },
-  {
     path: 'login',
     loadComponent: () => import('./auth/login/login.page').then( m => m.LoginPage)
   },
@@ -73,6 +69,10 @@ export const routes: Routes = [
   {
     path: 'deactivate-account',
     loadComponent: () => import('./deactivate-account/deactivate-account.page').then( m => m.DeactivateAccountPage)
+  },
+  {
+    path: 'myprofile',
+    loadComponent: () => import('./userpages/myprofile/myprofile.page').then( m => m.MyprofilePage)
   }
 
 

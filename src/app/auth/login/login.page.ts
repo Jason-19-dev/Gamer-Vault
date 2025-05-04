@@ -59,9 +59,9 @@ export class LoginPage implements OnInit {
           await this.storageService.setJwt(token);
           this.userService.setCurrentUser({
             userName: name,
-            fullName: name.toUpperCase(),
+            firstName: name.toUpperCase(),
             email: `${name}@example.com`,
-            profileImage: "https://ionicframework.com/docs/img/demos/avatar.svg",
+            profileImage: "https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif",
           })
   
           // 🔥 Aquí cargas el carrito del usuario

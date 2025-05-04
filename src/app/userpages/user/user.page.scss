@@ -4,7 +4,7 @@
   align-items: center;
   background-color:  rgba(41, 82, 128, 0.45);
   border-radius: 8px;
-  padding: 10px 16px;
+  padding: 20px 16px;
 }
 
 .button-container:not(:last-child) {
@@ -46,62 +46,18 @@ ion-title {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   width: 100%;
   text-align: center;
 }
 
 ion-avatar {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height:100px;
   margin-bottom: 12px;
   border: 2px solid white;
   margin-left: auto;
   margin-right: auto;
-}
-
-.name-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.name-container h2 {
-  color: white;
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.name-container ion-icon {
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: auto;
-  padding: 0 16px;
-}
-
-.action-button {
-  --background: white;
-  --color: #0a1933;
-  --border-radius: 8px;
-  --box-shadow: none;
-  font-weight: 500;
-  height: 48px;
-  margin: 0;
-  text-transform: none;
-}
-
-.action-button ion-icon {
-  margin-right: 8px;
-  font-size: 1.2rem;
 }
 
 .logout-button {
@@ -158,49 +114,3 @@ ion-avatar {
   }
 }
 
-.menu-items {
-  margin-bottom: auto;
-  padding: 0 16px;
-}
-
-.menu-items ion-item {
-  --background: white;
-  --color: #0a1933;
-  --border-radius: 8px;
-  margin-bottom: 12px;
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --inner-padding-end: 16px;
-  --min-height: 48px;
-}
-
-.menu-items ion-item ion-icon {
-  color: #0a1933;
-  margin-right: 12px;
-}
-
-.menu-items ion-item ion-label {
-  font-weight: 500;
-  font-size: 14px;
-}
-
-/* Styling for the tab bar */
-ion-tab-bar {
-  --background: #0a1933;
-  --color: rgba(255, 255, 255, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-ion-tab-button {
-  --color-selected: #ffcc00;
-}
-
-/* Adjust for iOS status bar */
-.ios ion-header {
-  padding-top: var(--ion-safe-area-top);
-}
-
-/* Adjust for Android status bar */
-.md ion-header {
-  padding-top: var(--ion-safe-area-top);
-}

@@ -6,7 +6,7 @@ import {IonAvatar,IonButton,IonContent,IonHeader,IonIcon,IonLabel,IonTitle,IonTo
 } from "@ionic/angular/standalone"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
-import {pencilOutline,timeOutline,cardOutline,lockClosedOutline,logOutOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline, personRemoveOutline } from "ionicons/icons"
+import {pencilOutline,timeOutline,cardOutline,lockClosedOutline,logOutOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline, personRemoveOutline, personOutline } from "ionicons/icons"
 import { UserService, type User } from "src/services/user/user.service"
 import type { Subscription } from "rxjs"
 
@@ -27,7 +27,7 @@ export class UserPage implements OnInit, OnDestroy {
     private userService: UserService,
   ) {
     // Register Ionicons
-    addIcons({pencilOutline,timeOutline,lockClosedOutline,logOutOutline,personRemoveOutline,cardOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline});
+    addIcons({personOutline,timeOutline,lockClosedOutline,logOutOutline,personRemoveOutline,pencilOutline,cardOutline,trashOutline,linkOutline,shieldOutline,helpCircleOutline});
   }
 
   ngOnInit() {
@@ -94,6 +94,9 @@ export class UserPage implements OnInit, OnDestroy {
   changePassword() {
     console.log("Change password clicked")
     this.router.navigateByUrl("/change-password")
+  }
+  myprofile() {
+    this.router.navigateByUrl("/myprofile")
   }
 }
 

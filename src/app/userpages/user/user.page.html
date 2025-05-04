@@ -9,17 +9,23 @@
     
     <div class="avatar-section">
       <ion-avatar>
-        <img [src]="currentUser.profileImage || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Profile picture" />
+        <img [src]="currentUser.profileImage || 'https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif'" alt="Profile picture"  width="100" height="100"/>
       </ion-avatar>
-      <div class="name-container">
-        <h2 class="ion-text-color">{{ currentUser.fullName || currentUser.userName }}</h2>
-        <ion-icon name="pencil-outline" (click)="editProfile()"></ion-icon>
+      <div>
+        <h2 class="ion-text-color">{{currentUser.userName.toUpperCase()}}</h2>
+        
       </div>
     </div>
 
-    <div class="menu-items">
+    <div class="ion-padding">
 
-
+      <div class="button-container" (click)="myprofile()">
+        <div class="button-wrapper">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">My Profile</ion-label>
+        </div>
+      </div>
+      
       <div class="button-container" (click)="orderHistory()">
         <div class="button-wrapper">
           <ion-icon name="time-outline" slot="start" class="input-icon"></ion-icon>
@@ -41,26 +47,6 @@
         </div>
       </div>
 
-      <!-- <ion-item detail="false" lines="none" button (click)="orderHistory()" class="ion-item-color">
-        <ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>Order history</ion-label>
-      </ion-item>
-
-      <ion-item detail="false" lines="none" button (click)="managePayment()">
-        <ion-icon name="card-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>Manage payment methods</ion-label>
-      </ion-item>
-
-      <ion-item detail="false" lines="none" button (click)="changePassword()">
-        <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>Change password</ion-label>
-      </ion-item>
-
-      <ion-item detail="false" lines="none" button (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>Log Out</ion-label>
-      </ion-item> -->
-
     </div>
 
     <div class="delete-account-container">
@@ -72,7 +58,6 @@
     
   </div>
   
-  <!-- Show loading or redirect message if no user -->
   <div class="no-user-container" *ngIf="!currentUser">
     <p>Please log in to view your profile</p>
     <ion-button expand="block" routerLink="/login">Go to Login</ion-button>

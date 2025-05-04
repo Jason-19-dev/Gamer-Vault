@@ -11,7 +11,9 @@ export interface User {
   id?: string
   userName: string
   email?: string
-  fullName?: string
+  firstName?: string
+  lastName?: string
+  phone?: string
   profileImage?: string
 }
 
