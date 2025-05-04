@@ -10,13 +10,13 @@ import { UserService, type User } from 'src/services/user/user.service';
 import { Subscription } from 'rxjs';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { WalletService } from 'src/services/wallet/wallet.service';
-
+import {IonInfiniteScroll, IonInfiniteScrollContent, IonHeader, IonTitle, IonToolbar, IonContent, IonIcon, IonRefresher, IonRefresherContent, IonText, IonItem, IonProgressBar} from "@ionic/angular/standalone"
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.page.html',
   styleUrls: ['./wallet.page.scss'],
   standalone: true,
-  imports: [CommonModule,FormsModule,IonicModule,DatePipe,TabsPagesPage]
+  imports: [CommonModule,FormsModule,DatePipe,TabsPagesPage,IonInfiniteScroll, IonInfiniteScrollContent, IonHeader, IonTitle, IonToolbar, IonContent, IonIcon, IonRefresher, IonRefresherContent,IonText, IonItem, IonProgressBar]
 })
 export class WalletPage implements OnInit, OnDestroy {
   puntos: number = 6;
@@ -49,7 +49,6 @@ export class WalletPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    console.log("WalletPage will enter, refreshing orders...");
     this.loadUserAndOrders();
     this.LoadUserLevel();
   }
@@ -61,20 +60,17 @@ export class WalletPage implements OnInit, OnDestroy {
   }
 
   async getUserBalance() {
-    console.log("in");
     const user_id = await this.userService.getCurrentUserID();
-    console.log("value : " + user_id);
 
     if (!user_id) {
       console.error("No user ID found. Cannot load orders.");
       return;
     }
-    console.log("pasaste");
-    this.walletService.getWalletBalance(user_id).subscribe({
+    await this.walletService.getWalletBalance(user_id).subscribe({
       next: (res) => {
         this.walletUser = res;
         this.walletBalance = res.balance;
-        console.log(res);
+        
       },
       error: (err) => {
         console.error("Error loading wallet balance:", err);
@@ -174,7 +170,7 @@ export class WalletPage implements OnInit, OnDestroy {
       this.ordersSubscription = this.ordersService.load_user_orders(this.userId).subscribe({
         next: (res) => {
           this.orders = res || [];
-          console.log("Orders loaded:", this.orders);
+          
         },
         error: (err) => {
           this.toast_alert('bottom', 'Error al cargar órdenes');

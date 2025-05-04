@@ -70,7 +70,6 @@ export class CartPage implements OnInit, OnDestroy {
   private loadCartItems() {
     this.cartItems = this.cartService.getCartItems()
     this.calculateTotals()
-    console.log("Cart items loaded:", this.cartItems)
   }
 
   private calculateTotals() {
@@ -96,7 +95,7 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   removeFromCart(product: CartItem) {
-    console.log("Removing item from cart:", product)
+   
     this.isLoading = true
     this.cartService
       .removeCart(product)
@@ -164,6 +163,7 @@ export class CartPage implements OnInit, OnDestroy {
   }
   handleRefresh(event: CustomEvent) {
     this.loadCartItems()
+    this.ionViewWillEnter();
     setTimeout(() => {
       (event.target as HTMLIonRefresherElement).complete();
     }, 1000);

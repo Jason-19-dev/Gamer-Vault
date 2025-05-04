@@ -358,20 +358,20 @@ ion-list {
 ion-item {
   --background: transparent !important;
   --color: white !important;
-  background: #1d3557; /* Un tono de azul más oscuro y sólido */
+  background: rgba(41, 82, 128, 0.45);
   border-radius: 8px;
-  margin-bottom: 8px; /* Reduje un poco el margen inferior */
+  margin-bottom: 8px; 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 16px; /* Ajusté el padding vertical */
+  padding: 0px 16px;
 }
 
 .order-date {
   flex: 0.7;
   font-family: verdana;
   font-size: 16px;
-  color: #f1faee; /* Un color blanco hueso */
+  color: white;
 }
 
 .order-info {
@@ -388,7 +388,7 @@ ion-item {
 
 .order-total {
   font-family: verdana;
-  color: #f1faee; /* Un color blanco hueso */
+  color: white; /* Un color blanco hueso */
 }
 
 .order-saved {

@@ -56,16 +56,19 @@
 
   <h2 class="section-title">Order History</h2>
   <div class="order-history-container">
-    <ion-item lines="none" class="order-item" *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">
-      <div class="order-date">{{ order.created_at | date:'yyyy-MM-dd' }}</div>
-      <div class="order-details">
-        <div class="order-total">Total: ${{ order.total.toFixed(2) }}</div>
-        <div class="order-saved">Saved: ${{ order.savings.toFixed(2) }}</div>
-      </div>
-      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
+  <ion-item lines="none" class="order-item" *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">
+    <div class="order-date">{{ order.created_at | date:'yyyy-MM-dd' }}</div>
+    <div class="order-details">
+      <div class="order-total">Total: ${{ order.total.toFixed(2) }}</div>
+      <div class="order-saved">Saved: ${{ order.savings.toFixed(2) }}</div>
+    </div>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+  <ion-infinite-scroll >
+    <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
     
-    <div class="ion-padding" *ngIf="orders.length == 0">
+    <div *ngIf="orders.length == 0">
       <ion-item>
         <div>
           <p>No orders found.</p> 
