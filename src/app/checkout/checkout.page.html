@@ -111,9 +111,11 @@
       <span class="summary-value">${{ finalTotal.toFixed(2) }}</span>
     </div>
 
-    <ion-button expand="block" class="pay-button" (click)="payNow()" [disabled]="!selectedMethod || cartItems.length === 0 ">
-      Pay Now
+    <ion-button expand="block" class="pay-button" (click)="payNow()"
+      [disabled]="!selectedMethod || cartItems.length === 0 || loading">
+      {{ loading ? 'Processing...' : 'Pay Now' }}
     </ion-button>
+
   </div>
 
 

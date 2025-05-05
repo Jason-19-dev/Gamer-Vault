@@ -281,6 +281,7 @@ export class CheckoutPage implements OnInit {
 
       // Caso 3: Solo Tarjeta
       else if (this.savedCard) {
+        console.log("entre");
         const payload = {
           card_number: this.savedCard.number,
           cvv: this.savedCard.cvc,
@@ -323,7 +324,7 @@ export class CheckoutPage implements OnInit {
           errorMessage = error.error?.message || 'Error processing payment: ' + error.message;
           await this.showErrorModal(errorMessage);
         }
-
+        console.log("sali");
         this.loading = false;
       }
 
