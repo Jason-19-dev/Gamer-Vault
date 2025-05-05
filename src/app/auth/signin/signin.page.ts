@@ -9,7 +9,8 @@ import { CartService } from 'src/services/cart/cart.service';
 import { Router } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
 import { TermsConditionsComponent } from 'src/app/modals/terms-conditions/terms-conditions.component';
-import { IonicModule,ModalController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-signin',

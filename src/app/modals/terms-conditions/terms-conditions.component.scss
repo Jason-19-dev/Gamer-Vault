@@ -1,4 +1,9 @@
-
+ion-content.modal-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+}
 .modal-content {
   --background: rgba(0, 0, 0, 0.6);
   display: flex;
@@ -8,6 +13,7 @@
 }
 
 .terms-wrapper {
+  margin-top: 18%;
   background: #0b1e3c;
   border: 2px solid #f1c40f;
   border-radius: 20px;
@@ -50,15 +56,15 @@
   font-size: 16px;
   text-transform: none;
   padding-top: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .close-icon {
   font-size: 24px;
   color: #f1c40f;
   position: absolute;
-  top: 12px;
-  right: 12px;
+  margin-top: -3%;
+  margin-left: 37%;
   z-index: 10;
   cursor: pointer;
 }

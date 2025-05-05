@@ -99,7 +99,7 @@ export class CheckoutPage implements OnInit {
       console.error("No user ID found. Cannot load orders.");
       return;
     }
-  
+
     this.walletService.getWalletBalance(user_id).subscribe({
       next: (res) => {
         this.walletUser = res;
@@ -124,32 +124,32 @@ export class CheckoutPage implements OnInit {
   async payNow() {
     this.loading = true;
     let errorMessage = '';
-    
+
 
     // if (Capacitor.getPlatform() === 'android') {
     //   const biometricSuccess = await this.biometricService.verifyIdentity('Confirmar pago', 'Autenticación biométrica');
 
-    // if (!biometricSuccess) {  
+    // if (!biometricSuccess) {
     //   await this.showErrorModal('Autenticación biométrica fallida o cancelada.');
     //   this.loading = false;
-      
+
     //   return;
     // }}
-  
+
     try {
       const userId = await this.userService.getCurrentUserID();
       if (!userId) throw new Error("User ID not found.");
-  
+
       // Caso 1: Wallet + Card (combinado)
       if (this.payWithWallet && this.savedCard) {
         this.walletService.getWalletBalance(userId).subscribe(
           async (walletData: any) => {
             const walletBalance = walletData.balance;
             const walletDiscount = Math.min(walletBalance, this.originalTotal);;
-  
+
             console.log(`Descuento de Wallet: $${walletDiscount}`);
             console.log(`Total a pagar con tarjeta: $${this.finalTotal}`);
-  
+
             this.walletService.deductWalletBalance(userId, walletDiscount).subscribe(
               async (walletRes: any) => {
                 if (walletRes.error) {
@@ -157,7 +157,7 @@ export class CheckoutPage implements OnInit {
                   this.loading = false;
                   return;
                 }
-  
+
                 // Si aún hay saldo a pagar, usa la tarjeta
                 if (this.finalTotal > 0) {
                   const payload = {
@@ -166,13 +166,13 @@ export class CheckoutPage implements OnInit {
                     expiration: this.savedCard.expiry,
                     amount: this.finalTotal
                   };
-  
+
                   try {
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     const response: any = await this.http
                       .post('https://pq5e5sx8tb.execute-api.us-east-1.amazonaws.com/dev/pago', payload)
                       .toPromise();
-  
+
                     if (response.status === 'success') {
                       this.paymentSuccessful = true;
                     } else {
@@ -187,7 +187,7 @@ export class CheckoutPage implements OnInit {
                     return;
                   }
                 }
-  
+
                 // Crear orden
                 const order_payload = {
                   user_id: userId,
@@ -197,7 +197,7 @@ export class CheckoutPage implements OnInit {
                   description: this.cartItems,
                   payment_method: this.enmascararTarjeta(this.savedCard.number)
                 };
-  
+
                 this.ordersService.create_new_order(order_payload).subscribe({
                   next: async (res) => {
                     this.cartService.clearCart();
@@ -208,7 +208,7 @@ export class CheckoutPage implements OnInit {
                     await this.showErrorModal("Failed to create order. Please try again.");
                   }
                 });
-  
+
                 this.loading = false;
               },
               async (err) => {
@@ -223,20 +223,20 @@ export class CheckoutPage implements OnInit {
           }
         );
       }
-  
+
       // Caso 2: Solo Wallet
       else if (this.payWithWallet) {
         this.walletService.getWalletBalance(userId).subscribe(
           async (walletData: any) => {
             const discount = Math.min(walletData.balance, this.originalTotal);
             this.finalTotal = this.originalTotal - discount;
-  
+
             if (this.finalTotal > 0) {
               await this.showErrorModal("Insufficient wallet balance to complete the purchase.");
               this.loading = false;
               return;
             }
-  
+
             this.walletService.deductWalletBalance(userId, this.originalTotal).subscribe(
               async (response: any) => {
                 if (response.error) {
@@ -244,7 +244,7 @@ export class CheckoutPage implements OnInit {
                   this.loading = false;
                   return;
                 }
-  
+
                 this.paymentSuccessful = true;
                 const order_payload = {
                   user_id: userId,
@@ -253,7 +253,7 @@ export class CheckoutPage implements OnInit {
                   status: 'pending',
                   description: this.cartItems
                 };
-  
+
                 this.ordersService.create_new_order(order_payload).subscribe({
                   next: async (res) => {
                     this.cartService.clearCart();
@@ -263,7 +263,7 @@ export class CheckoutPage implements OnInit {
                     await this.showErrorModal("Failed to create order. Please try again.");
                   }
                 });
-  
+
                 this.loading = false;
               },
               async (error: any) => {
@@ -278,7 +278,7 @@ export class CheckoutPage implements OnInit {
           }
         );
       }
-  
+
       // Caso 3: Solo Tarjeta
       else if (this.savedCard) {
         const payload = {
@@ -287,16 +287,16 @@ export class CheckoutPage implements OnInit {
           expiration: this.savedCard.expiry,
           amount: this.originalTotal
         };
-  
+
         try {
           await new Promise(resolve => setTimeout(resolve, 1000));
           const response: any = await this.http
             .post('https://pq5e5sx8tb.execute-api.us-east-1.amazonaws.com/dev/pago', payload)
             .toPromise();
-  
+
           if (response.status === 'success') {
             this.paymentSuccessful = true;
-  
+
             const order_payload = {
               user_id: userId,
               total: this.originalTotal,
@@ -305,7 +305,7 @@ export class CheckoutPage implements OnInit {
               description: this.cartItems,
               payment_method: this.enmascararTarjeta(this.savedCard.number)
             };
-  
+
             this.ordersService.create_new_order(order_payload).subscribe({
               next: async (res) => {
                 this.cartService.clearCart();
@@ -323,10 +323,10 @@ export class CheckoutPage implements OnInit {
           errorMessage = error.error?.message || 'Error processing payment: ' + error.message;
           await this.showErrorModal(errorMessage);
         }
-  
+
         this.loading = false;
       }
-  
+
       // Caso 4: Ningún método seleccionado
       else {
         await this.showErrorModal("No payment method selected.");
@@ -337,7 +337,7 @@ export class CheckoutPage implements OnInit {
       this.loading = false;
     }
   }
-  
+
 
   async openCardModal() {
     const modal = await this.modalCtrl.create({
@@ -371,7 +371,7 @@ export class CheckoutPage implements OnInit {
         isSuccess: true,
       },
       breakpoints: [0, 1],
-      initialBreakpoint: 1,
+      initialBreakpoint: 0.6,
       showBackdrop: true
     });
 
@@ -385,7 +385,7 @@ export class CheckoutPage implements OnInit {
         isError: true
       },
       breakpoints: [0, 1],
-      initialBreakpoint: 1,
+      initialBreakpoint: 0.6,
       showBackdrop: true
     });
     await modal.present();
@@ -425,7 +425,7 @@ export class CheckoutPage implements OnInit {
       this.navCtrl.back();
     }
   }
-  // enmascarar tarjeta el número 
+  // enmascarar tarjeta el número
   enmascararTarjeta(numCard: string): string {
     const last = numCard.slice(-4);
     const enmascarar = '*'.repeat(numCard.length - 4);
