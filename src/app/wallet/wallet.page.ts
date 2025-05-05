@@ -102,7 +102,7 @@ export class WalletPage implements OnInit, OnDestroy {
 
         this.userProgress = res.user_progress/10;
         this.userLevel = res.user_level;
-        this.userLevelName = res.user_level_name;
+        this.userLevelName = res.user_level_id;
 
         if (this.userLevel == 0) {
           this.userLevelUp = 3-res.user_progress;
