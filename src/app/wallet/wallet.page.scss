@@ -177,8 +177,8 @@ ion-title {
 }
 
 .wallet-chip-img {
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
   object-fit: contain;
 }
 
@@ -213,8 +213,9 @@ ion-title {
 }
 
 .wallet-card {
-  background: linear-gradient(135deg, #0d3a71, #3a72b8);
-  border-radius: 20px;
+  // background: linear-gradient(to right, #005c97, #363795);
+  background: linear-gradient(to bottom, #02d6c8, #2b4d72); //DIAMOND
+  border-radius: 12px;
   padding: 0 20px;
   margin-bottom: 24px;
   color: white;
