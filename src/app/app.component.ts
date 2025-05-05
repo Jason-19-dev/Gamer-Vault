@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   constructor(private platform: Platform, private notification: NotificationsService) {
     this.initializeApp()
     this.showSplashScreen();
+    this.notification.initNotifications();
+
   }
   ngOnInit() {
     this.notification.initNotifications();
