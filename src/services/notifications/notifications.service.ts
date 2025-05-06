@@ -23,7 +23,7 @@ export class NotificationsService {
   constructor( private http: HttpClient, private userService: UserService) { }
 
   messageNotification( title: string, message: string ) {
-    const notifyId = new Date().getTime();
+    const notifyId = Math.floor(Math.random() * 10000);
 
     LocalNotifications.schedule({
       notifications: [
@@ -58,7 +58,8 @@ export class NotificationsService {
           this.messageNotification(body.title, body.message);
         });
 
-    }, 6 * 60 * 60 * 1000);
+    // }, 6 * 60 * 60 * 1000);
+    }, 60 *60 * 1000);
   } 
 
   initNotifications() {
