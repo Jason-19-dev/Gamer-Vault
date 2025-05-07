@@ -69,3 +69,20 @@
   text-decoration: underline;
   cursor: pointer;
 }
+.success-message {
+  font-size: 18px;
+  color: #ff6666; // rojo claro
+  margin: 20px 0;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ff9999;
+  border-radius: 10px;
+}
+
+.wallet-link {
+  color: #ffd700;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}

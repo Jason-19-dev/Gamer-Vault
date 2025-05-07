@@ -1,36 +1,49 @@
 <ion-content class="success-content">
   <div class="success-wrapper">
-    <ion-icon
-      [name]="isSuccess ? 'checkmark-circle-outline' : 'close-circle-outline'"
-      class="success-icon"
+
+    <!-- ✅ Ícono -->
+    <ion-icon [name]="isSuccess ? 'checkmark-circle-outline' : 'close-circle-outline'" class="success-icon"
       [class.error-icon]="isError">
     </ion-icon>
 
-    <h2 class="greeting-message">Hello! 👋{{ username?.toUpperCase() }} </h2>
+    <!-- ✅ MENSAJE DE ÉXITO -->
+    <ng-container *ngIf="isSuccess">
+      <h2 class="greeting-message">Hello! 👋{{ username?.toUpperCase() }} </h2>
 
-    <h1 class="thank-you-message">
-      <strong>THANK YOU</strong> for shopping at Gamer Vault 🎉
-    </h1>
+      <h1 class="thank-you-message">
+        <strong>THANK YOU</strong> for shopping at Gamer Vault 🎉
+      </h1>
 
-    <p class="reward-text">
-      Here's your exclusive reward:
-    </p>
+      <p class="reward-text">
+        Here's your exclusive reward:
+      </p>
 
-    <div class="code-box">
-      <h3>🔓 Code to redeem</h3>
-      <p class="code">{{ redeemCode }}</p>
-    </div>
+      <div class="code-box">
+        <h3>🔓 Code to redeem</h3>
+        <p class="code">{{ redeemCode }}</p>
+      </div>
 
-    <p class="redeem-instruction">
-      You can redeem this code on any<br />
-      digital video game distribution platform.
-    </p>
-    <!-- 🔗 Enlace a wallet -->
-    <p class="wallet-message">
-      You can also view your credited balance in your
-      <span class="wallet-link" (click)="goToWallet()">Wallet</span>.
-    </p>
+      <p class="redeem-instruction">
+        You can redeem this code on any<br />
+        digital video game distribution platform.
+      </p>
 
-    <ion-button expand="block" class="success-button" (click)="handleButtonClick()">Home</ion-button>
+      <p class="wallet-message">
+        You can also view your credited balance in your
+        <span class="wallet-link" (click)="goToWallet()">Wallet</span>.
+      </p>
+    </ng-container>
+
+    <!-- ❌ MENSAJE DE ERROR -->
+    <ng-container *ngIf="isError">
+      <h2 class="greeting-message">Oops! Something went wrong 😓</h2>
+      <p class="success-message">
+        {{ errorMessage || 'An unexpected error occurred. Please try again.' }}<br />
+        You can view your balance in your
+        <span class="wallet-link" (click)="goToWallet()">Wallet</span>.
+      </p>
+    </ng-container>
+
+    <ion-button expand="block" class="success-button" (click)="handleButtonClick()">OK</ion-button>
   </div>
 </ion-content>
