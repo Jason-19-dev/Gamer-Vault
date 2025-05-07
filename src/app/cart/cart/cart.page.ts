@@ -6,7 +6,7 @@ import {IonButton,IonContent,IonHeader,IonIcon,IonItem,IonThumbnail,IonTitle,Ion
 import  { CartService, CartItem } from "src/services/cart/cart.service"
 import { TabsPagesPage } from "src/app/tabs_bar/tabs-pages/tabs-pages.page"
 import { addIcons } from "ionicons"
-import { cartOutline, trashOutline, closeCircleOutline } from "ionicons/icons"
+import { cartOutline, trashOutline, closeCircleOutline, closeOutline } from "ionicons/icons"
 import type { Subscription } from "rxjs"
 import { IonBackButton } from "@ionic/angular/standalone"
 
@@ -34,7 +34,7 @@ export class CartPage implements OnInit, OnDestroy {
     private alertController: AlertController,
     private toastController: ToastController,
   ) {
-    addIcons({trashOutline,closeCircleOutline,cartOutline});
+    addIcons({trashOutline,closeOutline,cartOutline,closeCircleOutline});
   }
 
   ngOnInit() {

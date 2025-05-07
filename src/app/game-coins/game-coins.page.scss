@@ -1,10 +1,10 @@
-ion-content {
-    --background: #0a1933;
-    --color: white;
-  }
+// ion-content {
+//     --background: #0a1933;
+//     --color: white;
+//   }
   
   ion-header ion-toolbar {
-    --background: #0a1933;
+    // --background: #0a1933;
     --color: white;
     --border-style: none;
     --border-width: 0;
@@ -188,6 +188,8 @@ ion-content {
     margin: 10px;
     border-radius: 5px;
     color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
+    font-size: 15px;
+    font-family: Verdana;
+    text-align: center;
   }
   

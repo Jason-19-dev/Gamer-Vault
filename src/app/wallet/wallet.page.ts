@@ -95,7 +95,7 @@ export class WalletPage implements OnInit, OnDestroy {
     this.userService.getUserLevel({user_id}).subscribe({
       next: (res) => {
         if (res.error) {
-          this.toast_alert('bottom', res.error);
+          this.toast_alert('bottom', "Something went wrong.");
           console.error(res.error);
           return;
         }
