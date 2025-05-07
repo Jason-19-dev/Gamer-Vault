@@ -43,10 +43,11 @@
   </ion-item>
 
   <div class="card-grid">
-    <ion-item class="half-input styled-input">
-      <ion-label position="floating">MM/AA</ion-label>
-      <ion-input [(ngModel)]="expiry" maxlength="5"></ion-input>
-    </ion-item>
+  <ion-item class="half-input styled-input">
+    <ion-label position="floating">MM/AA</ion-label>
+    <ion-input [(ngModel)]="expiry" maxlength="5" inputmode="numeric" (ionInput)="onExpiryInput($event)" (keydown)="blockLetters($event)">
+    </ion-input>
+  </ion-item>
     <ion-item class="half-input styled-input">
       <ion-label position="floating">CVC</ion-label>
       <ion-input [(ngModel)]="cvc" maxlength="4" type="password"></ion-input>

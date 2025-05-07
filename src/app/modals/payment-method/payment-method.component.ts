@@ -90,7 +90,27 @@ getCardType(): string {
   return 'unknown';
 }
 
+onExpiryInput(event: any) {
+  let input = event.target.value.replace(/\D/g, ''); // solo dígitos
 
+  if (input.length > 4) {
+    input = input.slice(0, 4);
+  }
+
+  if (input.length >= 3) {
+    this.expiry = `${input.slice(0, 2)}/${input.slice(2)}`;
+  } else {
+    this.expiry = input;
+  }
+}
+blockLetters(event: KeyboardEvent) {
+  const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+
+  // Permite solo números y algunas teclas de control
+  if (!/^\d$/.test(event.key) && !allowedKeys.includes(event.key)) {
+    event.preventDefault(); // Bloquea letras, símbolos, etc.
+  }
+}
 
   getCardLogo(): string {
     const type = this.getCardType();
