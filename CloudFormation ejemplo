@@ -1,0 +1,285 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Infraestructura para desplegar Flask en Fargate con API Gateway y
+  Lambda autorizadora
+
+Parameters:
+  VpcCidr:
+    Type: String
+    Default: 10.0.0.0/16
+    Description: CIDR Block para la VPC
+  SubnetCidr:
+    Type: String
+    Default: 10.0.1.0/24
+    Description: CIDR Block para la subred privada
+  DBSecretName:
+    Type: String
+    Default: my-aurora-db-credentials
+    Description: Nombre del secreto de AWS Secrets Manager
+
+Resources:
+  # 1. VPC con subred privada
+  MyVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCidr
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: FlaskAppVpc
+
+  MySubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !Ref SubnetCidr
+      VpcId: !Ref MyVpc
+      AvailabilityZone: us-east-1a
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: FlaskAppSubnet
+
+  # 2. Security Groups para Fargate y Aurora
+  FlaskAppSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group para Fargate (Flask)
+      VpcId: !Ref MyVpc
+
+  AuroraSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group para Aurora MySQL
+      VpcId: !Ref MyVpc
+
+  # 3. Secrets Manager para las credenciales de la base de datos
+  MyDatabaseSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Ref DBSecretName
+      Description: Credenciales de base de datos Aurora MySQL
+      SecretString: !Sub |
+        {
+          "username": "admin",
+          "password": "your_password",
+          "host": "aurora-db-cluster.cluster-xxxxxxxxxx.us-east-1.rds.amazonaws.com",
+          "dbname": "your_database_name",
+          "port": "3306"
+        }
+
+  # 4. Aurora MySQL Cluster
+  AuroraDBCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      DBClusterIdentifier: aurora-db-cluster
+      Engine: aurora-mysql
+      MasterUsername: admin
+      MasterUserPassword: your_password
+      VpcSecurityGroupIds:
+        - !Ref AuroraSG
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
+      BackupRetentionPeriod: 7
+      EnableIAMDatabaseAuthentication: true
+
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subredes privadas para Aurora
+      SubnetIds:
+        - !Ref MySubnet
+
+  # 5. IAM Role para ECS Task
+  ECSFargateTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRole
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+      Policies:
+        - PolicyName: SecretsManagerPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: secretsmanager:GetSecretValue
+                Resource: !Ref MyDatabaseSecret
+
+  # 6. ECS Fargate Task Definition
+  FlaskAppTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: FlaskAppTask
+      ExecutionRoleArn: !GetAtt ECSFargateTaskRole.Arn
+      TaskRoleArn: !GetAtt ECSFargateTaskRole.Arn
+      NetworkMode: awsvpc
+      ContainerDefinitions:
+        - Name: flask-app
+          Image: my-flask-app-image # Debes subir la imagen Docker a ECR o Docker Hub
+          Memory: 512
+          Cpu: 256
+          Essential: true
+          PortMappings:
+            - ContainerPort: 5000
+              HostPort: 5000
+
+  # 7. ECS Fargate Service
+  FlaskAppService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref MyECSCluster
+      TaskDefinition: !Ref FlaskAppTaskDefinition
+      DesiredCount: 1
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - !Ref MySubnet
+          SecurityGroups:
+            - !Ref FlaskAppSG
+          AssignPublicIp: DISABLED
+
+  # 8. ECS Cluster
+  MyECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: FlaskAppCluster
+
+  # 9. Application Load Balancer
+  MyALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: FlaskAppALB
+      Subnets:
+        - !Ref MySubnet
+      SecurityGroups:
+        - !Ref FlaskAppSG
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: '60'
+
+  # 10. ALB Target Group
+  MyTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 5000
+      Protocol: HTTP
+      VpcId: !Ref MyVpc
+
+  # 11. ALB Listener
+  MyALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: fixed-response
+          FixedResponseConfig:
+            StatusCode: 200
+            MessageBody: Hello from Flask
+      LoadBalancerArn: !Ref MyALB
+      Port: 80
+      Protocol: HTTP
+
+  # 12. API Gateway
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: FlaskAppApi
+      Description: API Gateway para Flask en Fargate
+
+  # 13. API Gateway Recurso (login y register en una sola API)
+  ApiResourceLogin:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt ApiGateway.RootResourceId
+      RestApiId: !Ref ApiGateway
+      PathPart: login
+
+  ApiResourceRegister:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt ApiGateway.RootResourceId
+      RestApiId: !Ref ApiGateway
+      PathPart: register
+
+  # 14. Lambda Autorizer
+  FlaskAppAuthorizer:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: FlaskAppAuthorizer
+      Handler: index.lambda_handler
+      Runtime: python3.11
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          import json
+
+          def lambda_handler(event, context):
+              token = event['authorizationToken']  # Token enviado por el cliente
+              if token == 'valid_token':
+                  policy_document = {
+                      "Version": "2012-10-17",
+                      "Statement": [{
+                          "Effect": "Allow",
+                          "Action": "execute-api:Invoke",
+                          "Resource": event['methodArn']
+                      }]
+                  }
+                  return {
+                      'principalId': 'user|12345',
+                      'policyDocument': policy_document
+                  }
+              else:
+                  raise Exception('Unauthorized')
+
+  # 15. Permiso para invocar la Lambda (Autorizadora)
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref FlaskAppAuthorizer
+      Principal: apigateway.amazonaws.com
+
+  # 16. Métodos POST en API Gateway
+  ApiMethodLogin:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId: !Ref ApiResourceLogin
+      RestApiId: !Ref ApiGateway
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref FlaskAppAuthorizer
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:ecs:path/2015-03-31/functions/${FlaskAppTaskDefinition.Arn}/invocations
+
+  ApiMethodRegister:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId: !Ref ApiResourceRegister
+      RestApiId: !Ref ApiGateway
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref FlaskAppAuthorizer
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:ecs:path/2015-03-31/functions/${FlaskAppTaskDefinition.Arn}/invocations
+
+  # 17. Despliegue de la API Gateway
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - ApiMethodLogin
+      - ApiMethodRegister
+    Properties:
+      RestApiId: !Ref ApiGateway
+      StageName: prod
+
+Outputs:
+  ApiGatewayUrl:
+    Description: URL de la API Gateway
+    Value: !Sub https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod
