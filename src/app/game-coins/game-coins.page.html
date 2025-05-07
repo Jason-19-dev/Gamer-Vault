@@ -1,0 +1,65 @@
+<ion-header class="ion-safe-area" [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/menu"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="font2P">{{ gameName }} Coins</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <!-- Toast message container -->
+    <div *ngIf="toastMessage" class="toast-message">
+      {{ toastMessage }}
+    </div>
+  
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="loading-container">
+      <ion-spinner name="circular"></ion-spinner>
+      <p>Loading coins...</p>
+    </div>
+  
+    <!-- Debug info -->
+    <div *ngIf="!isLoading && coinOptions.length === 0" class="debug-info">
+      <p>Something went wrong</p>
+    </div>
+  
+    <!-- Hero banner for the game -->
+    <div *ngIf="!isLoading && coinOptions.length > 0" class="hero-banner">
+      <img 
+        [src]="bannerImageUrl" 
+        [alt]="gameName + ' banner'"
+        onerror="this.src='https://d1th0hc7ymkxpv.cloudfront.net/games/Default_Banner.webp'"
+        class="hero-image">
+      <div class="hero-overlay">
+        <h1 class="game-title">{{ gameName }}</h1>
+        <p *ngIf="gameInfo?.description?.developer" class="game-developer">
+          {{ gameInfo?.description?.developer }} | {{ gameInfo?.description?.genre }}
+        </p>
+      </div>
+    </div>
+  
+    <!-- Coin options grid -->
+    <div *ngIf="!isLoading && coinOptions.length > 0" class="coins-grid">
+      <div *ngFor="let coin of coinOptions" class="coin-card">
+        <div class="coin-image-container">
+          <img [src]="coin.image_url" [alt]="coin.name" class="coin-image">
+        </div>
+        <div class="coin-info">
+          <h3 class="coin-name">{{ coin.name }}</h3>
+          <p class="coin-price">Price: ${{ coin.price }}</p>
+        </div>
+        <ion-button expand="block" class="add-to-cart-button" (click)="addToCart(coin)">
+          Add to Cart
+        </ion-button>
+      </div>
+    </div>
+  
+    <!-- No options message -->
+    <div *ngIf="!isLoading && coinOptions.length === 0" class="message">
+      No coin options available for {{ gameName }}
+    </div>
+  </ion-content>
+  
+  <app-tabs-pages></app-tabs-pages>
+  

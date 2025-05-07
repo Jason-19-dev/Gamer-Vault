@@ -7,6 +7,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: "product-detail/:id",
+    loadComponent: () => import("./product_details/product-detail.page").then((m) => m.ProductDetailPage),
+  },
+  {
     path: '',
     loadComponent: ()=> import('./auth/login/login.page').then(m=> m.LoginPage)
   },
@@ -17,10 +21,6 @@ export const routes: Routes = [
   {
     path: 'menu',
     loadComponent: () => import('./menu_/menu/menu.page').then( m => m.MenuPage)
-  },
-  {
-    path: 'new-product',
-    loadComponent: () => import('./menu_/new-product/new-product.page').then( m => m.NewProductPage)
   },
   {
     path: 'login',
@@ -45,6 +45,35 @@ export const routes: Routes = [
   {
     path: 'cart',
     loadComponent: () => import('./cart/cart/cart.page').then( m => m.CartPage)
+  },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./checkout/checkout.page').then( m => m.CheckoutPage)
+  },
+  {
+    path: "game-coins/:game",
+    loadComponent: () => import("./game-coins/game-coins.page").then((m) => m.GameCoinsPage),
+  },
+  {
+    path: 'order-history',
+    loadComponent: () => import('./order-history/order-history.page').then( m => m.OrderHistoryPage)
+  },
+  {
+    path: 'change-password',
+    loadComponent: () => import('./change-password/change-password/change-password.page').then( m => m.ChangePasswordPage)
+  },
+  {
+    path: 'order-details/:id',
+    loadComponent: () => import('./order-details/order-details.page').then( m => m.OrderDetailsPage)
+  },
+  {
+    path: 'deactivate-account',
+    loadComponent: () => import('./deactivate-account/deactivate-account.page').then( m => m.DeactivateAccountPage)
+  },
+  {
+    path: 'myprofile',
+    loadComponent: () => import('./userpages/myprofile/myprofile.page').then( m => m.MyprofilePage)
   }
 
-];
+
+]

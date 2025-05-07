@@ -1,128 +1,380 @@
-.wallet {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 1.5rem;
-    // background-color: rgb(56, 1, 70);
-    background: url('/assets/gamer.jpg') no-repeat center center/cover;
-    // width: auto;
-    height: 130px;
-    border-radius: 20px;
-    margin: 0px 50px 0 50px;
+
+ion-header {
+  &.has-shadow {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+ion-searchbar {
+  --background: #ffffff;
+  --color: #000000;
+  --border-radius: 8px;
+  --box-shadow: none;
+  margin-bottom: 16px;
+}
+
+.banner {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  /* oscurece un poco para que el texto se lea */
+  z-index: 0;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+}
+.banner-text {
+  color: white;
+  font-size: 20px;
+  font-weight: 1000;
+  /* 👈 más grueso */
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: Verdana;
+}
+
+.section-header h2 {
+  color: white;
+  font-size: 16px;
+  margin: 0;
+}
+
+.section-header ion-icon {
+  color: white;
+  font-size: 20px;
+}
+
+.game-icons {
+  display: flex;
+  gap: 20px; /* Increased gap for larger icons */
+  overflow-x: auto;
+  padding-bottom: 12px; /* Increased padding for larger icons */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.game-icons::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.game-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Increased gap between circle and text */
+  min-width: 70px; /* Increased min-width for larger icons */
+}
+
+.game-circle {
+  width: 70px; /* Increased from 50px to 70px */
+  height: 70px; /* Increased from 50px to 70px */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 24px; /* Increased font size for letters */
+  color: white;
+  overflow: hidden; /* Keep the image within the circle */
+  background-color: #1e3f20; /* Fallback background color */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Added subtle shadow for depth */
+}
+
+/* Style for the circular image */
+.circle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fortnite {
+  background-color: #1da1f2;
+}
+
+.roblox {
+  background-color: #000000;
+}
+
+.lol {
+  background-color: #1e3f20;
+  border: 2px solid #c89b3c;
+}
+
+.fifa {
+  background-color: #e90052;
+}
+
+.game-name {
+  color: white;
+  font-family: Verdana;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70px; /* Increased to match min-width of game-icon-item */
 }
 
 
-.wallet .content {
-    display: flex;
-    gap: 5px;
+ion-header {
+  &.has-shadow {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
 }
 
-p {
-    font-size: 17px;
-    line-height: 22px;
-    // color: #7e7e7e;
-    color: #ffffff;
-    margin-top: 1.5rem;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.144);
-    border-radius: 25px;
+ion-searchbar {
+  --background: #ffffff;
+  --color: #000000;
+  --border-radius: 8px;
+  --box-shadow: none;
+  margin-bottom: 16px;
 }
 
-
-.link a {
-    color: white;
-    background-color: red;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    padding: 1rem;
+.banner {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 1.5rem; // 
-    margin-top: 2.5rem;
-    margin-bottom: 1.25rem;
-    
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
 }
 
-
-// nav
-.nav {
-    padding: 1rem;
+.banner-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
 }
 
-.category a {
-    color: black;
-    padding: 0.5rem;
+.banner-text {
+  color: white;
+  font-size: 20px;
+  font-weight: 1000;
+  margin: 0;
+  padding: 0;
+  background: transparent;
 }
 
-.nav .category {
-    display: flex;
-    gap: 5px;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow: hidden;
-    overflow-x: auto;
-    text-transform: uppercase;
+.section {
+  margin-bottom: 24px;
 }
 
-// scroll bar  nav category
-.scrollbar-hidden::-webkit-scrollbar {
-    display: none;
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
-.scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+.section-header h2 {
+  color: white;
+  font-size: 16px;
+  margin: 0;
 }
 
-.category a:hover {
-    background-color: black;
-    color: white;
-    border-radius: 10px 0 10px 0;
+.section-header ion-icon {
+  color: white;
+  font-size: 20px;
 }
 
-
-// seach bar 
-ion-searchbar{
-    // --background: transparent !important;
-    // border-radius: 5px;
-    --box-shadow: none; 
+.game-icons {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-ion-content {
-    // --background: transparent !important;
-    
+.game-icons::-webkit-scrollbar {
+  display: none;
 }
 
-// cart products 
-.cart{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap:0;
-}
-.cart .content{
-    color: black;
-    // margin: 1rem;
-    border-radius: 0.75rem;
-    padding: 1.3rem;
-}
-.cart p{
-    color: black;
-}
-.content h3{
-    color: black;
-}
-.shadow-lg {
-    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+.game-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 70px;
 }
 
-.imgp{
-    border-radius: 0.5rem;
-    width: auto;
-    object-fit: contain; 
+.game-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 24px;
+  color: white;
+  overflow: hidden;
+  background-color: #1e3f20;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.circle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fortnite {
+  background-color: #1da1f2;
+}
+
+.roblox {
+  background-color: #000000;
+}
+
+.lol {
+  background-color: #1e3f20;
+  border: 2px solid #c89b3c;
+}
+
+.fifa {
+  background-color: #e90052;
+}
+
+.game-name {
+  color: white;
+  font-family: Verdana;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70px;
+}
+
+// Game cards grid
+.game-cards, .videogames-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  //padding: 16px;
+}
+
+// Game card styling
+.game-card, .videogame-card {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #0d2144;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.game-card:active, .videogame-card:active {
+  transform: scale(0.98);
+}
+
+.game-image, .videogame-image-container {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.game-image img, .videogame-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-info, .videogame-info {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.game-title, .videogame-title {
+  margin: 0;
+  font-family: Verdana;
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  line-height: 1.3;
+}
+
+.game-price, .videogame-price {
+  color: white;
+  font-family: Verdana;
+  font-size: 13px;
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+// Platforms
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.platform-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+// Message
+.message {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
 }

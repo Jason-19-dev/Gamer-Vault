@@ -25,28 +25,84 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import '@ionic/angular/css/palettes/dark.system.css';
 
+:root {
+  --ion-safe-area-top: env(safe-area-inset-top);
+  --ion-safe-area-bottom: env(safe-area-inset-bottom);
+}
+
+
+@font-face {
+  font-family: 'PressStart2P';
+  src: url("assets/fonts/PressStart2P.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.app-card {
+  --background: rgba(41, 82, 128, 0.45) !important;
+  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+}
+
+
 ion-button{
-    
+
     --background: #DEAD1C !important;
     --color: white !important;
     --box-shadow: none !important;
     // --color:white;
 }
 
-.btnGoogle {
-    --background: transparent !important;
-    background-color: white;
-    border-radius: 10px;
-    color: black;
-    padding: 10px 30px 10px 30px;
+
+.font2P {
+  font-family: PressStart2P !important;
+  
 }
 
+ion-modal {
+  // --height: 65%;
+  // --border-radius: 16px;
+  // --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+// ion-modal::part(backdrop) {
+//   background: rgba(209, 213, 219);
+//   opacity: 1;
+// }
 
-.btnFacebook {
-    
-    --background: transparent !important;
-    background-color: #4368C7;
-    border-radius: 10px;
-    color: white;
-    padding: 10px 30px 10px 30px;
+// ion-modal ion-toolbar {
+//   --background: rgb(14 116 144);
+//   --color: white;
+// }
+
+// .card-full-modal {
+//   --height: 100%;
+//   height: 100% !important;
+
+//   ion-modal::part(content) {
+//     height: 100% !important;
+//   }
+// }
+
+ion-content {
+  // --background: linear-gradient(180deg, #041637 20.5%, #295280 100%);
+  --background: linear-gradient(180deg, #000428, #004e92); 
+
+  --color: white;
+}
+
+ion-header ion-toolbar {
+  // --background: #0a1933;
+  --background: #000428;
+  --color: white;
+  // --border-style: none;  
+  // --border-width: 0;
+  padding-top: 0 !important;
+}
+
+ion-header ion-toolbar:first-of-type {
+  padding-top: env(safe-area-inset-top); 
+}
+
+ion-item{
+  --background: transparent !important;
 }

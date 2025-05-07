@@ -1,93 +1,119 @@
-<ion-content class="ion-padding">
 
+<ion-content [fullscreen]="true" scroll="true">
+  <div class="signin-container">
 
-  <h1 style="padding: 10px;text-align: center; color: white;">Sign in</h1>
-
-
-  <!-- <div style="text-align: center;">
-      <p style="color: white;">Login with</p>
-      <ion-button class="btnGoogle">
-        <img src="/assets/google.jpg" alt="google logo" width="20" height="20">
-        Google
-      </ion-button>
-      <ion-button class="btnFacebook">
-        <ion-icon name="logo-facebook" ios="logo-facebook" md="logo-facebook"></ion-icon>
-        Facebook
-      </ion-button>
-      
-    </div> -->
-  <ion-card>
     <div class="login-logo">
-      <img src="assets/icon/favicon.png" alt="logo" width="140" height="140" priority />
-      <h1 style="color: white;">Gamer Vault</h1>
-  
+      <img src="assets/icon/favicon.png" alt="logo" width="100" height="100" priority />
+      <h1>GAMER VAULT</h1>
     </div>
-    <div style="padding: 20px;">
 
-      <form [formGroup]="form_signin" novalidate>
-        
-        <ion-text color="danger" *ngIf="form_signin.get('nameUser')?.invalid&& form_signin.get('nameUser')?.touched">
-          Maximo 6 caracteres
-        </ion-text>
-        
-        <div class="inputModel">
-          <img src="assets/User.png" alt="" class="log">
-          <input class="inputModel" placeholder="Username" formControlName="nameUser" type="text" required>
-        </div>
+    <ion-card class="app-card">
+
+      <div class="signin-form">
+        <form [formGroup]="form_signin" novalidate>
+
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/User.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Username" labelPlacement="floating" placeholder="e.g. ggEasy" formControlName="username" type="text" required></ion-input>
+            </div>
+            <ion-text class="error-message" *ngIf="form_signin.get('username')?.hasError('required') && form_signin.get('username')?.touched">
+              The username is required.
+            </ion-text>
+            <ion-text class="error-message" *ngIf="form_signin.get('username')?.hasError('maxlength')">
+              Must be no more than 25 characters.
+            </ion-text>
+          </div>
+
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/calendar.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Birthdate" labelPlacement="floating" formControlName="birth_date" type="date" required></ion-input>
+            </div>
+            <ion-text class="error-message" *ngIf="form_signin.get('birth_date')?.hasError('required') && form_signin.get('birth_date')?.touched">
+              The birthdate is required.
+            </ion-text>
+            <ion-text class="error-message" *ngIf="form_signin.get('birth_date')?.hasError('underage') && form_signin.get('birth_date')?.touched">
+              Must be over 18 years old.
+            </ion-text>
+          </div>
+
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/email.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Email" labelPlacement="floating" placeholder="e.e. ggEasy@gmail.com" formControlName="email" type="email" required></ion-input>
+            </div>
+            <ion-text class="error-message" *ngIf="form_signin.get('email')?.hasError('required') && form_signin.get('email')?.touched">
+              The email is required.
+            </ion-text>
+            <ion-text class="error-message" *ngIf="form_signin.get('email')?.hasError('email') && form_signin.get('email')?.touched">
+              Invalid email.
+            </ion-text>
+          </div>
+
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/phone.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Phone number" labelPlacement="floating" placeholder="e.g. 66482846" formControlName="phone" type="number" required></ion-input>
+            </div>
+            <ion-text class="error-message" *ngIf="form_signin.get('phone')?.hasError('required') && form_signin.get('phone')?.touched">
+              The phone number is required.
+            </ion-text>
+            <ion-text class="error-message" *ngIf="form_signin.get('phone')?.hasError('pattern')">
+              Invalid phone number.
+            </ion-text>
+          </div>
+
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/key.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Password" labelPlacement="floating" placeholder="e.g. mypassword123" formControlName="password_hash" type="password" required minlength="8"></ion-input>
+            </div>
+            <ion-text class="error-message" *ngIf="form_signin.get('password_hash')?.hasError('minlength') && form_signin.get('password_hash')?.touched">
+              Must be no less than 8 characters.
+            </ion-text>
+            <ion-text class="error-message" *ngIf="form_signin.get('password_hash')?.hasError('maxlength')">
+              Must be no more than 50 characters.
+            </ion-text>
+            <ion-text class="error-message" *ngIf="form_signin.get('password_hash')?.hasError('required') && form_signin.get('password_hash')?.touched">
+              The password is required.
+            </ion-text>
+          </div>
+
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/key.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Confirm password" labelPlacement="floating" placeholder="e.g. mypassword123" formControlName="password_confirm" type="password" required minlength="8"></ion-input>
+            </div>
+            <ion-text class="error-message" *ngIf="form_signin.get('password_confirm')?.hasError('passwordMismatch') && form_signin.get('password_confirm')?.touched">
+              The password validation doesn't match
+            </ion-text>
+          </div>
+
+          <div class="terms-container">
+            <ion-checkbox formControlName="termsAccepted" >
+            </ion-checkbox>
+
+            <ion-label class="terms-label">
+              I read and accept the
+              <span class="terms-link" (click)="openTermsModal($event)">terms and conditions</span>
+            </ion-label>
+          </div>
+
+        </form>
+      </div>
+
+    </ion-card>
 
 
-        <!-- <ion-input type="text" label="Name" labelPlacement="floating" errorText="name is required" required
-          formControlName="nameUser"></ion-input> -->
+    <ion-button [disabled]="form_signin.invalid" (click)="signin()" type="submit" expand="block" class="register-button">
+       REGISTER
+    </ion-button>
 
-          <ion-text color="danger" *ngIf="form_signin.get('email')?.invalid && form_signin.get('email')?.touched">
-            Email inválido
-          </ion-text>
-
-        <!-- <ion-input type="email" label="Email" formControlName="email" required=""></ion-input> -->
-        <div class="inputModel">
-          <img src="assets/User.png" alt="" class="log">
-          <input class="inputModel" placeholder="Email" formControlName="email" type="text" required>
-        </div>
-        <ion-text color="danger" *ngIf="form_signin.get('password')?.invalid && form_signin.get('password')?.touched">
-          Mínimo 6 y 8 Maximo caracteres
-        </ion-text>
-
-        <div class="inputModel">
-          <img src="assets/key.png" alt="" class="log">
-          <input class="inputModel" placeholder="Password" formControlName="password" type="text" required maxlength="8" minlength="6">
-        </div>
-        <!-- <ion-input type="password" label="Password" required formControlName="password">
-          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-        </ion-input> -->
-
-
-        <div class="inputModel">
-          <img src="assets/key.png" alt="" class="log">
-          <input class="inputModel" placeholder="Confirm Password" formControlName="password_confirm" type="text" required maxlength="8" minlength="6">
-        </div>
-        
-        <!-- <ion-input type="password" label="Confirm Password" required formControlName="password_confirm">
-          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-        </ion-input> -->
-        
-        <!-- TODO: VALIDAR QUE SEAN IGUALES  -->
-        <!-- <ion-text color="danger" *ngIf="form_signin.get('password_confirm')!= form_signin.get('password')">
-          Las contraseñas no coinciden
-        </ion-text> -->
-
-        <ion-checkbox labelPlacement="end" style="padding: 10px">He leído y acepto los términos y
-          condiciones</ion-checkbox>
-
-        <ion-button  [disabled]="form_signin.invalid" class="btnSignin" (click)="signin()"
-          type="submit">Register</ion-button>
-
-        <!-- <button class="btnSignin" (click)="signin_new_user()">Sign in</button> -->
-      </form>
-
+    <div class="bottom-links">
+      <p class="login-link">Already have an account? <a href="/login">Login</a></p>
     </div>
-  </ion-card>
 
-  <div style="text-align: center; margin-top: 20px;">
-    <p style="color: white">¿Ya tienes una cuenta?<a href=""> Login</a></p>
   </div>
 </ion-content>
+

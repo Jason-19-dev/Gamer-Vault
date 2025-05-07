@@ -1,0 +1,88 @@
+.success-content {
+  --background: linear-gradient(to bottom, #041637 20.5%, #295280 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-wrapper {
+  text-align: center;
+  padding: 40px 20px;
+  color: white;
+}
+
+.greeting-message {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.thank-you-message {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.reward-text {
+  font-size: 16px;
+}
+
+.code-box {
+  background-color: #2a2a40;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width: fit-content;
+}
+
+.code-box h3 {
+  color: #ffcc00;
+  margin: 0;
+}
+
+.code {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 8px 0 0 0;
+}
+
+.redeem-instruction {
+  font-size: 16px;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+.success-button {
+  --background: #ffc409;
+  --color: #0a1933;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+.wallet-message {
+  font-size: 16px;
+  color: white;
+  margin-top: 16px;
+}
+
+.wallet-link {
+  color: #ffc409;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.success-message {
+  font-size: 18px;
+  color: #ff6666; // rojo claro
+  margin: 20px 0;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ff9999;
+  border-radius: 10px;
+}
+
+.wallet-link {
+  color: #ffd700;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}

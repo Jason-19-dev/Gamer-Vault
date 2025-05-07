@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font2P">My Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="avatar-section">
+    <ion-avatar>
+      <img [src]="currentUser.avatar || 'https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif'" alt="Profile picture"  width="100" height="100"/>
+    </ion-avatar>
+    <ion-icon name="camera-outline" class="input-icon" (click)="shooseImage()"></ion-icon> 
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="12"> 
+        <ion-input class="custom-input" label="User" labelPlacement="floating" type="text" [(ngModel)]="currentUser.username"></ion-input>
+      </ion-col>
+      <ion-col size="1"><ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="12"> 
+        <ion-input name="firstName" class="custom-input" label="First Name" labelPlacement="floating" type="text" [(ngModel)]="currentUser.first_name"></ion-input>
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="12"> 
+        <ion-input name="lastName" class="custom-input" label="Last Name" labelPlacement="floating" type="text" [(ngModel)]="currentUser.last_name"></ion-input>
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="12"> 
+        <ion-input name="email" class="custom-input" label="Email" labelPlacement="floating" type="email" [(ngModel)]="currentUser.email"></ion-input>
+      </ion-col>
+      <ion-col size="1"><ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="12"> 
+        <ion-input name="phone" class="custom-input" label="Phone" labelPlacement="floating" type="number" [(ngModel)]="currentUser.phone"></ion-input>
+      </ion-col>
+      <ion-col size="1"><ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
+    </ion-row>
+  </ion-grid>
+
+    <ion-item lines="none">
+      <ion-toggle color="success">
+        <ion-label style="color: white;"> <ion-icon name="finger-print-outline"></ion-icon> Biometrics</ion-label>
+      </ion-toggle>
+    </ion-item>
+
+
+
+
+</ion-content>
+
+<app-tabs-pages></app-tabs-pages>

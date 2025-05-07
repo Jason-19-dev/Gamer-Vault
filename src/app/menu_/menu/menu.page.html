@@ -1,40 +1,93 @@
 <ion-header class="ion-safe-area" [translucent]="true">
   <ion-toolbar>
-    <ion-title>Catálogo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font2P">{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
 
-  <!-- nav -->
-  <!-- <div class="nav">
-    <div class="category scrollbar-hidden">
-      <a>Example</a>
-      <a>Example</a>
-      <a>Example</a>
-    </div>
-  </div> -->
+  <div class="search-container">
+    <ion-searchbar
+      placeholder="Search"
+      [(ngModel)]="searchQuery"
+      (ionInput)="filterProducts()"
+      show-clear-button="always"
+      class="custom-searchbar"
+    ></ion-searchbar>
+  </div>
 
-  @if (products.length>0) {
-  <div id="container">
-    <!-- product -->
-    <div *ngFor="let product of products;">
-      <div class=" cart">
-        <div class="content shadow-lg">
-          <a>
-            <img class="imgp" src={{product.image_url}} alt={{product.name}}>
-            <h3 style="font-weight: bold;">{{product.description}}</h3>
-          </a>
-          <p>Precio:$ {{product.price}}</p>
-          <p>Disponible: {{product.available ? "✅":"❌"}}</p>  
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="circular"></ion-spinner>
+    <p>Loading products...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+    <div *ngIf="products.length > 0; else noProducts">
+      <div
+        class="products-container"
+        
+      >
+        <div
+          class="product-card"
+          *ngFor="let product of products"
+          (click)="
+            title === 'In-Game Coins'
+              ? goToGameCoins(product.game_name)
+              : goToProductDetail(product)
+          "
+        >
+          <div class="product-image-container">
+            <img
+              class="product-image"
+              [src]="product.image_url"
+              [alt]="product.name"
+            />
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">{{ product.name }}</h3>
+
+            <p *ngIf="title === 'Videogames'" class="product-details">
+              <span *ngIf="product.genre">{{ product.genre }}</span>
+              <span *ngIf="product.developer">
+                | {{ product.developer }}</span
+              >
+              <span *ngIf="product.release_year">
+                ({{ product.release_year }})</span
+              >
+            </p>
+
+            <p *ngIf="title === 'In-Game Coins'" class="product-details">
+              {{ product.description }}
+            </p>
+
+            <p *ngIf="title === 'Videogames'" class="product-price">
+              ${{ product.price.toFixed(2) }}
+            </p>
+
+            <div
+              *ngIf="product.platforms && product.platforms.length > 0"
+              class="platforms"
+            >
+              <span
+                *ngFor="let platform of product.platforms"
+                class="platform-tag"
+                >{{ platform }}</span
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  }@else {
-  <div class="message">No hay prooductos disponibles</div>
-  }
+    <ng-template #noProducts>
+      <div class="message">No products available</div>
+    </ng-template>
+  </ng-container>
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>

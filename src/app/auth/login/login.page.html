@@ -1,80 +1,57 @@
-<ion-content class="page-background">
+<ion-content [fullscreen]="true" scroll="true">
+  <div class="login-container">
+    <div class="login-logo">
+      <img src="assets/icon/favicon.png" alt="logo" width="100" height="100" priority />
+      <h1>GAMER VAULT</h1>
+    </div>
+    
+    <ion-card class="app-card">
+      <div class="login-form">
+        <form [formGroup]="loginForm" novalidate>
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/User.png" alt="" class="input-icon">
+                <ion-input class="custom-input" label="Username" labelPlacement="floating" placeholder="Enter your username" formControlName="userName" type="text" required></ion-input>
+              </div>
+              <ion-text class="error-message" color="danger" *ngIf="loginForm.get('userName')?.hasError('required') && loginForm.get('userName')?.touched">
+                The username is required.
+              </ion-text>
+              <ion-text class="error-message" *ngIf="loginForm.get('userName')?.hasError('maxlength') && loginForm.get('userName')?.touched">
+                Must be no more than 25 characters.
+              </ion-text>
+          </div>
+          
+          <div class="input-container">
+            <div class="input-wrapper">
+              <img src="assets/key.png" alt="" class="input-icon">
+              <ion-input class="custom-input" label="Password" labelPlacement="floating" placeholder="Enter your password" formControlName="password" type="password" required></ion-input>
+            </div>
+            <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+              The password is required.
+            </ion-text>
+            <ion-text class="error-message" color="danger" *ngIf="loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
+              Must be no more than 50 characters.
+            </ion-text>
+          </div>
 
-  <div class="login-logo">
-    <img src="assets/icon/favicon.png" alt="logo" width="140" height="140" priority />
-    <h1 style="color: white;">Gamer Vault</h1>
+          <!--<div class="forgot-password">
+            <a href="signin">¿Olvidaste tu contraseña?</a>
+          </div>-->
+          
+          
+        </form>
+      </div>
+    </ion-card>
 
-  </div>
-  <div style="text-align: center;">
-    <p style="color: white;">Login with</p>
-    <ion-button class="btnGoogle">
-      <img src="/assets/google.jpg" alt="google logo" width="20" height="20">
-      Google
+    <ion-button [disabled]="loginForm.invalid" (click)="onLogin()" type="submit" expand="block" class="login-button">
+            LOGIN
     </ion-button>
-    <ion-button class="btnFacebook" >
-      <ion-icon name="logo-facebook" ios="logo-facebook" md="logo-facebook"></ion-icon>
-       Facebook
-    </ion-button>
 
-  </div>
-  <ion-card>
-    <div class="login-form">
-
-      <form [formGroup]="loginForm" novalidate>
-
-        <!-- <ion-input label="User" labelPlacement="floating" [(ngModel)]="login.nameUser" name="nameUser" type="text"
-          #nameUser="ngModel" spellcheck="false" autocapitalize="off" errorText="name is required" required>
-        </ion-input> -->
-
-        <!-- test  -->
-        <ion-text color="danger" *ngIf="loginForm.get('userName')?.invalid&& loginForm.get('userName')?.touched">
-          Requerido
-        </ion-text>
-        
-      
-        <div class="inputModel">
-          <img src="assets/User.png" alt="" class="log">
-          <input class="inputModel" placeholder="Username" formControlName="userName" type="text" required >
-        </div>
-        
-        <ion-text color="danger" *ngIf="loginForm.get('password')?.invalid&& loginForm.get('password')?.touched">
-          Requerido 
-        </ion-text>
-
-        <div class="inputModel">
-          <img src="assets/key.png" alt="" class="log">
-          <input class="inputModel" placeholder="Password" formControlName="password" type="password" required>
-        </div>
-
-
-
-        <!--  -->
-        <!-- <ion-input label="Password" labelPlacement="floating" [(ngModel)]="login.password" name="password"
-          type="password" #password="ngModel" errorText="Password is required" required>
-          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-        </ion-input> -->
-
-
-        <div style="text-align: right; margin: 15px;">
-          <a href="signin" style="color: white;">Forgot Password?</a>
-        </div>
-        <ion-row>
-          <ion-col>
-            <ion-button [disabled]="loginForm.invalid" (click)="onLogin()" type="submit" expand="block"
-              class="btnLogin">Login</ion-button>
-          </ion-col>
-        </ion-row>
-
-      </form>
-
+    <div class="bottom-links">
+      <p class="signup-link" (click)="onSignup()">Don't have an account yet? <a>Register</a></p>
+      <!--<a href="home" class="guest-link">Entrar como invitado</a>-->
     </div>
 
-  </ion-card>
-
-  <p style="text-align: center; margin-top: 50px; color: white;" (click)="onSignup()" color="light" expand="block">¿No tienes una cuenta? <a>Regístrate</a></p>
-
-  <div style="text-align: center; margin-top: 40px;">
-    <a href="home" style="color: white; text-decoration: none;">Login as a Guest</a>
   </div>
-  
 </ion-content>
+

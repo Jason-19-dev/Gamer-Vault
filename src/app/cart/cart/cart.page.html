@@ -1,52 +1,89 @@
 <ion-header>
-<ion-toolbar>
-  <ion-title>Carrito</ion-title>
-  <a (click)="clearCart()">Limpiar Todo</a>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font2P">Cart</ion-title>
+    <ion-button fill="clear" slot="end" class="clear-button" (click)="clearCart()">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of cartItems">
-      <ion-label>{{ item.name }}</ion-label>
-      <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src={{item.image_url}} />
-      </ion-thumbnail>
-      <ion-label>${{ item.price }} x {{ item.quantity }}</ion-label>
-      <ion-button (click)="removeFromCart(item)" color="danger">X</ion-button>
-    </ion-item>
-  </ion-list>
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
+  <!-- Toast message container -->
+  <div *ngIf="toastMessage" class="toast-message">
+    {{ toastMessage }}
+  </div>
 
-  <ion-grid style="margin-top: 80px;">
-    <ion-row>
-      <ion-col>Productos</ion-col>
-      <ion-col>{{cartItems.length}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>Cantidad</ion-col>
-      <ion-col>${{total}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>Descuento</ion-col>
-      <ion-col>-${{25}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>ITBMS 7%</ion-col>
-      <ion-col>${{total*0.07}}</ion-col>
-    </ion-row>
+  <div class="cart-container">
+    <div class="cart-items">
+      <ion-item-sliding *ngFor="let item of cartItems" class="cart-item" (ionSwipe)="removeFromCart(item)"> 
+        <ion-item>
+            <ion-thumbnail slot="start" class="item-thumbnail">
+            <img alt="Product image" [src]="item.image_url || '/placeholder.svg'" />
+          </ion-thumbnail>
+          <div class="item-details">
+            <h3 class="item-name">{{ item.name }}</h3>
+            <div class="item-price-quantity">
+              <span class="item-price">${{ item.price.toFixed(2) }}</span>
+            </div>
+          </div>
+          <ion-button fill="clear" class="remove-button" (click)="removeFromCart(item)">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item-options>
+        </ion-item-options>
+    </ion-item-sliding> 
 
-    <ion-row>
-      <ion-col>Total</ion-col>
-      <ion-col>$ {{((total*0.07)+total)}}</ion-col>
-    </ion-row>
-  </ion-grid>
+      <div class="empty-cart-message" *ngIf="cartItems.length === 0">
+        <ion-icon name="cart-outline" class="empty-cart-icon"></ion-icon>
+        <p>Your cart is empty</p>
+        <ion-button expand="block" (click)="continueShopping()">
+          Continue Shopping
+        </ion-button>
+      </div>
+    </div>
 
+    <div class="cart-summary" *ngIf="cartItems.length > 0">
+      <h2 class="summary-title">Order Summary</h2>
 
-  <ion-button expand="full" color="danger">
-    Pagar
-    <ion-icon name="cart-outline"></ion-icon>
+      <div class="summary-row">
+        <span class="summary-label">Products</span>
+        <span class="summary-value">{{cartItems.length}}</span>
+      </div>
 
-  </ion-button>
+      <div class="summary-row">
+        <span class="summary-label">Subtotal</span>
+        <span class="summary-value">${{subtotal.toFixed(2)}}</span>
+      </div>
+
+      <!-- <div class="summary-row">
+        <span class="summary-label">Rounded Total</span>
+        <span class="summary-value">${{roundedTotal.toFixed(2)}}</span>
+      </div> -->
+
+      
+      <div class="summary-row total" *ngIf="savings > 0">
+        <span class="summary-label" style="font-weight: bold; color: white;" >To My Wallet</span>
+        <span class="summary-value discount" style="font-weight: bold;">+ ${{savings.toFixed(2)}}</span>
+      </div>
+
+      <div class="summary-row" style="font-weight: bold; color: white;">
+        <span class="summary-label">Total</span>
+        <span class="summary-value">${{finalTotal.toFixed(2)}}</span>
+      </div>
+      
+      <ion-button expand="block" class="pay-button" (click)="checkout()">
+        Checkout
+      </ion-button>
+    </div>
+    
+  </div>
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>

@@ -1,133 +1,271 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton, AlertController, IonSearchbar, IonList, IonLabel, IonItem, IonNote, IonTabBar, IonTabButton, IonIcon } from '@ionic/angular/standalone';
-import { Product } from 'src/types';
-import { RouterLink } from '@angular/router';
-import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
+import { Component, type OnInit } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule } from "@angular/forms"
+import  { Router } from "@angular/router" // Changed from type-only import
+import  { HttpClient } from "@angular/common/http" // Changed from type-only import
+import { environment } from "src/environments/environment"
 
+import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher, IonButtons, IonToast } from "@ionic/angular/standalone"
+// Keep this as a type-only import since it's just for type checking
+import type { GameItem, CoinItem } from "src/types"
+import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
+import { addIcons } from "ionicons"
+import { chevronForwardCircle, chevronForwardCircleOutline } from "ionicons/icons"
+import  { ProductsService } from "src/services/products/products.service" // Changed from type-only import
+import { UserService } from "src/services/user/user.service"
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: "app-home",
+  templateUrl: "./home.page.html",
+  styleUrls: ["./home.page.scss"],
   standalone: true,
-  imports: [
-    IonContent,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonSearchbar,
-    IonItem,
-    IonNote,
-    IonHeader,
-    TabsPagesPage,
-  ]
+  imports: [IonToast, IonRefresher, IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonSearchbar,IonNote,IonHeader,TabsPagesPage,IonIcon,IonRefresherContent
+  ],
 })
 export class HomePage implements OnInit {
+  puntos = 6
+  saldo = 10.99
+  message = ""
+  isAndroid = false
+  username = this.userService.getCurrentUser()?.username
+  // Add these properties for categorized products
+  coinProducts: CoinItem[] = [] // Solo se llenará con datos de la API
+  gameProducts: GameItem[] = [] // Solo se llenará con datos de la API
 
-  constructor(private alertController: AlertController) {
-    // this.welcome()
-    
+  // Store original data for search filtering
+  private allCoinProducts: CoinItem[] = []
+  private allGameProducts: GameItem[] = []
+
+  // Current search query
+  searchQuery = ""
+
+  // Variables del banner
+  currentBannerImage = ""
+  currentBannerText = ""
+  bannerIndex = 0
+  private bannerInterval: any
+
+  constructor(
+    private alertController: AlertController,
+    private platform: Platform,
+    private router: Router,
+    private productsService: ProductsService,
+    private http: HttpClient,
+    private userService: UserService
+  ) {
+    addIcons({chevronForwardCircle,chevronForwardCircleOutline});
   }
 
   ngOnInit() {
+    this.fetchGameProducts();
+    this.fetchCoinProducts();
+    
   }
-  title = "Gamer Vault"
-  puntos = 6
-  saldo = 10.99
-  message = ''
-  // async welcome() {
-  //   const alert = await this.alertController.create({
-  //     header: 'Bienvenido!',
-  //     subHeader: "",
-  //     message: "",
-  //     buttons: ['Ok'],
-  //   });
 
-  //   await alert.present();
-  // }
- 
-  products: Product[] = [
-    {
-      id: 1,
-      name: "Laptop ASUS VivoBook",
-      description: "Laptop ultraligera con procesador Intel Core i5 y 8GB de RAM.",
-      price: 750.99,
-      stock: 10,
-      available: true,
-      image_url: "https://www.multimax.net/cdn/shop/files/Asus_VivoBook_Go_15_OLED_AMD_Ryzen_5_7520U_8GB_RAM_512GB_SSD_15.6_Windows_11_Multimax_Panama_Computadoras_Dell_Lenovo_Apple_ASUS_MSI_Huawei_PSN0109624_1_1200x.jpg?v=1732564858",
-      create_at: "2024-02-27T10:00:00Z"
-    },
-    {
-      id: 2,
-      name: "iPhone 15 Pro",
-      description: "Smartphone de alta gama con chip A17 y cámara de 48 MP.",
-      price: 999.99,
-      stock: 5,
-      available: true,
-      image_url: "https://www.apple.com/newsroom/images/2023/09/apple-unveils-iphone-15-pro-and-iphone-15-pro-max/article/Apple-iPhone-15-Pro-lineup-color-lineup-230912_big.jpg.large.jpg",
-      create_at: "2024-02-26T15:30:00Z"
-    },
-    {
-      id: 3,
-      name: "Audífonos Sony WH-1000XM5",
-      description: "Audífonos con cancelación de ruido y batería de 30 horas.",
-      price: 349.99,
-      stock: 20,
-      available: true,
-      image_url: "https://www.sony.com.pa/image/6145c1d32e6ac8e63a46c912dc33c5bb?fmt=pjpeg&wid=165&bgcolor=FFFFFF&bgc=FFFFFF",
-      create_at: "2024-02-25T12:45:00Z"
-    },
-    {
-      id: 4,
-      name: "Silla Gamer Razer",
-      description: "Silla ergonómica con ajuste lumbar y reposabrazos 4D.",
-      price: 259.99,
-      stock: 8,
-      available: true,
-      image_url: "https://back.panafoto.com/media/catalog/product/cache/22adb41f3f66ba957b3b3b7b0df44fe6/1/5/154973-001.jpg",
-      create_at: "2024-02-24T18:20:00Z"
-    },
-    {
-      id: 5,
-      name: "Samsung Galaxy Watch 6",
-      description: "Reloj inteligente con monitor de salud y pantalla AMOLED.",
-      price: 299.99,
-      stock: 15,
-      available: true,
-      image_url: "https://images.samsung.com/latin/galaxy-watch6/feature/galaxy-watch6-kv-pc.jpg",
-      create_at: "2024-02-23T09:10:00Z"
-    },
-    {
-      id: 6,
-      name: "Teclado Mecánico Logitech G Pro",
-      description: "Teclado mecánico RGB con switches GX Blue táctiles.",
-      price: 129.99,
-      stock: 12,
-      available: true,
-      image_url: "https://cdn.panacompu.com/cdn-img/pv/gallery-2-pro-x-tkl-black-lightspeed-gaming-keyboard.jpg-.jpg?width=1200&height=630&fixedwidthheight=true",
-      create_at: "2024-02-22T14:05:00Z"
-    },
-  ]
-
-
-  public results = [...this.products]; 
-
-  handleInput(event: Event) {
-    const target = event.target as HTMLIonSearchbarElement; 
-    const query = target.value?.toLowerCase() || ''; 
-  
-    this.results = this.products.filter((product) => product.name.toLowerCase().includes(query));
-    console.log(this.results)
-    // console.log(target)
-    console.log(query)
-
-    if (this.results.length === 0) {
-      this.message = 'No Results';
-    } else {
-      this.message = ''; 
+  ngOnDestroy() {
+    if (this.bannerInterval) {
+      clearInterval(this.bannerInterval)
     }
   }
+
+  private fetchCoinProducts() {
+    this.productsService.getCoins().subscribe({
+      next: (data) => {
+
+
+        // Ensure each coin has an id property
+        this.coinProducts = data.map((coin) => {
+          // If the coin doesn't have an id, use product_id or generate one
+          if (!coin.id) {
+            return {
+              ...coin,
+              id: coin.product_id || `coin_${coin.game_name}_${Date.now()}`,
+            }
+          }
+          return coin
+        })
+
+        this.allCoinProducts = [...this.coinProducts] // Guarda los datos originales para la búsqueda
+      },
+      error: (err) => {
+        console.error("Error al obtener monedas:", err.message)
+      },
+    })
+  }
+
+  private fetchGameProducts() {
+    this.productsService.getProducts().subscribe({
+      next: (data) => {
+       
+
+        // Ensure each game has an id property
+        const gamesWithIds = data.map((game) => {
+          // If the game doesn't have an id, use product_id or generate one
+          if (!game.id) {
+            return {
+              ...game,
+              id: game.product_id || `game_${game.name}_${Date.now()}`,
+            }
+          }
+          return game
+        })
+
+        // Seleccionar 10 videojuegos aleatorios
+        this.gameProducts = this.getRandomItems(gamesWithIds, 10)
+        this.allGameProducts = [...this.gameProducts] 
+
+
+        this.startBannerRotation()
+      },
+      error: (err) => {
+        console.error("Error al obtener juegos:", err.message)
+      },
+    })
+  }
+
+  // Método para obtener elementos aleatorios de un arreglo
+  private getRandomItems<T>(array: T[], count: number): T[] {
+    const shuffled = [...array].sort(() => 0.5 - Math.random()) // Mezclar el arreglo
+    return shuffled.slice(0, count) // Retornar los primeros 'count' elementos
+  }
+
+  private startBannerRotation() {
+    if (this.gameProducts.length === 0) return
+
+    this.currentBannerImage = this.gameProducts[0].image_url
+    this.currentBannerText = this.gameProducts[0].name
+
+    this.bannerInterval = setInterval(() => {
+      this.bannerIndex = (this.bannerIndex + 1) % this.gameProducts.length
+      const current = this.gameProducts[this.bannerIndex]
+      this.currentBannerImage = current.image_url
+      this.currentBannerText = current.name
+    }, 5000)
+  }
+
+  handleInput(event: Event) {
+    const target: HTMLIonSearchbarElement = event.target as HTMLIonSearchbarElement
+    const query = target.value?.toLowerCase().trim() || ""
+    this.searchQuery = query
+
+    // Apply filtering
+    this.filterProducts()
+  }
+
+  filterProducts() {
+    if (this.searchQuery) {
+      // Filtrar productos de videojuegos por nombre
+      this.gameProducts = this.allGameProducts.filter((product) =>
+        product.name.toLowerCase().includes(this.searchQuery),
+      )
+
+      // Filtrar monedas por el campo 'game_name'
+      this.coinProducts = this.allCoinProducts.filter((product) =>
+        product.game_name.toLowerCase().includes(this.searchQuery),
+      )
+
+      // Mostrar mensaje si no se encuentran resultados en ninguna categoría
+      if (this.gameProducts.length === 0 && this.coinProducts.length === 0) {
+        this.message = "No Results"
+      } else {
+        this.message = ""
+      }
+    } else {
+      // Restablecer los datos originales cuando se borre la búsqueda
+      this.gameProducts = [...this.allGameProducts]
+      this.coinProducts = [...this.allCoinProducts]
+      this.message = ""
+    }
+
+    // Actualizar la rotación del banner si los productos de videojuegos han cambiado
+    if (this.gameProducts.length > 0) {
+      this.bannerIndex = 0
+      this.currentBannerImage = this.gameProducts[0].image_url
+      this.currentBannerText = this.gameProducts[0].name
+    } else {
+      this.currentBannerImage = ""
+      this.currentBannerText = "No games found"
+    }
+  }
+
+
+
+  // Method to get the first letter of the game name for the circle
+  getGameInitial(name: string): string {
+    if (!name) return "G"
+
+    // Check for specific games
+    if (name.toLowerCase().includes("fortnite")) return "F"
+    if (name.toLowerCase().includes("roblox")) return "□"
+    if (name.toLowerCase().includes("lol") || name.toLowerCase().includes("league")) return "L"
+    if (name.toLowerCase().includes("fifa")) return "F"
+    if (name.toLowerCase().includes("valorant")) return "V"
+
+    // Default to first letter
+    return name.charAt(0).toUpperCase()
+  }
+
+
+  // Método para navegar al menú con parámetro para indicar qué sección mostrar
+  navigateToMenu(section = "videogames") {
+    this.router.navigate(["/menu"], {
+      queryParams: {
+        section: section,
+      },
+    })
+  }
+
+  // Method to navigate to product detail or game-coins page
+  navigateToProductDetail(product: any, type: "videogame" | "coin", event: Event) {
+    // Stop event propagation to prevent the section click from triggering
+    event.stopPropagation()
+
+    if (!product) {
+      console.error("Cannot navigate: Product is missing", product)
+      return
+    }
+
+    // For coins, navigate to the game-coins page with the game name
+    if (type === "coin") {
+      if (!product.game_name) {
+        console.error("Cannot navigate: Coin game_name is missing", product)
+        return
+      }
+
+      
+
+      // Navigate to game-coins page with the game name
+      this.router.navigate(["/game-coins", encodeURIComponent(product.game_name)])
+      return
+    }
+
+    // For videogames, continue with the existing logic
+    // Check for different possible ID field names
+    const productId = product.id || product.product_id || product.id_product
+
+    if (!productId) {
+      
+      console.error("Cannot navigate: Product ID is missing. Available fields:", Object.keys(product))
+      return
+    }
+
+        
+
+    // Navigate to product detail page with the product ID and type
+    this.router.navigate(["/product-detail", productId], {
+      queryParams: {
+        type: type,
+      },
+    })
+  }
+  handleRefresh(event: CustomEvent) {
+    this.fetchGameProducts()
+    this.fetchCoinProducts()
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
+  }
+
 }
+
+export default HomePage

@@ -1,22 +1,116 @@
-ion-tab-bar {
+
+.button-wrapper {
   display: flex;
-  justify-content: space-around;
-  background-color: #f4f4f4;
+  align-items: center;
+  background-color:  rgba(41, 82, 128, 0.45);
+  border-radius: 8px;
+  padding: 20px 16px;
 }
 
-// ion-segment-view {
-//   height: 150px;
-// }
-
-ion-input {
-  font-size: 1rem;
+.button-container:not(:last-child) {
   margin-bottom: 20px;
-color: white;
-  
 }
 
-ion-content {
-  
-  --background: transparent !important;
-  background: linear-gradient(to bottom, #141e30, #243b55) !important;
+.input-icon {
+  color: #DEAD1C;
+  width: 25px;
+  height: 25px;
+  margin-right: 12px;
 }
+
+.ion-text-color {
+  font-family: Verdana;
+  color: #ffffff;
+}
+
+
+ion-item-color {
+  --background:  rgba(41, 82, 128, 0.45);;
+}
+
+ion-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+ion-avatar {
+  width: 100px;
+  height:100px;
+  margin-bottom: 12px;
+  // border: 2px solid white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logout-button {
+  --background: white;
+  --color: #0a1933;
+}
+
+.delete-account-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.delete-button { 
+  --color: #ff3b30; 
+  --background: transparent !important; 
+  --background-hover: transparent !important;
+  --background-activated: transparent !important;
+  --background-focused: transparent !important;
+  font-size: 0.9rem; 
+  text-transform: none; 
+}
+
+.delete-button ion-icon { 
+  margin-right: 8px; 
+  font-size: 1.3rem; 
+  color: #0a1933;
+}
+
+.deactivate-button {
+  font-family: Verdana;
+  color: #0a1933;
+  font-size: 1.0rem;
+}
+
+.no-user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 20px;
+  text-align: center;
+  
+  p {
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  ion-button {
+    --background: #e90052;
+    --color: white;
+  }
+}
+

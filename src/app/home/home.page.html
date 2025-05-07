@@ -1,53 +1,78 @@
-<ion-header>
+<ion-header class="has-shadow">
   <ion-toolbar>
-    <ion-title>Home</ion-title>
+    <ion-title class="font2P">Home </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
-
-  <div id="container">
-    <!-- wallet -->
-    <div style="margin-top: 10px;">
-      <div class="wallet">
-        <div class="content">
-          <p>Billetera </p>
-          <p>{{puntos}} Puntos</p>
-        </div>
-        <div>
-          <p>${{saldo}}</p>
-        </div>
-      </div>
-    </div>
-    <!--  -->
-    <!-- nav options -->
-    <div class="nav">
-      <div class="category scrollbar-hidden">
-        <a>Pagos</a>
-        <a>Transferir</a>
-        <a>Remesas</a>
-        <a>Kioscos</a>
-        <a>Verifica</a>
-        <a>Ejemplo</a>
-      </div>
-    </div>
-
-    <div class="cart">
-      <ion-item *ngFor="let product of results">
-        <div class="content shadow-lg">
-          <a>
-            <img class="imgp" src={{product.image_url}} alt={{product.name}}>
-            <h3 style="font-weight: bold;">{{product.name}}</h3>
-          </a>
-          <p>Precio:$ {{product.price}}</p>
-          <!-- <p style="color: black;">Disponible: {{product.available ? "✅":"❌"}}</p> -->
-        </div>
-      </ion-item>
-    </div>
-
-    <ion-note style="font-size: x-large;" color="danger" *ngIf="message">{{ message }}</ion-note>
-
+<ion-content class="ion-padding">
+  <div *ngIf="username" style="color: white !important; font-size: 17px !important; font-weight: bold !important;">
+    <p>¡Hello, {{ username.toUpperCase() }}!</p>
   </div>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar placeholder="Search" [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
+
+  <div class="banner" [ngStyle]="{
+      'background-image': currentBannerImage
+        ? 'url(' + currentBannerImage + ')'
+        : 'none'
+    }" (click)="navigateToProductDetail(gameProducts[bannerIndex], 'videogame', $event)">
+    <div class="banner-content">
+      <p class="banner-text">{{ currentBannerText }}</p>
+    </div>
+  </div>
+
+  <!-- In-Game Coins Section -->
+  <div class="section" style="cursor: pointer;" (click)="navigateToMenu('coins')">
+    <div class="section-header">
+      <h2>In-Game Coins</h2>
+      <ion-icon name="chevron-forward-circle"></ion-icon>
+    </div>
+
+    <!-- Display coin products as circular images -->
+    <div class="game-icons">
+      <div class="game-icon-item" *ngFor="let product of coinProducts" (click)="navigateToProductDetail(product, 'coin', $event)">
+        <div class="game-circle">
+          <img
+            [src]="product.image_url || 'assets/images/default-image.png'"
+            class="circle-image">
+        </div>
+        <!-- Mostrar el nombre de las monedas -->
+        <p class="game-name">{{ product.game_name }}</p>
+      </div>
+
+      <!-- Show default icons if no coin products are found -->
+      <ng-container *ngIf="coinProducts.length === 0">
+        
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Videogames Section -->
+  <div class="section" (click)="navigateToMenu('videogames')">
+    <div class="section-header">
+      <h2>Videogames</h2>
+      <ion-icon name="chevron-forward-circle"></ion-icon>
+    </div>
+
+    <div class="game-cards">
+      <div class="game-card" *ngFor="let product of gameProducts" (click)="navigateToProductDetail(product, 'videogame', $event)">
+        <div class="game-image">
+          <img
+            [src]="product.image_url || 'assets/images/default-image.png'"
+            [alt]="product.name || 'Product Image'"
+            class="product-image">
+        </div>
+        <div class="game-info">
+          <span class="game-title">{{product.name}}</span>
+          <span class="game-price">${{product.price}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-note style="font-size: x-large;" color="danger" *ngIf="message">{{ message }}</ion-note>
 </ion-content>
+
 <app-tabs-pages></app-tabs-pages>

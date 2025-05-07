@@ -1,44 +1,41 @@
 
-// 
-export type Product = {
-    id: number
+//
+export type GameItem = {
+    id: string
     name: string
-    description: string
     price: number
-    stock: number
-    available: boolean
     image_url: string
-    create_at: string
-}
+    product_id?: string
+  }
 
-export type Customer = {
-    id: number
-    nameUser: string
-    email: string
-    phone: string
-    birthday_date: string
-    address:string
-    contry:string
-    password: string
-    is_active: boolean
-    role: string
-    create_at: string
-
+export type CoinItem = {
+    id: string
+    game_name: string // Nombre del juego o moneda
+    image_url: string
+    product_id?: string
 }
 
 
-export type order = {
-    nombre: string
-    fecha: string
-    tipo_entrega: string
+export type Order = {
+    order_id: number
+    status: string
     total: number
-    estado: string
-    item: items[] // dymano
+    savings: number
+    created_at: string
+    payment_method: string
+    description: Order_Details[]
 }
 
-export type items = {
-    item_id: number
-    name:string
-    cantidad: number
-    precio_unitario: number
+export type Order_Details = {
+    order_id: number
+    savings: number
+    name: string
+    price: number
+    image_url: string
+    quantity: number
+}
+
+export type Wallet = {
+    balance: number
+    user_id: string
 }

@@ -1,167 +1,109 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { IonCard, IonContent, IonButton, IonRow, IonCol, IonInput, IonIcon, AlertController, IonInputPasswordToggle, IonItem, IonList, IonText } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
-import { Customer } from 'src/types';
-import { addIcons } from 'ionicons';
-import * as icons from 'ionicons/icons';
+import { Component, type OnInit } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule, ReactiveFormsModule, FormBuilder, type FormGroup, Validators } from "@angular/forms"
+import { CartService } from "src/services/cart/cart.service"
+import { IonCard, IonContent, IonButton, IonInput, AlertController, IonText} from "@ionic/angular/standalone"
+import { Router } from "@angular/router"
+import { AuthService } from "src/services/auth/auth.service"
+import { UserService } from "src/services/user/user.service"
+import { addIcons } from "ionicons"
+import { personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle } from "ionicons/icons"
+import { StorageService } from "src/services/storage/storage.service"
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  // standalone: true,
-  imports: [IonText, 
-    IonContent,
-    CommonModule,
-    FormsModule,
-    IonCard,
-    IonButton,
-    IonRow,
-    IonCol,
-    IonInput,
-    IonInputPasswordToggle,
-    IonIcon,
-    ReactiveFormsModule
-
-
-  ]
+  selector: "app-login",
+  templateUrl: "./login.page.html",
+  styleUrls: ["./login.page.scss"],
+  standalone: true,
+  imports: [ IonContent, CommonModule, FormsModule, ReactiveFormsModule, IonCard, IonButton, IonInput, IonText],
 })
 export class LoginPage implements OnInit {
-
   loginForm: FormGroup
+  showPassword = false
 
-  user: Customer[] = [
-    {
-      id: 1,
-      nameUser: 'jason',
-      email: 'jason@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 2,
-      nameUser: 'adriana',
-      email: 'adriana@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 3,
-      nameUser: 'jack',
-      email: 'jack@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 4,
-      nameUser: 'jeremy',
-      email: 'jeremy@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    },
-    {
-      id: 5,
-      nameUser: 'carlos',
-      email: 'carlos@example.com',
-      phone: '12345679',
-      birthday_date: '19-02-2002',
-      address: '',
-      contry: 'Panama',
-      password: 'admin',
-      is_active: true,
-      role: 'admin',
-      create_at: ''
-    }
-  ]
-  constructor(private router: Router, private alertController: AlertController,private fb:FormBuilder) {
-    addIcons(icons)
+  constructor(
+    private router: Router,
+    private alertController: AlertController,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService,
+    private storageService: StorageService,
+    private cartService: CartService,
+  ) {
+    addIcons({ personOutline, lockClosedOutline, eyeOutline, eyeOffOutline, logoGoogle });
+
     this.loginForm = this.fb.group({
-      userName: ["",[Validators.required,Validators.maxLength(8)]],
-      password: ["",[Validators.required,Validators.maxLength(8)]],
+      userName: ["", [Validators.required, Validators.maxLength(25)]],
+      password: ["", [Validators.required, Validators.maxLength(50)]],
     })
   }
-
+                           
   ngOnInit() {
-    
+    this.authService.checkToken();
+
+    this.storageService.getJwt().then(token => {
+
+      if (token && !this.authService.isTokenExpired(token)) {
+        this.userService.loadCurrentUser()
+        this.router.navigate(['/home']);
+      }
+    });
   }
 
-  // 
-  onLogin() {
+  togglePassword() {
+    this.showPassword = !this.showPassword
+  }
+
+  async onLogin() {
+
+    if (this.loginForm.invalid) {
+      return
+    }
 
     const { userName: name, password: pass } = this.loginForm.value
-    
-    const user = this.user.find(user => user.nameUser === name && user.password === pass)
-    console.log(this.loginForm.value)
+  
+    this.authService.login(name, pass).subscribe({
+      next: async (response) => {
+        if (response.token && !this.authService.isTokenExpired(response.token)) {
+          const token = response.token;
+          await this.storageService.setJwt(token);
 
-    if (user) {
-      this.alert("Welcome!" + " " + name.toUpperCase(), "", "")
-      this.router.navigateByUrl('home');
-    }
-    else {
-      this.alert('Usuario o contraseña incorrectos', "inténtalo de nuevo", '')
-    }
+          this.userService.loadCurrentUser()
+          try {
+            await this.cartService.refreshCart()
+            
+          } catch (err) {
+            console.error("Failed to load cart after login:", err)
+          }
+  
+          this.router.navigateByUrl("home")
+          this.loginForm.reset()
+        } else {
+          this.alert("Incorrect username or password", "Try again", "")
+        }
+      },
+      error: (err) => {
+        console.error(err)
+        this.alert("Server error", "Please try again later", "")
+      },
+    })
   }
+  
 
   onSignup() {
-
-    this.router.navigateByUrl('signin');
+    this.router.navigateByUrl("signin")
   }
 
-  // alert 
   async alert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
       message: message,
-      buttons: ['OK'],
-    });
+      buttons: ["OK"],
+    })
 
-    await alert.present();
-
-    // LocalNotifications.schedule({
-    //   notifications: [
-    //     {
-    //       id: 1,
-    //       title: this.title,
-    //       body: `Has ahorrado $0.50, sigue así.`,
-    //       schedule: { at: new Date(Date.now() + 1000) }, // para ue mande en un seunfo
-    //       sound:"default",
-
-    //     }
-    //   ]
-    // })
-  }
-
-  //  login google
-  signinGoogle() {
-
-    
-
+    await alert.present()
   }
 }
+
+export default LoginPage

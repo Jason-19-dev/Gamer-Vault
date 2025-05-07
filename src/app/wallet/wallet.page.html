@@ -1,53 +1,80 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Wallet</ion-title>
+    <ion-title class="font2P">Wallet</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-  <div style="margin-top: 10px;">
-    <div class="wallet">
-      <div class="content">
-        <p>Billetera </p>
-        <p>{{puntos}} Puntos</p>
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
+  <div class="wallet-card">
+    <div class="wallet-content">
+      <div class="wallet-header">
+        <div class="wallet-title">
+          <img src="assets/icon/favicon.png" alt="Gamer Vault Logo" class="wallet-chip-img" />
+          <span class="wallet-label font2P" >GAMER VAULT</span>
+        </div>
       </div>
-      <div>
-        <p>${{saldo}}</p>
+  
+      <div class="wallet-footer">
+        <div class="wallet-user">{{ currentUser?.username?.toUpperCase() || 'Usuario' }}</div>
+        <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
+        </div>
       </div>
     </div>
-    <ion-button (click)="initializeApp()">Recargar</ion-button>
-
-    <ion-button (click)="toast_alert('top','Enviado')">Enviar</ion-button>
   </div>
-  <div>
-    <ion-grid>
-        <ion-item *ngFor="let trax of transactions">
 
-          <!-- <div class="content shadow-lg"> -->
-            <ion-row>
-              <ion-col>
-                <p style="color: black;">{{trax.date}}</p>     
-              </ion-col>
-      
-              <ion-col> 
-                <p style="color: black;">{{trax.type.toUpperCase()}}</p>
-              </ion-col>
-            
-              <ion-col>
-                <p style="color: black;">$ {{trax.amount}}</p>
-              </ion-col>
-              <ion-col>
-                <p style="color: black;">{{trax.origin}}</p>
-              </ion-col>
+  <h2 class="section-title">Vault Rewards</h2>
 
-              <!-- <p style="color: black;">{{trax.time}}</p> -->
-            </ion-row>
-            
-          <!-- </div> -->
-        </ion-item>
-    </ion-grid>
-    <!--  -->
+  <div class="reward-section">
+     
+     <ion-text class="level-text"><ion-text>Current Level:  </ion-text> <ion-text>  {{ userLevelName.toLocaleUpperCase() }}</ion-text></ion-text>
+     <ion-text class="plain-text" *ngIf="userLevel != 3">Complete {{userLevelUp}} more purchases to level up and earn more rewards!</ion-text>
+    <ion-text class="plain-text" *ngIf="userLevel == 3">You've completed all the challenges. Well played!</ion-text>
+
+
+    <div class="progress-container">
+      <ion-progress-bar [value]="userProgress" class="custom-progress" [ngClass]="getGradientClass()"></ion-progress-bar>
+    
+      <div class="milestone progress-silver">
+        <img src="assets/silver-coin.svg" [ngClass]="silverColor()" />
+        <div class="tooltip tooltip-silver"><b>SILVER</b><br>Challenge: Complete 3 purchases<br>Reward: 4% annual interest</div>
+      </div>
+    
+      <div class="milestone progress-gold">
+        <img src="assets/gold-coin.svg" [ngClass]="goldColor()" />
+        <div class="tooltip tooltip-gold"><b>GOLD</b><br>Challenge: Complete 6 purchases<br>Reward: 6% annual interest</div>
+      </div>
+    
+      <div class="milestone progress-diamond">
+        <img src="assets/diamond.svg" [ngClass]="diamondColor()" />
+        <div class="tooltip tooltip-diamond"><b>DIAMOND</b><br>Challenge: Complete 10 purchases<br>Reward: 8% annual interest</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Order History</h2>
+  <div class="order-history-container">
+  <ion-item lines="none" class="order-item" *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">
+    <div class="order-date">{{ order.created_at | date:'yyyy-MM-dd' }}</div>
+    <div class="order-details">
+      <div class="order-total">Total: ${{ order.total.toFixed(2) }}</div>
+      <div class="order-saved">Saved: ${{ order.savings.toFixed(2) }}</div>
+    </div>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+  <ion-infinite-scroll >
+    <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+    
+    <div *ngIf="orders.length == 0">
+      <ion-item>
+        <div>
+          <p>No orders found.</p> 
+        </div>
+      </ion-item>
+    </div>
   </div>
 </ion-content>
 

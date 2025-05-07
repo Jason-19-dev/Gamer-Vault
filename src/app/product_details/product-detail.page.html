@@ -1,0 +1,116 @@
+<ion-header class="ion-safe-area" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font2P">{{ product?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Toast message container -->
+  <div *ngIf="toastMessage" class="toast-message">
+    {{ toastMessage }}
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="circular"></ion-spinner>
+    <p>Loading details...</p>
+  </div>
+
+  <!-- Product details -->
+  <ng-container *ngIf="!isLoading && product">
+    <!-- Hero image/banner -->
+    <div class="hero-banner">
+      <img [src]="product.image_url" [alt]="product.name" class="hero-image">
+      <div class="hero-overlay">
+        <h1 class="product-name">{{ product.name }}</h1>
+      </div>
+    </div>
+
+    <!-- Tags section - horizontal scrollable -->
+    <div class="tags-section">
+      <h2 class="section-title">Tags</h2>
+      <div class="tags-scroll-container">
+        <div class="tags-container">
+          <ion-chip *ngFor="let tag of productTags" class="tag-chip">
+            <ion-label class="detail-value">{{ tag }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description section -->
+    <div class="description-section">
+      <h2 class="section-title">Description</h2>
+      
+      <!-- For videogames, show a generic description if none is provided -->
+      <p *ngIf="isVideoGame" class="description-text">
+        {{ product.description?.description || 'A game of ' + product.description?.genre }}
+      </p>
+      
+      <!-- For coins, show the description directly -->
+      <p *ngIf="!isVideoGame" class="description-text">
+        {{ product.description || 'Virtual currency for ' + product.game_name }}
+      </p>
+      
+      <!-- Additional details for videogames -->
+      <div *ngIf="isVideoGame && product.description" class="details-grid">
+        <div class="detail-item" *ngIf="product.description.developer">
+          <span class="detail-label">Developer:</span>
+          <span class="detail-value">{{ product.description.developer }}</span>
+        </div>
+        <div class="detail-item" *ngIf="product.description.genre">
+          <span class="detail-label">Genre:</span>
+          <span class="detail-value">{{ product.description.genre }}</span>
+        </div>
+        <div class="detail-item" *ngIf="product.description.release_year">
+          <span class="detail-label">Release Year:</span>
+          <span class="detail-value">{{ product.description.release_year }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price and cart section -->
+    <div class="price-section">
+      <div class="price-container">
+        <span class="price-symbol">$</span>
+        <span class="price-value">{{ product.price?.toFixed(2) }}</span>
+      </div>
+      
+      <!-- Show different button based on whether product is in cart -->
+      <ng-container *ngIf="!isInCart; else alreadyInCart">
+        <ion-button expand="block" class="add-to-cart-button" (click)="addToCart()">
+          Add to Cart
+        </ion-button>
+      </ng-container>
+      
+      <ng-template #alreadyInCart>
+        <div class="cart-actions">
+          <ion-button fill="clear" class="view-cart-button" (click)="goToCart()">
+            <ion-icon name="cart-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" class="remove-from-cart-button" (click)="removeFromCart()">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Screenshots section for videogames -->
+    <div *ngIf="isVideoGame && screenshots.length > 0" class="screenshots-section">
+      <h2 class="section-title">Screenshots</h2>
+      <div class="screenshots-container">
+        <img *ngFor="let screenshot of screenshots" [src]="screenshot" alt="Game screenshot" class="screenshot-image">
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- No product found message -->
+  <div *ngIf="!isLoading && !product" class="message">
+    Product not found
+  </div>
+</ion-content>
+
+<app-tabs-pages></app-tabs-pages>

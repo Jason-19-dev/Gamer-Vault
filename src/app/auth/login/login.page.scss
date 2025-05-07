@@ -1,96 +1,228 @@
-.login-logo {
-    min-height: 200px;
-    padding: 20px 0;
-    text-align: center;
-}
-
-.login-logo img {
-    max-width: 150px;
-    margin-top: 50px;
-}
-
-.login-form {
-    padding: 16px;
-}
 
 
+  
+  .login-container {
 
-ion-content {
-    --background: transparent !important;
-    background: linear-gradient(to bottom, #041637, #295280) !important;
-}
+    justify-content: space-evenly;
 
-ion-card {
-    --background: transparent !important;
-    --box-shadow: none !important;
-
-
-}
-
-ion-input {
-    font-size: 1rem;
-    margin-bottom: 20px;
-
-}
-
-
-.page-background {
-    height: 100vh;
-}
-
-ion-button {
-    --background: transparent !important;
-    // --box-shadow: none !important;
-    margin: 5px;
-
-}
-
-// button 
-.btnGoogle {
-    background-color: white;
-    border-radius: 10px;
-    color: black;
-    padding: 10px 30px 10px 30px;
-}
-
-
-.btnFacebook {
-
-    background-color: #4368C7;
-    border-radius: 10px;
-    color: white;
-    padding: 10px 30px 10px 30px;
-}
-
-.btnLogin {
-    font-weight: bold;
-    background-color: #DEAD1C;
-    border-radius: 10px;
-    color: white;
-    padding: 10px 30px 10px 30px;
-}
-
-
-.inputModel {
+    width: 100%;
+    min-height: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px 20px; 
     display: flex;
-    gap: 20px;
-    flex-wrap: nowrap;
-    // justify-content: center;
+    flex-direction: column;
+  }
+  
+  .login-logo {
+    text-align: center;
+    
+    img {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+    
+    h1 {
+      color: white;
+      font-family: PressStart2P;
+      font-size: 20px;
+      margin: 0;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .login-form {
+    padding: 20px;
+  }
+  
+  .input-container:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  
+  .input-wrapper {
+    display: flex;
     align-items: center;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 0px 16px;
+    transition: all 0.3s ease;
+    
+    /*&:focus-within {
+      box-shadow: 0 0 0 2px #DEAD1C;
+    }*/
+  }
+  
+  .input-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 12px;
+  }
+  
+  .custom-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #333;
+    font-family: Verdana;
+    font-size: 16px;
+    padding: 0;
+    
+    &:focus {
+      outline: none;
+    }
+    
+    &::placeholder {
+      color: #999;
+    }
+
+    /*&.error-placeholder::placeholder {
+        color: red;
+      }*/
+  }
+  
+  .error-message {
+    font-family: Verdana;
+    font-size: 16px;
+    margin-top: 8px;
+    margin-left: 8px;
+    color: #DEAD1C;
+  }
+  
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+    
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      text-decoration: none;
+      
+      &:hover {
+        color: white;
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .login-button {
+    --background: #DEAD1C !important;
+    color: #0a1933;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 8px rgba(222, 173, 28, 0.3);
+    font-family: Verdana;
+    font-weight: bold;
+    margin: 0 auto;
+    height: 48px;
+    width: 200px;
+    font-size: 16px;
+    text-transform: none;
+  }
+  
+  .social-login {
+    padding: 0 20px 20px;
+    text-align: center;
+    
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+  }
+  
+  .social-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .google-button, .facebook-button {
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    height: 40px;
+    flex: 1;
+    max-width: 130px;
+  }
+  
+  .google-button {
+    --background: white !important;
     color: black;
-    border-radius: 15px;
-    padding: 13px;
-    border: none;
-    margin-bottom: 5px;
-}
-
-.inputModel:focus {
-    border: none;
-    outline: none;
-}
-
-log {
-    height: 2px;
-    height: 24px;
-}
+    
+    img {
+      margin-right: 8px;
+    }
+  }
+  
+  .facebook-button {
+    --background: #4368C7 !important;
+    --color: white;
+    
+    ion-icon {
+      margin-right: 8px;
+      font-size: 160px; 
+    }
+  }
+  
+  .bottom-links {
+    text-align: center;
+    padding-bottom: 30px;
+  }
+  
+  .signup-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-family: Verdana;
+    margin-bottom: 16px;
+    
+    a {
+      color: #DEAD1C;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+  
+  .guest-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-height: auto) {
+    .login-logo {
+      padding-top: 20px;
+      
+      img {
+        width: 100px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+    }
+    
+    .login-card {
+      margin: 10px 0;
+    }
+    
+    .input-wrapper {
+      padding: 10px 14px;
+    }
+    
+    .bottom-links {
+      padding-bottom: 20px;
+    }
+  }
+  
+  

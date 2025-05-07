@@ -1,31 +1,67 @@
-<ion-header [translucent]="true">
+<ion-header class="has-shadow" [translucent]="true">
   <ion-toolbar>
-    <ion-title>My Profile</ion-title>
-    <a href="/">LogOut</a>
+    <ion-title class="font2P">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
+  <div class="profile-container" *ngIf="currentUser">
+    
+    <div class="avatar-section">
+      <ion-avatar>
+        <img [src]="currentUser.avatar || 'https://assets-v2.lottiefiles.com/a/6ae30608-1152-11ee-a832-8bf47b1739dd/1dRLd7BLCW.gif'" alt="Profile picture"  width="100" height="100"/>
+      </ion-avatar>
+      <div>
+        <h2 class="ion-text-color">{{currentUser.username.toUpperCase()}}</h2>
+        
+      </div>
+    </div>
 
-  <!--  -->
-  <ion-avatar>
-    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-  </ion-avatar>
+    <div class="ion-padding">
 
-  <div>
-    <!-- <ion-icon ></ion-icon> -->
-    <ion-input label="Name"></ion-input>
+      <div class="button-container" (click)="myprofile()">
+        <div class="button-wrapper">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">My Profile</ion-label>
+        </div>
+      </div>
+      
+      <div class="button-container" (click)="orderHistory()">
+        <div class="button-wrapper">
+          <ion-icon name="time-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">Order history</ion-label>
+        </div>
+      </div>
+
+      <div class="button-container" (click)="changePassword()">
+        <div class="button-wrapper">
+          <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">Change password</ion-label>
+        </div>
+      </div>
+
+      <div class="button-container" (click)="logout()">
+        <div class="button-wrapper">
+          <ion-icon name="log-out-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label class="ion-text-color">Log out</ion-label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="delete-account-container">
+      <ion-button fill="clear" class="delete-button" (click)="deleteAccount()">
+        <ion-icon name="person-remove-outline" slot="start"></ion-icon>
+        <span class="deactivate-button">Delete account</span>
+      </ion-button>
+    </div>
+    
   </div>
-  <ion-input label="Email" labelPlacement="fixed"></ion-input>
-
-
-
-  <ion-input type="password" label="Password"> </ion-input>
-
-  <ion-input label="Code" labelPlacement="fixed" name="nameUser" type="text" spellcheck="false" autocapitalize="off"
-    errorText="name is required" required>
-  </ion-input>
-
+  
+  <div class="no-user-container" *ngIf="!currentUser">
+    <p>Please log in to view your profile</p>
+    <ion-button expand="block" routerLink="/login">Go to Login</ion-button>
+  </div>
 </ion-content>
-<!-- tabas menus -->
+
 <app-tabs-pages></app-tabs-pages>

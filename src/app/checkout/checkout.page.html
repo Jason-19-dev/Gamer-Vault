@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font2P">Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+<!--
+<img _ngcontent-ng-c437055410="" src="assets/icon/favicon.png" alt="logo" width="100" height="100" priority="">
+-->
+<!-- Wallet Card -->
+
+<!-- Wallet Card -->
+<div class="wallet-title-payment-wallet">
+  Saved cards
+</div>
+  <div *ngIf="savedCard" class="saved-card-checkout">
+    <div class="checkout-card">
+      <div class="checkout-card-logo">
+        <img *ngIf="savedCard.brand === 'visa'" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" />
+        <img *ngIf="savedCard.brand === 'mastercard'" src="https://img.icons8.com/color/48/mastercard-logo.png" />
+      </div>
+
+      <div class="checkout-card-number">
+        {{ savedCard.number ? (savedCard.number | slice:0:4) + ' ' +
+        (savedCard.number | slice:4:8) + ' ' +
+        (savedCard.number | slice:8:12) + ' ' +
+        (savedCard.number | slice:12) : '**** **** **** ****' }}
+      </div>
+
+      <div class="checkout-card-footer">
+        <div class="holder">{{ savedCard.holder?.toUpperCase() || 'NOMBRE Y APELLIDO' }}</div>
+        <div class="expiry">{{ savedCard.expiry || 'MM/AA' }}</div>
+      </div>
+    </div>
+  </div>
+
+<div class="wallet-title-payment">
+  Wallet as payment method
+</div>
+
+<div class="wallet-card">
+  <div class="wallet-content">
+    <div class="wallet-header">
+      <div class="wallet-title">
+        <img src="assets/icon/favicon.png" alt="Gamer Vault Logo" class="wallet-chip-img" />
+        <span class="wallet-label font2P" >GAMER VAULT</span>
+      </div>
+    </div>
+
+    <div class="wallet-footer">
+      <div class="wallet-user">{{ currentUser?.username?.toUpperCase() || 'Usuario' }}</div>
+      <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wallet-checkbox">
+  <ion-checkbox [(ngModel)]="payWithWallet" (ionChange)="toggleWalletPayment()" class="custom-wallet-checkbox"
+    justify="start"></ion-checkbox>
+  <label class="wallet-checkbox-text">
+    Do you wish to user your <span class="highlight">savings</span>
+    as part of your payment?
+  </label>
+</div>
+
+  <div class="method-cards">
+    <div class="method-card" [class.selected]="selectedMethod === 'card'" (click)="selectMethod('card')">
+      <ion-icon name="card-outline"></ion-icon>
+      <span>Add card</span>
+    </div>
+
+    <div class="method-card" [class.selected]="selectedMethod === 'yappy'" (click)="selectMethod('yappy')">
+      <img src="https://ganoitouchpanama.com/wp-content/uploads/2021/07/yappy-logo-landing.png" alt="Yappy" />
+      <span>Yappy</span>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-row">
+      <span class="summary-label">Products</span>
+      <span class="summary-value">{{ cartItems.length }}</span>
+    </div>
+
+        <div class="summary-row">
+      <span class="summary-label">Subtotal</span>
+      <span class="summary-value">${{subtotal.toFixed(2)}}</span>
+    </div>
+
+
+    <!-- <div class="summary-row">
+      <span class="summary-label">Rounded Total</span>
+      <span class="summary-value">${{ roundedTotal.toFixed(2) }}</span>
+    </div> -->
+
+    <div class="summary-row" *ngIf="savings > 0">
+      <span class="summary-label">Wallet</span>
+      <span class="summary-value discount">+ ${{ savings.toFixed(2) }}</span>
+    </div>
+
+    <div class="summary-row" *ngIf="payWithWallet">
+      <span class="summary-label">Discount from Wallet</span>
+      <span class="summary-value discount" style="color: red;">- ${{discount.toFixed(2)}}</span>
+    </div>
+
+    <!-- <div class="divider"></div> -->
+
+    <div class="summary-row total">
+      <span class="summary-label">Total</span>
+      <span class="summary-value">${{ finalTotal.toFixed(2) }}</span>
+    </div>
+
+    <ion-button expand="block" class="pay-button" (click)="payNow()"
+      [disabled]="!selectedMethod || cartItems.length === 0 || loading">
+      {{ loading ? 'Processing...' : 'Pay Now' }}
+    </ion-button>
+
+  </div>
+
+
+</ion-content>
+
+
+
+<app-tabs-pages></app-tabs-pages>
