@@ -53,6 +53,7 @@ export class CheckoutPage implements OnInit {
   originalTotal: number = 0;
   paymentSuccessful = false;
   discount = 0
+  private audio = new Audio('assets/cash.mp3');
 
   constructor(
     private cartService: CartService,
@@ -203,6 +204,7 @@ export class CheckoutPage implements OnInit {
                   next: async (res) => {
                     this.cartService.clearCart();
                     await this.notificationsService.notifyPurchaseWithSavings(this.savings);
+                    this.audio.play().catch(err => console.error('No sonido:', err));
                     await this.showSuccessModal();
                   },
                   error: async () => {
@@ -259,6 +261,9 @@ export class CheckoutPage implements OnInit {
                   next: async (res) => {
                     this.cartService.clearCart();
                     await this.showSuccessModal();
+                    this.audio.play().catch(err => console.error('No sonido:', err));
+                    this.notificationsService.notifyPurchaseWithSavings(this.savings);
+
                   },
                   error: async () => {
                     await this.showErrorModal("Failed to create order. Please try again.");
@@ -312,6 +317,7 @@ export class CheckoutPage implements OnInit {
               next: async (res) => {
                 this.cartService.clearCart();
                 await this.showSuccessModal();
+                this.audio.play().catch(err => console.error('No sonido:', err));
                 this.notificationsService.notifyPurchaseWithSavings(this.savings);
               },
               error: async () => {
