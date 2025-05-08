@@ -57,7 +57,7 @@
 <h2 class="section-title">Interest History</h2>
 <div class="order-history-container">
 <ion-item lines="none" class="order-item interest-item" *ngFor="let history of interestHistory">
-    <div class="order-date">{{ history.created_at | date:'LLLL' }}</div>
+    <div class="order-date">{{ history.created_at | date:'LLL' }}</div>
     <div class="order-details">
       <div class="order-date">{{ history.created_at | date:'dd-yyyy' }}</div>
       <div class="order-total">Generated interest : {{ history.interest_generated | currency:'USD' }}</div>

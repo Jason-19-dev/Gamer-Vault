@@ -371,10 +371,27 @@ ion-searchbar {
   color: rgba(255, 255, 255, 0.8);
 }
 
-// Message
-.message {
+.empty-message {
+  margin-top: 16px;
+  border-radius: 10px;
+  background-color: rgba(41, 82, 128, 0.45);
+  padding: 12px;
+  color: white;
+  font-family: verdana;
+  font-size: 14px;
   text-align: center;
-  padding: 40px 20px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+
+  ion-item {
+    --background: transparent;
+    justify-content: center;
+  }
+
+  ion-label {
+    text-align: center;
+    --color: white;
+  }
 }

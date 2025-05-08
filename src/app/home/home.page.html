@@ -44,35 +44,43 @@
 
       <!-- Show default icons if no coin products are found -->
       <ng-container *ngIf="coinProducts.length === 0">
-        
+
       </ng-container>
     </div>
   </div>
 
   <!-- Videogames Section -->
-  <div class="section" (click)="navigateToMenu('videogames')">
-    <div class="section-header">
-      <h2>Videogames</h2>
-      <ion-icon name="chevron-forward-circle"></ion-icon>
-    </div>
+<!-- Videogames Section -->
+<div class="section" (click)="navigateToMenu('videogames')">
+  <div class="section-header">
+    <h2>Videogames</h2>
+    <ion-icon name="chevron-forward-circle"></ion-icon>
+  </div>
 
-    <div class="game-cards">
-      <div class="game-card" *ngFor="let product of gameProducts" (click)="navigateToProductDetail(product, 'videogame', $event)">
-        <div class="game-image">
-          <img
-            [src]="product.image_url || 'assets/images/default-image.png'"
-            [alt]="product.name || 'Product Image'"
-            class="product-image">
-        </div>
-        <div class="game-info">
-          <span class="game-title">{{product.name}}</span>
-          <span class="game-price">${{product.price}}</span>
-        </div>
+  <div class="game-cards">
+    <div class="game-card" *ngFor="let product of gameProducts"
+      (click)="navigateToProductDetail(product, 'videogame', $event)">
+
+      <div class="game-image">
+        <img [src]="product.image_url || 'assets/images/default-image.png'" [alt]="product.name || 'Product Image'"
+          class="product-image">
+      </div>
+
+      <div class="game-info">
+        <span class="game-title">{{ product.name }}</span>
+        <span class="game-price">${{ product.price }}</span>
       </div>
     </div>
   </div>
+    <div class="empty-message">
+      <ion-item lines="none">
+        <ion-label>No videogames avaible.</ion-label>
+      </ion-item>
+    </div>
+</div>
 
-  <ion-note style="font-size: x-large;" color="danger" *ngIf="message">{{ message }}</ion-note>
+
+
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>
