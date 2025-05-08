@@ -318,7 +318,7 @@ ion-title {
 // }
 
 // .learn-button {
-  
+
 //   --background: rgba(255, 255, 255, 0.1);
 //   --border-radius: 8px;
 //   --padding-top: 8px;
@@ -355,11 +355,11 @@ ion-item {
   --color: white !important;
   background: rgba(41, 82, 128, 0.45);
   border-radius: 8px;
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 16px;
+  padding: 15px 10px;
 }
 
 .order-date {
@@ -394,4 +394,17 @@ ion-item {
 .order-item ion-icon[slot="end"] {
   color: #DEAD1C !important;
   font-size: 20px;
+}
+.order-item ion-icon[slot="end"] {
+  color: #DEAD1C !important;
+  font-size: 20px;
+}
+.interest-item ion-icon[slot="end"] {
+  color: #00d2ff !important;
+}
+
+.order-details{
+  display: flex;
+  flex-direction: column;
+  gap :5px;
 }

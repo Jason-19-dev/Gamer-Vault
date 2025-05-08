@@ -10,13 +10,13 @@ import { UserService, type User } from 'src/services/user/user.service';
 import { Subscription } from 'rxjs';
 import { TabsPagesPage } from '../tabs_bar/tabs-pages/tabs-pages.page';
 import { WalletService } from 'src/services/wallet/wallet.service';
-import {IonInfiniteScroll, IonInfiniteScrollContent, IonHeader, IonTitle, IonToolbar, IonContent, IonIcon, IonRefresher, IonRefresherContent, IonText, IonItem, IonProgressBar} from "@ionic/angular/standalone"
+import {IonInfiniteScroll, IonInfiniteScrollContent, IonHeader, IonTitle,IonToolbar, IonContent, IonIcon, IonRefresher, IonRefresherContent, IonText, IonItem, IonProgressBar,IonLabel,IonList} from "@ionic/angular/standalone"
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.page.html',
   styleUrls: ['./wallet.page.scss'],
   standalone: true,
-  imports: [CommonModule,FormsModule,DatePipe,TabsPagesPage,IonInfiniteScroll, IonInfiniteScrollContent, IonHeader, IonTitle, IonToolbar, IonContent, IonIcon, IonRefresher, IonRefresherContent,IonText, IonItem, IonProgressBar]
+  imports: [CommonModule,FormsModule,DatePipe,TabsPagesPage,IonInfiniteScroll, IonInfiniteScrollContent, IonHeader, IonTitle, IonToolbar, IonContent, IonIcon, IonRefresher, IonRefresherContent,IonText, IonItem, IonProgressBar,IonLabel,IonList]
 })
 export class WalletPage implements OnInit, OnDestroy {
   puntos: number = 6;
@@ -165,7 +165,10 @@ export class WalletPage implements OnInit, OnDestroy {
   loadInterestHistory() {
   this.walletService.load_user_interest_history(this.userId).subscribe({
     next: (res) => {
-      this.interestHistory = res || [];
+      console.log('Respuesta de historial de intereses:', res);
+      //this.interestHistory = Array.isArray(res.data) ? res.data : [];
+      this.interestHistory = Array.isArray(res) ? res : [];
+
     },
     error: (err) => {
       this.toast_alert('bottom', 'Error al cargar historial de intereses');

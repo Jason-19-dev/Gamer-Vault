@@ -16,7 +16,7 @@
           <span class="wallet-label font2P" >GAMER VAULT</span>
         </div>
       </div>
-  
+
       <div class="wallet-footer">
         <div class="wallet-user">{{ currentUser?.username?.toUpperCase() || 'Usuario' }}</div>
         <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
@@ -28,7 +28,7 @@
   <h2 class="section-title">Vault Rewards</h2>
 
   <div class="reward-section">
-     
+
      <ion-text class="level-text"><ion-text>Current Level:  </ion-text> <ion-text>  {{ userLevelName.toLocaleUpperCase() }}</ion-text></ion-text>
      <ion-text class="plain-text" *ngIf="userLevel != 3">Complete {{userLevelUp}} more purchases to level up and earn more rewards!</ion-text>
     <ion-text class="plain-text" *ngIf="userLevel == 3">You've completed all the challenges. Well played!</ion-text>
@@ -36,17 +36,17 @@
 
     <div class="progress-container">
       <ion-progress-bar [value]="userProgress" class="custom-progress" [ngClass]="getGradientClass()"></ion-progress-bar>
-    
+
       <div class="milestone progress-silver">
         <img src="assets/silver-coin.svg" [ngClass]="silverColor()" />
         <div class="tooltip tooltip-silver"><b>SILVER</b><br>Challenge: Complete 3 purchases<br>Reward: 4% annual interest</div>
       </div>
-    
+
       <div class="milestone progress-gold">
         <img src="assets/gold-coin.svg" [ngClass]="goldColor()" />
         <div class="tooltip tooltip-gold"><b>GOLD</b><br>Challenge: Complete 6 purchases<br>Reward: 6% annual interest</div>
       </div>
-    
+
       <div class="milestone progress-diamond">
         <img src="assets/diamond.svg" [ngClass]="diamondColor()" />
         <div class="tooltip tooltip-diamond"><b>DIAMOND</b><br>Challenge: Complete 10 purchases<br>Reward: 8% annual interest</div>
@@ -54,28 +54,35 @@
     </div>
   </div>
 
-  <h2 class="section-title">Order History</h2>
-  <div class="order-history-container">
-  <ion-item lines="none" class="order-item" *ngFor="let order of orders" (click)="viewDetailOrder(order.order_id)">
-    <div class="order-date">{{ order.created_at | date:'yyyy-MM-dd' }}</div>
-    <div class="order-details">
-      <div class="order-total">Total: ${{ order.total.toFixed(2) }}</div>
-      <div class="order-saved">Saved: ${{ order.savings.toFixed(2) }}</div>
-    </div>
-    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+<!-- Historial de intereses separado -->
+ <!--
+<h2 class="section-title">Historial de Intereses</h2>
+<ion-list>
+  <ion-item *ngFor="let history of interestHistory">
+    <ion-label>
+      <h2>Fecha: {{ history.created_at | date:'yyyy-MM-dd HH:mm' }}</h2>
+      <p>Interés generado: {{ history.interest_generated | currency:'USD' }}</p>
+      <p>Interés anual: {{ history.annual_interest | percent:'1.0-2' }}</p>
+      <p>Balance en ese momento: {{ history.balance | currency:'USD' }}</p>
+    </ion-label>
   </ion-item>
-  <ion-infinite-scroll >
-    <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-    
-    <div *ngIf="orders.length == 0">
-      <ion-item>
-        <div>
-          <p>No orders found.</p> 
-        </div>
-      </ion-item>
+</ion-list>
+-->
+<h2 class="section-title">Interest History</h2>
+<div class="order-history-container">
+<ion-item lines="none" class="order-item interest-item" *ngFor="let history of interestHistory">
+    <div class="order-date">{{ history.created_at | date:'LLLL' }}</div>
+    <div class="order-details">
+      <div class="order-date">{{ history.created_at | date:'dd-yyyy' }}</div>
+      <div class="order-total">Generated interest : {{ history.interest_generated | currency:'USD' }}</div>
+      <div class="order-saved">Annual interest : {{ history.annual_interest | percent:'1.0-2' }}</div>
+      <div class="order-saved">Balance at that time : {{ history.balance | currency:'USD' }}</div>
     </div>
-  </div>
+    <ion-icon name="trending-up-outline" slot="end"></ion-icon>
+  </ion-item>
+</div>
+
 </ion-content>
+
 
 <app-tabs-pages></app-tabs-pages>
