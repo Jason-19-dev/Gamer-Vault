@@ -134,6 +134,18 @@ export class WalletPage implements OnInit, OnDestroy {
     }
   }
 
+  getLevelColor() {
+    if (this.userLevel == 0) {
+      return 'low-color';
+    } else if (this.userLevel == 1) {
+      return 'silver-color';
+    } else if (this.userLevel == 2) {
+      return 'gold-color';
+    } else {
+      return 'diamond-color';
+    }
+  }
+
   silverColor() {
     if (this.userProgress < 0.3) {
       return "gray-filter";

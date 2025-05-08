@@ -29,7 +29,7 @@
 
   <div class="reward-section">
      
-     <ion-text class="level-text"><ion-text>Current Level:  </ion-text> <ion-text>  {{ userLevelName.toLocaleUpperCase() }}</ion-text></ion-text>
+     <ion-text class="level-text"><ion-text>Current Level:  </ion-text> <ion-text [ngClass]="getLevelColor()">  {{ userLevelName.toLocaleUpperCase() }}</ion-text></ion-text>
      <ion-text class="plain-text" *ngIf="userLevel != 3">Complete {{userLevelUp}} more purchases to level up and earn more rewards!</ion-text>
     <ion-text class="plain-text" *ngIf="userLevel == 3">You've completed all the challenges. Well played!</ion-text>
 
