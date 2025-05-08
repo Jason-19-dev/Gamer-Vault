@@ -31,156 +31,6 @@ ion-searchbar {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  /* oscurece un poco para que el texto se lea */
-  z-index: 0;
-}
-
-.banner-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  color: white;
-}
-.banner-text {
-  color: white;
-  font-size: 20px;
-  font-weight: 1000;
-  /* 👈 más grueso */
-  margin: 0;
-  padding: 0;
-  background: transparent;
-}
-
-.section {
-  margin-bottom: 24px;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  font-family: Verdana;
-}
-
-.section-header h2 {
-  color: white;
-  font-size: 16px;
-  margin: 0;
-}
-
-.section-header ion-icon {
-  color: white;
-  font-size: 20px;
-}
-
-.game-icons {
-  display: flex;
-  gap: 20px; /* Increased gap for larger icons */
-  overflow-x: auto;
-  padding-bottom: 12px; /* Increased padding for larger icons */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.game-icons::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-.game-icon-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; /* Increased gap between circle and text */
-  min-width: 70px; /* Increased min-width for larger icons */
-}
-
-.game-circle {
-  width: 70px; /* Increased from 50px to 70px */
-  height: 70px; /* Increased from 50px to 70px */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 24px; /* Increased font size for letters */
-  color: white;
-  overflow: hidden; /* Keep the image within the circle */
-  background-color: #1e3f20; /* Fallback background color */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Added subtle shadow for depth */
-}
-
-/* Style for the circular image */
-.circle-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fortnite {
-  background-color: #1da1f2;
-}
-
-.roblox {
-  background-color: #000000;
-}
-
-.lol {
-  background-color: #1e3f20;
-  border: 2px solid #c89b3c;
-}
-
-.fifa {
-  background-color: #e90052;
-}
-
-.game-name {
-  color: white;
-  font-family: Verdana;
-  font-size: 12px;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 70px; /* Increased to match min-width of game-icon-item */
-}
-
-
-ion-header {
-  &.has-shadow {
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  }
-}
-
-ion-searchbar {
-  --background: #ffffff;
-  --color: #000000;
-  --border-radius: 8px;
-  --box-shadow: none;
-  margin-bottom: 16px;
-}
-
-.banner {
-  height: 150px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
 
@@ -254,7 +104,7 @@ ion-searchbar {
   font-size: 24px;
   color: white;
   overflow: hidden;
-  background-color: #1e3f20;
+  background-color: #0017e223;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -262,23 +112,6 @@ ion-searchbar {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.fortnite {
-  background-color: #1da1f2;
-}
-
-.roblox {
-  background-color: #000000;
-}
-
-.lol {
-  background-color: #1e3f20;
-  border: 2px solid #c89b3c;
-}
-
-.fifa {
-  background-color: #e90052;
 }
 
 .game-name {
