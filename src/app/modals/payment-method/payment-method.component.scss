@@ -1,12 +1,11 @@
 ion-content {
-  --background: #0a1933;
+  --background:linear-gradient(180deg, #000428, #004e92);
   color: white;
   padding: 16px;
 }
 
 .card-modal-header {
   ion-toolbar {
-    --background: #0a1933;
     --color: white;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -17,13 +16,13 @@ ion-content {
   }
 
   ion-button {
-    color: #ffc409;
+    --background: transparent !important;
   }
 }
 
 /* Vista previa de la tarjeta */
 .card-preview {
-  background: linear-gradient(135deg, #1c1c3c, #2a3f88);
+  background: linear-gradient(135deg, #0d3a71, #3a72b8);
   border-radius: 16px;
   padding: 20px;
   color: white;

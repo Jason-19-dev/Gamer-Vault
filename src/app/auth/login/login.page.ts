@@ -77,6 +77,7 @@ export class LoginPage implements OnInit {
           }
   
           this.router.navigateByUrl("home")
+          this.loginForm.reset()
         } else {
           this.alert("Incorrect username or password", "Try again", "")
         }

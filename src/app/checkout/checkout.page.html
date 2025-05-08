@@ -53,7 +53,7 @@
     </div>
 
     <div class="wallet-footer">
-      <div class="wallet-user">{{ currentUser?.username || 'Usuario' }}</div>
+      <div class="wallet-user">{{ currentUser?.username?.toUpperCase() || 'Usuario' }}</div>
       <div class="wallet-balance">${{ walletBalance.toFixed(2) }}
       </div>
     </div>
@@ -81,7 +81,6 @@
     </div>
   </div>
 
-
   <div class="summary-card">
     <div class="summary-row">
       <span class="summary-label">Products</span>
@@ -94,17 +93,22 @@
     </div>
 
 
-    <div class="summary-row">
+    <!-- <div class="summary-row">
       <span class="summary-label">Rounded Total</span>
       <span class="summary-value">${{ roundedTotal.toFixed(2) }}</span>
-    </div>
+    </div> -->
 
     <div class="summary-row" *ngIf="savings > 0">
-      <span class="summary-label">Ahorro</span>
-      <span class="summary-value discount">${{ savings.toFixed(2) }}</span>
+      <span class="summary-label">Wallet</span>
+      <span class="summary-value discount">+ ${{ savings.toFixed(2) }}</span>
     </div>
 
-    <div class="divider"></div>
+    <div class="summary-row" *ngIf="payWithWallet">
+      <span class="summary-label">Discount from Wallet</span>
+      <span class="summary-value discount" style="color: red;">- ${{discount.toFixed(2)}}</span>
+    </div>
+
+    <!-- <div class="divider"></div> -->
 
     <div class="summary-row total">
       <span class="summary-label">Total</span>

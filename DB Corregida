@@ -1,0 +1,86 @@
+CREATE DATABASE IF NOT EXISTS marketplace;
+
+USE marketplace;
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    username VARCHAR(50) UNIQUE,
+    email VARCHAR(50) UNIQUE,
+    password_hash VARCHAR(50),
+    phone VARCHAR(20),
+    birth_date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    avatar VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS categories (
+    category_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(50) NOT NULL UNIQUE,
+    description JSON
+);
+
+CREATE TABLE IF NOT EXISTS products (
+    product_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    prod_name VARCHAR(50) NOT NULL,
+    prod_description JSON,
+    prod_price DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    image_url VARCHAR(50),
+    category_id VARCHAR(50),
+    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(category_id)
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    order_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    user_id VARCHAR(50) NOT NULL,
+    payment_id VARCHAR(50) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    savings DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+    description JSON
+);
+
+DROP TABLE IF EXISTS order_items;
+
+CREATE TABLE IF NOT EXISTS wallet (
+    wallet_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    user_id VARCHAR(50) NOT NULL,
+    balance DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS savings;
+
+CREATE TABLE IF NOT EXISTS saving_plans (
+    plan_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(50) NOT NULL,
+    min_amount DECIMAL(10,2) NOT NULL,
+    min_transactions INT NOT NULL,
+    annual_interest DECIMAL(5,2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS interest_history (
+    interest_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    user_id VARCHAR(50) NOT NULL,
+    wallet_id VARCHAR(50) NOT NULL,
+    interest_amount DECIMAL(10,2) NOT NULL,
+    calculated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_saving_plans (
+    user_id VARCHAR(50) NOT NULL,
+    plan_id VARCHAR(50) NOT NULL,
+    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, plan_id)
+);
+
+CREATE TABLE IF NOT EXISTS shopping_cart (
+    cart_id VARCHAR(50) PRIMARY KEY DEFAULT (UUID()),
+    user_id VARCHAR(50) NOT NULL,
+    products JSON NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

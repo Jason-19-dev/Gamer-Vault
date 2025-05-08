@@ -52,6 +52,8 @@ export class CheckoutPage implements OnInit {
   userName = 'Carlos';
   originalTotal: number = 0;
   paymentSuccessful = false;
+  discount = 0
+  private audio = new Audio('assets/cash.mp3');
 
   constructor(
     private cartService: CartService,
@@ -202,6 +204,7 @@ export class CheckoutPage implements OnInit {
                   next: async (res) => {
                     this.cartService.clearCart();
                     await this.notificationsService.notifyPurchaseWithSavings(this.savings);
+                    this.audio.play().catch(err => console.error('No sonido:', err));
                     await this.showSuccessModal();
                   },
                   error: async () => {
@@ -228,8 +231,8 @@ export class CheckoutPage implements OnInit {
       else if (this.payWithWallet) {
         this.walletService.getWalletBalance(userId).subscribe(
           async (walletData: any) => {
-            const discount = Math.min(walletData.balance, this.originalTotal);
-            this.finalTotal = this.originalTotal - discount;
+            this.discount = Math.min(walletData.balance, this.originalTotal);
+            this.finalTotal = this.originalTotal - this.discount;
 
             if (this.finalTotal > 0) {
               await this.showErrorModal("Insufficient wallet balance to complete the purchase.");
@@ -258,6 +261,9 @@ export class CheckoutPage implements OnInit {
                   next: async (res) => {
                     this.cartService.clearCart();
                     await this.showSuccessModal();
+                    this.audio.play().catch(err => console.error('No sonido:', err));
+                    this.notificationsService.notifyPurchaseWithSavings(this.savings);
+
                   },
                   error: async () => {
                     await this.showErrorModal("Failed to create order. Please try again.");
@@ -311,6 +317,7 @@ export class CheckoutPage implements OnInit {
               next: async (res) => {
                 this.cartService.clearCart();
                 await this.showSuccessModal();
+                this.audio.play().catch(err => console.error('No sonido:', err));
                 this.notificationsService.notifyPurchaseWithSavings(this.savings);
               },
               error: async () => {
@@ -413,8 +420,8 @@ export class CheckoutPage implements OnInit {
     console.log('¿Pagar con Wallet?', this.payWithWallet);
 
     if (this.payWithWallet) {
-      const discount = Math.min(this.walletBalance, this.originalTotal);
-      this.finalTotal = this.originalTotal - discount;
+      this.discount = Math.min(this.walletBalance, this.originalTotal);
+      this.finalTotal = this.originalTotal - this.discount;
       //console.log(`Aplicando descuento de Wallet: -$${discount}`);
     } else {
       this.finalTotal = this.originalTotal;

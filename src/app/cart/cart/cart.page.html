@@ -62,21 +62,22 @@
         <span class="summary-value">${{subtotal.toFixed(2)}}</span>
       </div>
 
-      <div class="summary-row">
+      <!-- <div class="summary-row">
         <span class="summary-label">Rounded Total</span>
         <span class="summary-value">${{roundedTotal.toFixed(2)}}</span>
+      </div> -->
+
+      
+      <div class="summary-row total" *ngIf="savings > 0">
+        <span class="summary-label" style="font-weight: bold; color: white;" >To My Wallet</span>
+        <span class="summary-value discount" style="font-weight: bold;">+ ${{savings.toFixed(2)}}</span>
       </div>
 
-      <div class="summary-row" *ngIf="savings > 0">
-        <span class="summary-label">To My Wallet</span>
-        <span class="summary-value discount">${{savings.toFixed(2)}}</span>
-      </div>
-
-      <div class="summary-row total">
+      <div class="summary-row" style="font-weight: bold; color: white;">
         <span class="summary-label">Total</span>
         <span class="summary-value">${{finalTotal.toFixed(2)}}</span>
       </div>
-
+      
       <ion-button expand="block" class="pay-button" (click)="checkout()">
         Checkout
       </ion-button>

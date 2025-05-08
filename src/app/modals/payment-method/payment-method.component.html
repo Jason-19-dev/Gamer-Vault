@@ -1,6 +1,6 @@
 <ion-header class="card-modal-header">
   <ion-toolbar>
-    <ion-title>Card</ion-title>
+    <ion-title class="font2P">Payment Method</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="closeModal()">
         <ion-icon name="close-outline"></ion-icon>
@@ -43,10 +43,11 @@
   </ion-item>
 
   <div class="card-grid">
-    <ion-item class="half-input styled-input">
-      <ion-label position="floating">MM/AA</ion-label>
-      <ion-input [(ngModel)]="expiry" maxlength="5"></ion-input>
-    </ion-item>
+  <ion-item class="half-input styled-input">
+    <ion-label position="floating">MM/AA</ion-label>
+    <ion-input [(ngModel)]="expiry" maxlength="5" inputmode="numeric" (ionInput)="onExpiryInput($event)" (keydown)="blockLetters($event)">
+    </ion-input>
+  </ion-item>
     <ion-item class="half-input styled-input">
       <ion-label position="floating">CVC</ion-label>
       <ion-input [(ngModel)]="cvc" maxlength="4" type="password"></ion-input>
