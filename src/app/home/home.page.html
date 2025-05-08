@@ -13,13 +13,22 @@
   </ion-refresher>
   <ion-searchbar placeholder="Search" [debounce]="1000" (ionInput)="handleInput($event)" show-clear-button="always"></ion-searchbar>
 
+ <!-- Banner Section with Empty State -->
   <div class="banner" [ngStyle]="{
-      'background-image': currentBannerImage
+      'background-image': gameProducts.length > 0 && currentBannerImage
         ? 'url(' + currentBannerImage + ')'
         : 'none'
-    }" (click)="navigateToProductDetail(gameProducts[bannerIndex], 'videogame', $event)">
-    <div class="banner-content">
+    }" (click)="gameProducts.length > 0 ? navigateToProductDetail(gameProducts[bannerIndex], 'videogame', $event) : null">
+
+    <!-- Show this when games are available -->
+    <div class="banner-content" *ngIf="gameProducts.length > 0">
       <p class="banner-text">{{ currentBannerText }}</p>
+    </div>
+
+    <!-- Show this when no games are available -->
+    <div class="banner-content empty-banner" *ngIf="gameProducts.length === 0">
+      <p class="banner-text">No featured games available</p>
+      <p class="banner-subtext">Check back later for new releases</p>
     </div>
   </div>
 
@@ -42,10 +51,12 @@
         <p class="game-name">{{ product.game_name }}</p>
       </div>
 
-      <!-- Show default icons if no coin products are found -->
-      <ng-container *ngIf="coinProducts.length === 0">
-
-      </ng-container>
+      <!-- Add empty message for coins -->
+      <div class="empty-message" *ngIf="coinProducts.length === 0">
+        <ion-item lines="none">
+          <ion-label>No in-game coins available.</ion-label>
+        </ion-item>
+      </div>
     </div>
   </div>
 
@@ -72,9 +83,9 @@
       </div>
     </div>
   </div>
-    <div class="empty-message">
+    <div class="empty-message" *ngIf="gameProducts.length === 0">
       <ion-item lines="none">
-        <ion-label>No videogames avaible.</ion-label>
+        <ion-label>No videogames available.</ion-label>
       </ion-item>
     </div>
 </div>
