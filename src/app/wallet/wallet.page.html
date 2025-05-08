@@ -54,20 +54,6 @@
     </div>
   </div>
 
-<!-- Historial de intereses separado -->
- <!--
-<h2 class="section-title">Historial de Intereses</h2>
-<ion-list>
-  <ion-item *ngFor="let history of interestHistory">
-    <ion-label>
-      <h2>Fecha: {{ history.created_at | date:'yyyy-MM-dd HH:mm' }}</h2>
-      <p>Interés generado: {{ history.interest_generated | currency:'USD' }}</p>
-      <p>Interés anual: {{ history.annual_interest | percent:'1.0-2' }}</p>
-      <p>Balance en ese momento: {{ history.balance | currency:'USD' }}</p>
-    </ion-label>
-  </ion-item>
-</ion-list>
--->
 <h2 class="section-title">Interest History</h2>
 <div class="order-history-container">
 <ion-item lines="none" class="order-item interest-item" *ngFor="let history of interestHistory">
@@ -83,6 +69,5 @@
 </div>
 
 </ion-content>
-
 
 <app-tabs-pages></app-tabs-pages>

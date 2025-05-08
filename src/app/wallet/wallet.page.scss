@@ -47,11 +47,11 @@ ion-title {
 }
 
 .low-gradient {
-  --progress-background: linear-gradient(90deg, #00b09b, #96c93d);
+  --progress-background: linear-gradient(90deg, #21855f, #96c93d);
 }
 
 .silver-gradient {
-  --progress-background: linear-gradient(90deg, #93A2AA, #8eafda);
+  --progress-background: linear-gradient(90deg, #c2c5c7, #879eb8);
 }
 
 .gold-gradient {
@@ -62,6 +62,21 @@ ion-title {
   --progress-background: linear-gradient(90deg, #00ffff, #10a0ff);
 }
 
+.low-color {
+  color: #ffffff
+}
+
+.silver-color {
+  color: #c5c9cf;
+}
+
+.gold-color {
+  color: #FFD700;
+}
+
+.diamond-color {
+  color: #00ffff;
+}
 
 .progress-container {
   position: relative;
