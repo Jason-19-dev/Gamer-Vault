@@ -25,6 +25,7 @@ export class WalletPage implements OnInit, OnDestroy {
   walletUser:Wallet [] = [];
   userId: string = '';
   orders: Order[] = [];
+  interestHistory: any[] = [];
   userProgress: number = 0;
   userLevel: number = 0;
   userLevelUp: number = 0;
@@ -70,7 +71,7 @@ export class WalletPage implements OnInit, OnDestroy {
       next: (res) => {
         this.walletUser = res;
         this.walletBalance = res.balance;
-        
+
       },
       error: (err) => {
         console.error("Error loading wallet balance:", err);
@@ -81,7 +82,7 @@ export class WalletPage implements OnInit, OnDestroy {
   async loadUserAndOrders() {
     this.userId = await this.userService.getCurrentUserID() || '';
     if (this.userId) {
-      this.loadOrders();
+      this.loadInterestHistory();
     } else {
       console.error('Could not get user ID.');
       this.toast_alert('bottom', 'Could not get user ID.');
@@ -121,7 +122,7 @@ export class WalletPage implements OnInit, OnDestroy {
     })
   }
 
-  
+
   getGradientClass() {
     if (this.userProgress < 0.3) {
       return 'low-gradient';
@@ -161,28 +162,18 @@ export class WalletPage implements OnInit, OnDestroy {
     }
   }
 
-  loadOrders() {
-    if (this.ordersSubscription) {
-      this.ordersSubscription.unsubscribe();
+  loadInterestHistory() {
+  this.walletService.load_user_interest_history(this.userId).subscribe({
+    next: (res) => {
+      this.interestHistory = res || [];
+    },
+    error: (err) => {
+      this.toast_alert('bottom', 'Error al cargar historial de intereses');
+      console.error(err);
     }
+  });
+}
 
-    if (this.userId) {
-      this.ordersSubscription = this.ordersService.load_user_orders(this.userId).subscribe({
-        next: (res) => {
-          this.orders = res || [];
-          
-        },
-        error: (err) => {
-          this.toast_alert('bottom', 'Error al cargar órdenes');
-          console.error(err);
-        }
-      });
-    } else {
-      this.orders = [];
-      console.error('Usuario no autenticado');
-      this.toast_alert('bottom', 'Usuario no autenticado');
-    }
-  }
 
   async makeRecharge(amount: number) {
     try {
@@ -201,7 +192,7 @@ export class WalletPage implements OnInit, OnDestroy {
           next: () => {
             this.walletBalance += amount;
             this.toast_alert('top', 'Recarga exitosa');
-            this.loadOrders();
+            this.loadInterestHistory();
           },
           error: (err) => {
             this.toast_alert('bottom', 'Error al realizar recarga');
@@ -240,7 +231,7 @@ export class WalletPage implements OnInit, OnDestroy {
   }
 
   handleRefresh(event: CustomEvent) {
-    this.loadOrders();
+    this.loadInterestHistory();
     this.loadUserAndOrders();
     this.getUserBalance();
     this.LoadUserLevel();

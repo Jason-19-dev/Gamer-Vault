@@ -32,7 +32,14 @@ export class WalletService {
       switchMap((headers) => {
         return this.http.post(`${this.apiURL}/${userId}/deduct`, body, { headers });
       }));
-    
+
+  }
+  load_user_interest_history(userId: string): Observable<any> {
+    return from(this.httpHeader.getJsonHeaders()).pipe(
+      switchMap((headers) => {
+        return this.http.get(`${environment.apiURL}/wallet/${userId}/history`, { headers });
+      })
+    );
   }
 
   // async balance() {
