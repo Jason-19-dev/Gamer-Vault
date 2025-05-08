@@ -5,7 +5,7 @@ import  { Router } from "@angular/router" // Changed from type-only import
 import  { HttpClient } from "@angular/common/http" // Changed from type-only import
 import { environment } from "src/environments/environment"
 
-import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher, IonButtons, IonToast } from "@ionic/angular/standalone"
+import {IonContent,IonHeader,IonTitle,IonToolbar,IonSearchbar,IonNote,IonIcon,AlertController, Platform,IonRefresherContent, IonRefresher, IonButtons, IonToast,IonItem, IonLabel } from "@ionic/angular/standalone"
 // Keep this as a type-only import since it's just for type checking
 import type { GameItem, CoinItem } from "src/types"
 import { TabsPagesPage } from "../tabs_bar/tabs-pages/tabs-pages.page"
@@ -19,7 +19,7 @@ import { UserService } from "src/services/user/user.service"
   templateUrl: "./home.page.html",
   styleUrls: ["./home.page.scss"],
   standalone: true,
-  imports: [IonToast, IonRefresher, IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonSearchbar,IonNote,IonHeader,TabsPagesPage,IonIcon,IonRefresherContent
+  imports: [IonItem, IonLabel, IonToast, IonRefresher, IonContent,IonTitle,IonToolbar,CommonModule,FormsModule,IonSearchbar,IonNote,IonHeader,TabsPagesPage,IonIcon,IonRefresherContent
   ],
 })
 export class HomePage implements OnInit {
@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.fetchGameProducts();
     this.fetchCoinProducts();
-    
+
   }
 
   ngOnDestroy() {
@@ -93,35 +93,27 @@ export class HomePage implements OnInit {
     })
   }
 
-  private fetchGameProducts() {
-    this.productsService.getProducts().subscribe({
-      next: (data) => {
-       
+private fetchGameProducts() {
+  this.productsService.getProducts().subscribe({
+    next: (data) => {
+      const gamesWithIds = data.map((game) => ({
+        ...game,
+        id: game.id || game.product_id || `game_${game.name}_${Date.now()}`,
+      }));
 
-        // Ensure each game has an id property
-        const gamesWithIds = data.map((game) => {
-          // If the game doesn't have an id, use product_id or generate one
-          if (!game.id) {
-            return {
-              ...game,
-              id: game.product_id || `game_${game.name}_${Date.now()}`,
-            }
-          }
-          return game
-        })
+      this.gameProducts = this.getRandomItems(gamesWithIds, 10);
+      this.allGameProducts = [...this.gameProducts];
+      this.message = this.gameProducts.length === 0 ? "No videogames found." : "";
+      this.startBannerRotation();
+    },
+    error: (err) => {
+      console.error("Error al obtener juegos:", err.message);
+      this.message = "Couldn't load videogames. Please try again later.";
+      this.gameProducts = [];
+    },
+  });
+}
 
-        // Seleccionar 10 videojuegos aleatorios
-        this.gameProducts = this.getRandomItems(gamesWithIds, 10)
-        this.allGameProducts = [...this.gameProducts] 
-
-
-        this.startBannerRotation()
-      },
-      error: (err) => {
-        console.error("Error al obtener juegos:", err.message)
-      },
-    })
-  }
 
   // Método para obtener elementos aleatorios de un arreglo
   private getRandomItems<T>(array: T[], count: number): T[] {
@@ -232,7 +224,7 @@ export class HomePage implements OnInit {
         return
       }
 
-      
+
 
       // Navigate to game-coins page with the game name
       this.router.navigate(["/game-coins", encodeURIComponent(product.game_name)])
@@ -244,12 +236,12 @@ export class HomePage implements OnInit {
     const productId = product.id || product.product_id || product.id_product
 
     if (!productId) {
-      
+
       console.error("Cannot navigate: Product ID is missing. Available fields:", Object.keys(product))
       return
     }
 
-        
+
 
     // Navigate to product detail page with the product ID and type
     this.router.navigate(["/product-detail", productId], {
