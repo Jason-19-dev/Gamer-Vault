@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title class="font2P">Payment Method</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="closeModal()">
+      <ion-button fill="clear" (click)="closeModal()" aria-label="Close modal">
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,6 +12,7 @@
 <ion-content class="ion-padding">
   <!-- Simulación de la tarjeta -->
   <div class="card-preview">
+    <div class="card-chip"></div>
     <div class="card-logo-container">
       <img *ngIf="getCardType() === 'visa'" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
         class="card-logo" />
@@ -32,18 +33,22 @@
   </div>
 
   <!-- Inputs -->
-  <ion-item class="styled-input">
-    <ion-label position="floating">Card Number</ion-label>
-    <ion-input [(ngModel)]="cardNumber" maxlength="16" inputmode="numeric"></ion-input>
-  </ion-item>
+<ion-item class="styled-input">
+  <ion-icon name="card-outline" slot="start" class="input-icon"></ion-icon>
+  <ion-label position="floating">Card Number</ion-label>
+  <ion-input [(ngModel)]="cardNumber" maxlength="16" inputmode="numeric"></ion-input>
+</ion-item>
 
-  <ion-item class="styled-input">
-    <ion-label position="floating">Name</ion-label>
-    <ion-input [(ngModel)]="cardHolder"></ion-input>
-  </ion-item>
+<ion-item class="styled-input">
+  <ion-icon name="person-outline" slot="start" class="card-icon" class="form-icon" ></ion-icon>
+  <ion-label position="floating">Name</ion-label>
+  <ion-input [(ngModel)]="cardHolder"></ion-input>
+</ion-item>
+
 
   <div class="card-grid">
   <ion-item class="half-input styled-input">
+    <ion-icon name="calendar-outline" slot="start" class="card-icon"></ion-icon>
     <ion-label position="floating">MM/AA</ion-label>
     <ion-input [(ngModel)]="expiry" maxlength="5" inputmode="numeric" (ionInput)="onExpiryInput($event)" (keydown)="blockLetters($event)">
     </ion-input>

@@ -23,13 +23,13 @@ ion-content {
 /* Vista previa de la tarjeta */
 .card-preview {
   background: linear-gradient(135deg, #0d3a71, #3a72b8);
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.08), 0 6px 20px rgba(0, 0, 0, 0.4);
   border-radius: 16px;
-  padding: 20px;
+  padding: 32px;
   color: white;
   margin-bottom: 20px;
   position: relative;
   height: 160px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   font-family: 'Courier New', monospace;
 }
 
@@ -106,7 +106,11 @@ ion-input {
     margin-bottom: 0;
   }
 }
-
+.card-number,
+.card-holder,
+.card-expiry {
+  transition: all 0.3s ease;
+}
 /* Botón */
 .pay-button {
   --background: #ffc409;
@@ -114,4 +118,48 @@ ion-input {
   border-radius: 12px;
   font-weight: 600;
   margin-top: 24px;
+}
+
+ion-item.valid {
+  border: 1px solid #2ecc71;
+}
+
+ion-item.invalid {
+  border: 1px solid #e74c3c;
+}
+
+.input-icon {
+  color: #ffc409; // color dorado
+  font-size: 20px;
+  margin-right:10px;
+}
+ion-item.styled-input ion-icon[slot="start"] {
+  margin-left: 4px;
+  margin-right: 8px;
+  font-size: 20px;
+  color: #ffc409;
+  align-self: center;
+}
+ion-icon.input-icon {
+  opacity: 1 !important;
+}
+
+.card-icon {
+  font-size: 18px;
+  color: #ffc409;
+  margin-right: 8px;
+}
+.form-icon {
+  font-size: 20px;
+  color: #ffc409;
+  margin-left: 4px;
+  margin-right: 8px;
+  align-self: center;
+}
+.card-preview {
+  margin-bottom: 28px;
+}
+
+.styled-input {
+  height: 52px;
 }
