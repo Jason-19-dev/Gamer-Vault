@@ -46,7 +46,6 @@
 
 
 ion-button{
-
     --background: #DEAD1C !important;
     --color: white !important;
     --box-shadow: none !important;
@@ -56,7 +55,7 @@ ion-button{
 
 .font2P {
   font-family: PressStart2P !important;
-  
+
 }
 
 ion-modal {
@@ -85,7 +84,7 @@ ion-modal {
 
 ion-content {
   // --background: linear-gradient(180deg, #041637 20.5%, #295280 100%);
-  --background: linear-gradient(180deg, #000428, #004e92); 
+  --background: linear-gradient(180deg, #000428, #004e92);
 
   --color: white;
 }
@@ -94,13 +93,13 @@ ion-header ion-toolbar {
   // --background: #0a1933;
   --background: #000428;
   --color: white;
-  // --border-style: none;  
+  // --border-style: none;
   // --border-width: 0;
   padding-top: 0 !important;
 }
 
 ion-header ion-toolbar:first-of-type {
-  padding-top: env(safe-area-inset-top); 
+  padding-top: env(safe-area-inset-top);
 }
 
 ion-item{
