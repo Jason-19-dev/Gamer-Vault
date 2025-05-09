@@ -94,7 +94,7 @@ export class MenuPage implements OnInit {
 
   private loadCoinsFromAPI() {
     this.isLoading = true;
-    this.http.get<ApiCoinItem[]>(`${environment.apiURL}/products/coins`).subscribe({
+    this.http.get<ApiCoinItem[]>(`${environment.apiURL}/products/coins/games-list`).subscribe({
       next: (data) => {
         
 

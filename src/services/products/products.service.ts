@@ -26,7 +26,7 @@ export class ProductsService {
   public getCoins(): Observable<CoinItem[]> {
     return from(this.httpHeader.getJsonHeaders()).pipe(
       switchMap((headers) => {
-        return this.http.get<CoinItem[]>(`${this.apiUrl}/coins`, { headers });
+        return this.http.get<CoinItem[]>(`${this.apiUrl}/coins/games-list`, { headers });
       }),
       catchError(this.handleError)
     );
