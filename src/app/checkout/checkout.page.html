@@ -19,7 +19,7 @@
   Saved cards
 </div>
   <div *ngIf="savedCard" class="saved-card-checkout">
-    <div class="checkout-card">
+    <div class="checkout-card" [ngClass]="savedCard.brand == 'visa' ? 'visa' : 'mastercard'">
       <div class="checkout-card-logo">
         <img *ngIf="savedCard.brand === 'visa'" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" />
         <img *ngIf="savedCard.brand === 'mastercard'" src="https://img.icons8.com/color/48/mastercard-logo.png" />
@@ -42,7 +42,7 @@
 <div class="wallet-title-payment">
   Wallet as payment method
 </div>
-
+<!--  -->
 <div class="wallet-card">
   <div class="wallet-content">
     <div class="wallet-header">

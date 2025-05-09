@@ -105,7 +105,7 @@ ion-title {
 }
 
 .wallet-card {
-  background: linear-gradient(135deg, #0d3a71, #3a72b8);
+  background: linear-gradient(to bottom, #02d6c8, #2b4d72); 
   border-radius: 20px;
   padding: 0 20px;
   margin-bottom: 24px;
@@ -282,4 +282,11 @@ ion-title {
 
 .checkout-card-footer .expiry {
   font-weight: 500;
+}
+
+.visa {
+  background: linear-gradient(135deg, #062750, #22518a);
+}
+.mastercard {
+  background: linear-gradient(135deg, #cc8d07, #633102);
 }
