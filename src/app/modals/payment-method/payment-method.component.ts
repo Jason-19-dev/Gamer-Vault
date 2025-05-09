@@ -1,6 +1,5 @@
-import { Component ,ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-encapsulation: ViewEncapsulation.None
 import {
   IonInput,
   IonItem,
@@ -22,7 +21,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './payment-method.component.html',
   styleUrls: ['./payment-method.component.scss'],
   standalone: true,
-   encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,
     FormsModule,
@@ -60,57 +59,73 @@ export class PaymentMethodComponent {
     this.modalCtrl.dismiss({ success: true });
   }
 
-payNow() {
-  const cardData = {
-    cardNumber: this.cardNumber,
-    cardHolder: this.cardHolder,
-    expiry: this.expiry,
-    cardType: this.getCardType(),
-    cvc: this.cvc
-  };
+  payNow() {
+    const cardData = {
+      cardNumber: this.cardNumber,
+      cardHolder: this.cardHolder,
+      expiry: this.expiry,
+      cardType: this.getCardType(),
+      cvc: this.cvc
+    };
 
-  this.modalCtrl.dismiss(cardData); // 👈 envía los datos al cerrar
-}
-
-
-
+    this.modalCtrl.dismiss(cardData);
+  }
 
   formatCardNumber(num: string): string {
     return num.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
   }
 
-getCardType(): string {
-  const number = this.cardNumber.replace(/\s+/g, '');
+  getCardType(): string {
+    const number = this.cardNumber.replace(/\s+/g, '');
 
-  if (/^4/.test(number)) return 'visa';
-  if (/^5[1-5]/.test(number)) return 'mastercard';
-  if (/^3[47]/.test(number)) return 'amex';
-  if (/^6(?:011|5)/.test(number)) return 'discover';
+    if (/^4/.test(number)) return 'visa';
+    if (/^5[1-5]/.test(number)) return 'mastercard';
+    if (/^3[47]/.test(number)) return 'amex';
+    if (/^6(?:011|5)/.test(number)) return 'discover';
 
-  return 'unknown';
-}
-
-onExpiryInput(event: any) {
-  let input = event.target.value.replace(/\D/g, ''); // solo dígitos
-
-  if (input.length > 4) {
-    input = input.slice(0, 4);
+    return 'unknown';
   }
 
-  if (input.length >= 3) {
-    this.expiry = `${input.slice(0, 2)}/${input.slice(2)}`;
-  } else {
-    this.expiry = input;
+  // Método para obtener la clase CSS según el tipo de tarjeta
+  getCardClass(): string {
+    const cardType = this.getCardType();
+    
+    switch (cardType) {
+      case 'visa':
+        return 'visa-card';
+      case 'mastercard':
+        return 'mastercard-card';
+      case 'amex':
+        return 'amex-card';
+      case 'discover':
+        return 'discover-card';
+      default:
+        return 'default-card';
+    }
   }
-}
-blockLetters(event: KeyboardEvent) {
-  const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
 
-  // Permite solo números y algunas teclas de control
-  if (!/^\d$/.test(event.key) && !allowedKeys.includes(event.key)) {
-    event.preventDefault(); // Bloquea letras, símbolos, etc.
+  onExpiryInput(event: any) {
+    let input = event.target.value.replace(/\D/g, ''); // solo dígitos
+
+    if (input.length > 4) {
+      input = input.slice(0, 4);
+    }
+
+    if (input.length >= 3) {
+      this.expiry = `${input.slice(0, 2)}/${input.slice(2)}`;
+    } else {
+      this.expiry = input;
+    }
   }
-}
+  
+  blockLetters(event: KeyboardEvent) {
+    const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+
+    // Permite solo números y algunas teclas de control
+    if (!/^\d$/.test(event.key) && !allowedKeys.includes(event.key)) {
+      event.preventDefault(); // Bloquea letras, símbolos, etc.
+    }
+  }
 
   getCardLogo(): string {
     const type = this.getCardType();

@@ -163,3 +163,23 @@ ion-icon.input-icon {
 .styled-input {
   height: 52px;
 }
+/* Estilos para diferentes tipos de tarjetas */
+.visa-card {
+  background: linear-gradient(135deg, #062750, #22518a);
+}
+
+.mastercard-card {
+  background: linear-gradient(135deg, #cc8d07, #633102);
+}
+
+.amex-card {
+  background: linear-gradient(135deg, #108168, #0f6a88);
+}
+
+.discover-card {
+  background: linear-gradient(135deg, #ff6600, #cc5500);
+}
+
+.default-card {
+  background: linear-gradient(135deg, #0d3a71, #3a72b8);
+}
