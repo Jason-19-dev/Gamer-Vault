@@ -106,7 +106,7 @@ ion-title {
 
 .wallet-card {
   background: linear-gradient(to bottom, #02d6c8, #2b4d72); 
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 0 20px;
   margin-bottom: 24px;
   color: white;
@@ -114,7 +114,7 @@ ion-title {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-  height: 160px;
+  height: 140px;
   position: relative;
   overflow: hidden;
   font-family: 'Courier New', monospace;
@@ -173,14 +173,14 @@ ion-title {
   display: flex;
   justify-content: flex-start;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .method-card {
   background: linear-gradient(180deg,#08275e,#020d35);
   color: white;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -244,10 +244,10 @@ ion-title {
 
 .checkout-card {
   background: linear-gradient(135deg, #0d3a71, #3a72b8);
-  border-radius: 14px;
+  // border-radius: 14px;
   padding: 20px;
   color: white;
-  height: 160px;
+  height: 100px;
   position: relative;
   font-family: 'Courier New', monospace;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);

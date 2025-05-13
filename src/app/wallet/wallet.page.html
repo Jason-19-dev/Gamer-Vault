@@ -68,6 +68,8 @@
   </ion-item>
 </div>
 
+<div class="empty-message" *ngIf="interestHistory.length === 0"><ion-item lines="none"><ion-label>No interest history available.</ion-label></ion-item></div>
+
 </ion-content>
 
 <app-tabs-pages></app-tabs-pages>

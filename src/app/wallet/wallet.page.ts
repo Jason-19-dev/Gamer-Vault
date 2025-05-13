@@ -183,7 +183,8 @@ export class WalletPage implements OnInit, OnDestroy {
 
     },
     error: (err) => {
-      this.toast_alert('bottom', 'Error al cargar historial de intereses');
+      // this.toast_alert('bottom', 'Error al cargar historial de intereses');
+      
       console.error(err);
     }
   });

@@ -45,7 +45,10 @@ export class LoginPage implements OnInit {
 
       if (token && !this.authService.isTokenExpired(token)) {
         this.userService.loadCurrentUser()
-        this.router.navigate(['/home']);
+        
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 3000);
       }
     });
   }
